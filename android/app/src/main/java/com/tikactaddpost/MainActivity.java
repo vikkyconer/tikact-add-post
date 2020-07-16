@@ -1,4 +1,4 @@
-package com.innathecinema.tikact;
+package com.tikactaddpost;
 
 import android.os.Bundle;
 

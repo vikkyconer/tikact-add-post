@@ -19,10 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.innathecinema.tikact"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "android": {
+      "package": "com.innathecinema.tikact"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
