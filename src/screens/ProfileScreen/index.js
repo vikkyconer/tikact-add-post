@@ -1,34 +1,17 @@
-import React, { Component } from "react";
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Alert,
-  BackHandler,
-  PermissionsAndroid,
-  Image,
-  Platform,
-  ActivityIndicator,
-  Picker,
-  SafeAreaView,
-} from "react-native";
+import React from 'react';
+import {Text, View} from 'react-native';
 
-class ProfileScreen extends Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text>{"Hello Profile.....!"}</Text>
-      </View>
-    );
-  }
-}
+const ProfileScreen = () => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text>{'Hello ProfileScreen.....!'}</Text>
+    </View>
+  );
+};
 
 export default ProfileScreen;

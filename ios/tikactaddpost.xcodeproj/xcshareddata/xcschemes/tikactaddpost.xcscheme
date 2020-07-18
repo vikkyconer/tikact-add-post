@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "tikactaddpost.app"
-               BlueprintName = "tikactaddpost"
-               ReferencedContainer = "container:tikactaddpost.xcodeproj">
+               BuildableName = "tikActAddPost.app"
+               BlueprintName = "tikActAddPost"
+               ReferencedContainer = "container:tikActAddPost.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "tikactaddpostTests.xctest"
-               BlueprintName = "tikactaddpostTests"
-               ReferencedContainer = "container:tikactaddpost.xcodeproj">
+               BuildableName = "tikActAddPostTests.xctest"
+               BlueprintName = "tikActAddPostTests"
+               ReferencedContainer = "container:tikActAddPost.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tikactaddpost.app"
-            BlueprintName = "tikactaddpost"
-            ReferencedContainer = "container:tikactaddpost.xcodeproj">
+            BuildableName = "tikActAddPost.app"
+            BlueprintName = "tikActAddPost"
+            ReferencedContainer = "container:tikActAddPost.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tikactaddpost.app"
-            BlueprintName = "tikactaddpost"
-            ReferencedContainer = "container:tikactaddpost.xcodeproj">
+            BuildableName = "tikActAddPost.app"
+            BlueprintName = "tikActAddPost"
+            ReferencedContainer = "container:tikActAddPost.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

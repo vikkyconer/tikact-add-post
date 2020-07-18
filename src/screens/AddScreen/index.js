@@ -1,118 +1,78 @@
-import React, { useState, useEffect } from "react";
-import { Text, TouchableOpacity, View, Icon, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { Camera } from "expo-camera";
+import React from 'react';
+import {View, Image} from 'react-native';
+import {RNCamera} from 'react-native-camera';
+import Feather from 'react-native-vector-icons/Feather';
+import {RecordButton} from './styles';
 
-function AddScreen() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.front);
-  const [recording, setRecording] = useState(false);
-  const [cameraRef, setCameraRef] = useState(null);
-  const [ratio, setRatio] = useState("16:9");
+const uploadIcon = require('../../assets/icons/upload.png');
+const cameraFlipIcon = require('../../assets/icons/camera-flip.png');
 
-  useEffect(() => {
-    getCameraPermissions();
-    getAspectRation();
-  }, []);
+const AddScreen = () => {
+  let camera = null;
+  const icon = <Feather name="x" color="white" size={30} />;
 
-  const getAspectRation = async () => {
-    // const ratios = await Camera.getSupportedRatiosAsync();
-  };
-
-  const getCameraPermissions = async () => {
-    const { status } = await Camera.requestPermissionsAsync();
-    setHasPermission(status === "granted");
-  };
-
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
   return (
-    <View style={{ flex: 1 }}>
-      <Camera
-        style={{ flex: 1 }}
-        type={type}
-        autoFocus={true}
-        whiteBalance={"auto"}
-        ratio={ratio}
-        maxDuration={10}
-        ref={(ref) => setCameraRef(ref)}
-      >
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'flex-start',
+      }}>
+      <RNCamera
+        ref={(ref) => {
+          camera = ref;
+        }}
+        captureAudio={false}
+        style={{flex: 1}}
+        type={RNCamera.Constants.Type.front}
+        flashMode={RNCamera.Constants.FlashMode.on}
+        androidCameraPermissionOptions={{
+          title: 'Permission to use camera',
+          message: 'We need your permission to use your camera',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}>
+        <View style={{margin: 10}}>{icon}</View>
         <View
           style={{
+            marginTop: 550,
+            backgroundColor: 'black',
             flex: 1,
-            backgroundColor: "transparent",
-            justifyContent: "flex-end",
-          }}
-        >
+            justifyContent: 'flex-end',
+            opacity: 0.3,
+          }}>
           <View
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <TouchableOpacity
+              flex: 1,
+              justifyContent: 'space-evenly',
+              flexDirection: 'row',
+            }}>
+            <Image
+              source={uploadIcon}
               style={{
-                flex: 0.1,
-                alignSelf: "flex-end",
+                padding: 10,
+                width: 40,
+                height: 40,
+                bottom: 5,
+                marginTop: 40,
               }}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
+            />
+            <RecordButton />
+            <Image
+              source={cameraFlipIcon}
+              style={{
+                padding: 10,
+                width: 40,
+                height: 40,
+                bottom: 5,
+                marginTop: 40,
               }}
-            >
-              <Ionicons name={"md-reverse-camera"} size={40} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ alignSelf: "center" }}
-              onPress={async () => {
-                if (!recording) {
-                  setRecording(true);
-                  let video = await cameraRef.recordAsync();
-                  console.log("video", video);
-                } else {
-                  setRecording(false);
-                  cameraRef.stopRecording();
-                }
-              }}
-            >
-              <View
-                style={{
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: "red",
-                  height: 50,
-                  width: 50,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  style={{
-                    borderWidth: 2,
-                    borderRadius: 50,
-                    borderColor: recording ? "blue" : "red",
-                    height: 40,
-                    width: 40,
-                    backgroundColor: recording ? "blue" : "red",
-                  }}
-                ></View>
-              </View>
-            </TouchableOpacity>
+            />
           </View>
+          <View></View>
         </View>
-      </Camera>
+      </RNCamera>
     </View>
   );
-}
+};
 
 export default AddScreen;
