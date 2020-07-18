@@ -8,6 +8,6 @@ export const RecordButton = styled.TouchableOpacity`
   border-color: #8c1227;
   border-radius: 40px;
   align-self: center;
-  bottom: 5%;
+  bottom: 8%;
   background-color: #fe2b54;
 `;
