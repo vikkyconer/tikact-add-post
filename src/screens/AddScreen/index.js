@@ -5,9 +5,6 @@ import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RecordButton } from "./styles";
 
-const uploadIcon = require("../../assets/icons/upload.png");
-const cameraFlipIcon = require("../../assets/icons/camera-flip.png");
-
 const AddScreen = () => {
   let camera = null;
   const icon = <Feather name="x" color="white" size={30} />;
@@ -26,6 +23,30 @@ const AddScreen = () => {
 
   const soundIcon = (
     <Ionicons name="musical-notes-outline" color="white" size={20} />
+  );
+
+  const cameraFlipIcon = (
+    <Ionicons
+      name="camera-reverse-outline"
+      color="white"
+      size={30}
+      style={{
+        padding: 10,
+        marginTop: 20,
+      }}
+    />
+  );
+
+  const uploadIcon = (
+    <Feather
+      name="upload"
+      color="white"
+      size={30}
+      style={{
+        padding: 10,
+        marginTop: 20,
+      }}
+    />
   );
 
   return (
@@ -100,7 +121,7 @@ const AddScreen = () => {
               left: 0,
               bottom: 0,
               backgroundColor: "black",
-              opacity: .3
+              opacity: 0.3,
             }}
           />
           <View
@@ -112,16 +133,7 @@ const AddScreen = () => {
             }}
           >
             <View>
-              <Image
-                source={uploadIcon}
-                style={{
-                  padding: 10,
-                  width: 40,
-                  height: 40,
-                  bottom: 5,
-                  marginTop: 30,
-                }}
-              />
+              {uploadIcon}
               <Text style={{ color: "white", alignSelf: "center" }}>
                 Upload
               </Text>
@@ -129,16 +141,7 @@ const AddScreen = () => {
 
             <RecordButton />
             <View>
-              <Image
-                source={cameraFlipIcon}
-                style={{
-                  padding: 10,
-                  width: 40,
-                  height: 40,
-                  bottom: 5,
-                  marginTop: 30,
-                }}
-              />
+              {cameraFlipIcon}
               <Text style={{ color: "white", alignSelf: "center" }}>Flip</Text>
             </View>
           </View>
