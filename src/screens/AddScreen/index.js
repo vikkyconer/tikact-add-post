@@ -84,21 +84,31 @@ const AddScreen = () => {
         <View
           style={{
             position: "absolute",
-            backgroundColor: "black",
             flex: 1,
             justifyContent: "flex-end",
-            opacity: 0.3,
             bottom: 0,
             left: 0,
             right: 0,
-            height: 180
+            height: 180,
           }}
         >
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              backgroundColor: "black",
+              opacity: .3
+            }}
+          />
           <View
             style={{
               flex: 1,
               justifyContent: "space-evenly",
               flexDirection: "row",
+              opacity: 1,
             }}
           >
             <View>
