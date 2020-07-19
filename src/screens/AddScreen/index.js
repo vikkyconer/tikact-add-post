@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import { RNCamera } from "react-native-camera";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -77,6 +84,9 @@ const AddScreen = (props) => {
         justifyContent: "flex-start",
       }}
     >
+      <View>
+        <StatusBar hidden={true} />
+      </View>
       <RNCamera
         ref={(ref) => {
           camera = ref;
