@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RNCamera } from "react-native-camera";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RecordButton } from "./styles";
 import Carousel from "react-native-snap-carousel";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const AddScreen = (props) => {
   let camera = null;
   let carousel = null;
   const [activeIndex, setActiveIndex] = useState(0);
-  const [cameraSide, setCamreraSide] = useState(RNCamera.Constants.Type.front);
+  const [cameraSide, setCamreraSide] = useState("front");
+  const [cameraFlash, setCameraFlash] = useState("off");
   const carouselItems = [
     {
       title: "15s",
@@ -84,7 +84,7 @@ const AddScreen = (props) => {
         captureAudio={false}
         style={{ flex: 1 }}
         type={cameraSide}
-        flashMode={RNCamera.Constants.FlashMode.off}
+        flashMode={cameraFlash}
         androidCameraPermissionOptions={{
           title: "Permission to use camera",
           message: "We need your permission to use your camera",
@@ -117,10 +117,19 @@ const AddScreen = (props) => {
               {getIcon("stopwatch-outline")}
               <Text style={{ color: "white" }}>Timer</Text>
             </View>
-            <View style={{ marginVertical: 10 }}>
-              {getIcon("flash-off-outline")}
+            <TouchableOpacity
+              style={{ marginVertical: 10 }}
+              onPress={() => {
+                cameraFlash === "off"
+                  ? setCameraFlash("torch")
+                  : setCameraFlash("off");
+              }}
+            >
+              {cameraFlash === "off"
+                ? getIcon("flash-off-outline")
+                : getIcon("flash-outline")}
               <Text style={{ color: "white" }}>Flash</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -163,11 +172,9 @@ const AddScreen = (props) => {
             <RecordButton />
             <TouchableOpacity
               onPress={() => {
-                if (cameraSide === camera.Constants.Type.front) {
-                  setCamreraSide(camera.Constants.Type.back);
-                } else {
-                  setCamreraSide(camera.Constants.Type.front);
-                }
+                cameraSide === "front"
+                  ? setCamreraSide("back")
+                  : setCamreraSide("front");
               }}
             >
               {cameraFlipIcon}
