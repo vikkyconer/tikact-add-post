@@ -7,7 +7,7 @@ import { RecordButton } from "./styles";
 import Carousel from "react-native-snap-carousel";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const AddScreen = () => {
+const AddScreen = (props) => {
   let camera = null;
   let carousel = null;
   const [activeIndex, setActiveIndex] = useState(0);
@@ -23,7 +23,16 @@ const AddScreen = () => {
   const getIcon = (name) => {
     return <Ionicons name={name} color="white" size={30} />;
   };
-  const icon = <Feather name="x" color="white" size={30} />;
+  const crossIcon = (
+    <Feather
+      name="x"
+      color="white"
+      size={30}
+      onPress={() => {
+        props.navigation.navigate("Home");
+      }}
+    />
+  );
 
   const soundIcon = (
     <Ionicons name="musical-notes-outline" color="white" size={20} />
@@ -75,7 +84,7 @@ const AddScreen = () => {
         captureAudio={false}
         style={{ flex: 1 }}
         type={cameraSide}
-        flashMode={RNCamera.Constants.FlashMode.on}
+        flashMode={RNCamera.Constants.FlashMode.off}
         androidCameraPermissionOptions={{
           title: "Permission to use camera",
           message: "We need your permission to use your camera",
@@ -90,7 +99,7 @@ const AddScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          {icon}
+          {crossIcon}
           <View style={{ flexDirection: "row" }}>
             {soundIcon}
             <Text style={{ color: "white" }}>Sounds</Text>
