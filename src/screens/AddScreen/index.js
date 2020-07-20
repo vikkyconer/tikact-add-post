@@ -116,6 +116,51 @@ const AddScreen = (props) => {
     );
   };
 
+  const getOtherOptions = () => {
+    return (
+      <View
+        style={{
+          margin: 10,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        {crossIcon}
+        <View style={{ flexDirection: "row" }}>
+          {soundIcon}
+          <Text style={{ color: "white" }}>Sounds</Text>
+        </View>
+        <View style={{ alignSelf: "center" }}>
+          <View style={{ marginVertical: 10 }}>
+            {getIcon("color-filter-outline")}
+            <Text style={{ color: "white" }}>Filters</Text>
+          </View>
+          <View style={{ marginVertical: 10 }}>
+            {getIcon("speedometer-outline")}
+            <Text style={{ color: "white" }}>Speed</Text>
+          </View>
+          <View style={{ marginVertical: 10 }}>
+            {getIcon("stopwatch-outline")}
+            <Text style={{ color: "white" }}>Timer</Text>
+          </View>
+          <TouchableOpacity
+            style={{ marginVertical: 10 }}
+            onPress={() => {
+              cameraFlash === "off"
+                ? setCameraFlash("torch")
+                : setCameraFlash("off");
+            }}
+          >
+            {cameraFlash === "off"
+              ? getIcon("flash-off-outline")
+              : getIcon("flash-outline")}
+            <Text style={{ color: "white" }}>Flash</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View
       style={{
@@ -141,46 +186,8 @@ const AddScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-        <View
-          style={{
-            margin: 10,
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          {crossIcon}
-          <View style={{ flexDirection: "row" }}>
-            {soundIcon}
-            <Text style={{ color: "white" }}>Sounds</Text>
-          </View>
-          <View style={{ alignSelf: "center" }}>
-            <View style={{ marginVertical: 10 }}>
-              {getIcon("color-filter-outline")}
-              <Text style={{ color: "white" }}>Filters</Text>
-            </View>
-            <View style={{ marginVertical: 10 }}>
-              {getIcon("speedometer-outline")}
-              <Text style={{ color: "white" }}>Speed</Text>
-            </View>
-            <View style={{ marginVertical: 10 }}>
-              {getIcon("stopwatch-outline")}
-              <Text style={{ color: "white" }}>Timer</Text>
-            </View>
-            <TouchableOpacity
-              style={{ marginVertical: 10 }}
-              onPress={() => {
-                cameraFlash === "off"
-                  ? setCameraFlash("torch")
-                  : setCameraFlash("off");
-              }}
-            >
-              {cameraFlash === "off"
-                ? getIcon("flash-off-outline")
-                : getIcon("flash-outline")}
-              <Text style={{ color: "white" }}>Flash</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {!recording && !showTimer ? getOtherOptions() : null}
+
         <View
           style={{
             position: "absolute",
@@ -193,7 +200,14 @@ const AddScreen = (props) => {
           }}
         />
         {showTimer ? (
-          <Text style={{ color: "white", fontSize: 100, alignSelf: "center" }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 200,
+              alignSelf: "center",
+              marginTop: "50%",
+            }}
+          >
             {timerValue}
           </Text>
         ) : null}
@@ -228,30 +242,36 @@ const AddScreen = (props) => {
               opacity: 1,
             }}
           >
-            <View>
-              {uploadIcon}
-              <Text style={{ color: "white", alignSelf: "center" }}>
-                Upload
-              </Text>
-            </View>
+            {!recording && !showTimer ? (
+              <View>
+                {uploadIcon}
+                <Text style={{ color: "white", alignSelf: "center" }}>
+                  Upload
+                </Text>
+              </View>
+            ) : null}
 
             {recording ? (
               <StopRecordingButton onPress={() => stopRecording()} />
-            ) : (
+            ) : !showTimer ? (
               <RecordButton onPress={() => recordVideo()} />
-            )}
+            ) : null}
 
-            <TouchableOpacity
-              onPress={() => {
-                console.log("Flip");
-                cameraSide === "front"
-                  ? setCamreraSide("back")
-                  : setCamreraSide("front");
-              }}
-            >
-              {cameraFlipIcon}
-              <Text style={{ color: "white", alignSelf: "center" }}>Flip</Text>
-            </TouchableOpacity>
+            {!recording && !showTimer ? (
+              <TouchableOpacity
+                onPress={() => {
+                  console.log("Flip");
+                  cameraSide === "front"
+                    ? setCamreraSide("back")
+                    : setCamreraSide("front");
+                }}
+              >
+                {cameraFlipIcon}
+                <Text style={{ color: "white", alignSelf: "center" }}>
+                  Flip
+                </Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
           <View
             style={{
