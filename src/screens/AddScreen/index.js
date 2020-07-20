@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import { RNCamera } from "react-native-camera";
+import CameraRoll from "@react-native-community/cameraroll";
 import { RecordButton, StopRecordingButton, style } from "./styles";
 import Carousel from "react-native-snap-carousel";
 import Feather from "react-native-vector-icons/Feather";
@@ -216,6 +217,11 @@ const AddScreen = (props) => {
     );
   };
 
+  const getLocalVideos = async () => {
+    const res = await CameraRoll.getPhotos({first: 20});
+    console.log("res: ", res);
+  };
+
   return (
     <View
       style={{
@@ -250,12 +256,12 @@ const AddScreen = (props) => {
           <View style={style.background} />
           <View style={style.bottomVideoIconsContainer}>
             {!recording && !showTimer ? (
-              <View>
+              <TouchableOpacity onPress={() => getLocalVideos()}>
                 {uploadIcon}
                 <Text style={{ color: "white", alignSelf: "center" }}>
                   Upload
                 </Text>
-              </View>
+              </TouchableOpacity>
             ) : null}
 
             {recording ? (
