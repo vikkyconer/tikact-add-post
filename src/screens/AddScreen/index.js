@@ -10,15 +10,19 @@ import {
 import { RNCamera } from "react-native-camera";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { RecordButton } from "./styles";
+import { RecordButton, StopRecordingButton } from "./styles";
 import Carousel from "react-native-snap-carousel";
 
 const AddScreen = (props) => {
-  let camera = null;
+  const [camera, setCamera] = useState(null);
   let carousel = null;
   const [activeIndex, setActiveIndex] = useState(0);
   const [cameraSide, setCamreraSide] = useState("front");
   const [cameraFlash, setCameraFlash] = useState("off");
+  const [recording, setRecording] = useState(false);
+  const [timerValue, setTimerValue] = useState(3);
+  const [showTimer, setShowTimer] = useState(false);
+  var timeLeft = 3;
   const carouselItems = [
     {
       title: "15s",
@@ -69,6 +73,41 @@ const AddScreen = (props) => {
     />
   );
 
+  const runCounter = async () => {
+    return new Promise((resolve, reject) => {
+      var interval = setInterval(() => {
+        timeLeft -= 1;
+        setTimerValue(timeLeft);
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, 1000);
+    });
+  };
+
+  const recordVideo = async () => {
+    try {
+      setShowTimer(true);
+      await runCounter();
+      setRecording(true);
+      setShowTimer(false);
+      setTimerValue(3);
+      const { uri, codec = "mp4" } = await camera.recordAsync({
+        maxDuration: 5,
+      });
+      console.log("uri: ", uri);
+      setRecording(false);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  const stopRecording = async () => {
+    await camera.stopRecording();
+    setRecording(false);
+  };
+
   const _renderItem = ({ item, index }) => {
     return (
       <View style={{ height: 20 }}>
@@ -89,7 +128,7 @@ const AddScreen = (props) => {
       </View>
       <RNCamera
         ref={(ref) => {
-          camera = ref;
+          setCamera(ref);
         }}
         captureAudio={false}
         style={{ flex: 1 }}
@@ -145,6 +184,23 @@ const AddScreen = (props) => {
         <View
           style={{
             position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+        {showTimer ? (
+          <Text style={{ color: "white", fontSize: 100, alignSelf: "center" }}>
+            {timerValue}
+          </Text>
+        ) : null}
+
+        <View
+          style={{
+            position: "absolute",
             flex: 1,
             justifyContent: "flex-end",
             bottom: 0,
@@ -179,9 +235,15 @@ const AddScreen = (props) => {
               </Text>
             </View>
 
-            <RecordButton />
+            {recording ? (
+              <StopRecordingButton onPress={() => stopRecording()} />
+            ) : (
+              <RecordButton onPress={() => recordVideo()} />
+            )}
+
             <TouchableOpacity
               onPress={() => {
+                console.log("Flip");
                 cameraSide === "front"
                   ? setCamreraSide("back")
                   : setCamreraSide("front");
