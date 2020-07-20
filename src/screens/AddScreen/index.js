@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  StatusBar,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, StatusBar } from "react-native";
 import { RNCamera } from "react-native-camera";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { RecordButton, StopRecordingButton } from "./styles";
+import { RecordButton, StopRecordingButton, style } from "./styles";
 import Carousel from "react-native-snap-carousel";
+import { crossIcon, soundIcon, cameraFlipIcon, uploadIcon } from "./constants";
+import { getIcon } from "./utility";
 
 const AddScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -23,55 +18,6 @@ const AddScreen = (props) => {
   const [timerValue, setTimerValue] = useState(3);
   const [showTimer, setShowTimer] = useState(false);
   var timeLeft = 3;
-  const carouselItems = [
-    {
-      title: "15s",
-    },
-    {
-      title: "60s",
-    },
-  ];
-  const getIcon = (name) => {
-    return <Ionicons name={name} color="white" size={30} />;
-  };
-  const crossIcon = (
-    <Feather
-      name="x"
-      color="white"
-      size={30}
-      onPress={() => {
-        props.navigation.navigate("Home");
-      }}
-    />
-  );
-
-  const soundIcon = (
-    <Ionicons name="musical-notes-outline" color="white" size={20} />
-  );
-
-  const cameraFlipIcon = (
-    <Ionicons
-      name="camera-reverse-outline"
-      color="white"
-      size={30}
-      style={{
-        padding: 10,
-        marginTop: 20,
-      }}
-    />
-  );
-
-  const uploadIcon = (
-    <Feather
-      name="upload"
-      color="white"
-      size={30}
-      style={{
-        padding: 10,
-        marginTop: 20,
-      }}
-    />
-  );
 
   const runCounter = async () => {
     return new Promise((resolve, reject) => {
@@ -116,6 +62,38 @@ const AddScreen = (props) => {
     );
   };
 
+  const getVideoEditTools = () => {
+    return (
+      <View style={{ alignSelf: "center" }}>
+        <View style={{ marginVertical: 10 }}>
+          {getIcon("color-filter-outline")}
+          <Text style={{ color: "white" }}>Filters</Text>
+        </View>
+        <View style={{ marginVertical: 10 }}>
+          {getIcon("speedometer-outline")}
+          <Text style={{ color: "white" }}>Speed</Text>
+        </View>
+        <View style={{ marginVertical: 10 }}>
+          {getIcon("stopwatch-outline")}
+          <Text style={{ color: "white" }}>Timer</Text>
+        </View>
+        <TouchableOpacity
+          style={{ marginVertical: 10 }}
+          onPress={() => {
+            cameraFlash === "off"
+              ? setCameraFlash("torch")
+              : setCameraFlash("off");
+          }}
+        >
+          {cameraFlash === "off"
+            ? getIcon("flash-off-outline")
+            : getIcon("flash-outline")}
+          <Text style={{ color: "white" }}>Flash</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const getOtherOptions = () => {
     return (
       <View
@@ -130,33 +108,7 @@ const AddScreen = (props) => {
           {soundIcon}
           <Text style={{ color: "white" }}>Sounds</Text>
         </View>
-        <View style={{ alignSelf: "center" }}>
-          <View style={{ marginVertical: 10 }}>
-            {getIcon("color-filter-outline")}
-            <Text style={{ color: "white" }}>Filters</Text>
-          </View>
-          <View style={{ marginVertical: 10 }}>
-            {getIcon("speedometer-outline")}
-            <Text style={{ color: "white" }}>Speed</Text>
-          </View>
-          <View style={{ marginVertical: 10 }}>
-            {getIcon("stopwatch-outline")}
-            <Text style={{ color: "white" }}>Timer</Text>
-          </View>
-          <TouchableOpacity
-            style={{ marginVertical: 10 }}
-            onPress={() => {
-              cameraFlash === "off"
-                ? setCameraFlash("torch")
-                : setCameraFlash("off");
-            }}
-          >
-            {cameraFlash === "off"
-              ? getIcon("flash-off-outline")
-              : getIcon("flash-outline")}
-            <Text style={{ color: "white" }}>Flash</Text>
-          </TouchableOpacity>
-        </View>
+        {getVideoEditTools()}
       </View>
     );
   };
@@ -188,60 +140,12 @@ const AddScreen = (props) => {
       >
         {!recording && !showTimer ? getOtherOptions() : null}
 
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        />
-        {showTimer ? (
-          <Text
-            style={{
-              color: "white",
-              fontSize: 200,
-              alignSelf: "center",
-              marginTop: "50%",
-            }}
-          >
-            {timerValue}
-          </Text>
-        ) : null}
+        <View style={style.timer} />
+        {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
 
-        <View
-          style={{
-            position: "absolute",
-            flex: 1,
-            justifyContent: "flex-end",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 180,
-          }}
-        >
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              backgroundColor: "black",
-              opacity: 0.3,
-            }}
-          />
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "space-evenly",
-              flexDirection: "row",
-              opacity: 1,
-            }}
-          >
+        <View style={style.bottomContainer}>
+          <View style={style.bottomBackground} />
+          <View style={style.bottomVideoIconsContainer}>
             {!recording && !showTimer ? (
               <View>
                 {uploadIcon}
@@ -252,7 +156,10 @@ const AddScreen = (props) => {
             ) : null}
 
             {recording ? (
-              <StopRecordingButton onPress={() => stopRecording()} />
+              <View>
+                <StopRecordingButton onPress={() => stopRecording()} />
+                <View style={style.stopRecordingSquare} />
+              </View>
             ) : !showTimer ? (
               <RecordButton onPress={() => recordVideo()} />
             ) : null}

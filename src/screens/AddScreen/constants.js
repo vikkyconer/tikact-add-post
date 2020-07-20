@@ -1,0 +1,55 @@
+import React from "react";
+import Feather from "react-native-vector-icons/Feather";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+export const crossIcon = (
+  <Feather
+    name="x"
+    color="white"
+    size={30}
+    onPress={() => {
+      props.navigation.navigate("Home");
+    }}
+  />
+);
+
+export const soundIcon = (
+  <Ionicons name="musical-notes-outline" color="white" size={20} />
+);
+
+export const checkIcon = (
+  <Ionicons name="checkmark-circle-outline" color="blue" size={20} />
+);
+
+export const cameraFlipIcon = (
+  <Ionicons
+    name="camera-reverse-outline"
+    color="white"
+    size={30}
+    style={{
+      padding: 10,
+      marginTop: 20,
+    }}
+  />
+);
+
+export const uploadIcon = (
+  <Feather
+    name="upload"
+    color="white"
+    size={30}
+    style={{
+      padding: 10,
+      marginTop: 20,
+    }}
+  />
+);
+
+export const carouselItems = [
+  {
+    title: "15s",
+  },
+  {
+    title: "60s",
+  },
+];
