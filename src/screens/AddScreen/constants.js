@@ -2,17 +2,6 @@ import React from "react";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export const crossIcon = (
-  <Feather
-    name="x"
-    color="white"
-    size={30}
-    onPress={() => {
-      props.navigation.navigate("Home");
-    }}
-  />
-);
-
 export const soundIcon = (
   <Ionicons name="musical-notes-outline" color="white" size={20} />
 );

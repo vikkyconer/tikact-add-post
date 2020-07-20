@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import { RNCamera } from "react-native-camera";
 import { RecordButton, StopRecordingButton, style } from "./styles";
 import Carousel from "react-native-snap-carousel";
+import Feather from "react-native-vector-icons/Feather";
 import {
-  crossIcon,
   soundIcon,
   cameraFlipIcon,
   uploadIcon,
@@ -26,6 +26,17 @@ const AddScreen = (props) => {
   const [timerValue, setTimerValue] = useState(timers[1]);
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   const [showTimerOptions, setShowTimerOptions] = useState(false);
+
+  const crossIcon = (
+    <Feather
+      name="x"
+      color="white"
+      size={30}
+      onPress={() => {
+        props.navigation.navigate("Home");
+      }}
+    />
+  );
 
   const runCounter = async () => {
     return new Promise((resolve, reject) => {
