@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, StatusBar, Platform } from "react-native";
 import { RNCamera } from "react-native-camera";
 import CameraRoll from "@react-native-community/cameraroll";
 import { RecordButton, StopRecordingButton, style } from "./styles";
@@ -12,7 +12,7 @@ import {
   speeds,
   timers,
 } from "./constants";
-import { getIcon } from "./utility";
+import { getIcon, hasAndroidPermission } from "./utility";
 
 const AddScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -218,7 +218,10 @@ const AddScreen = (props) => {
   };
 
   const getLocalVideos = async () => {
-    const res = await CameraRoll.getPhotos({first: 20});
+    if (Platform.OS === "android" && !(await hasAndroidPermission())) {
+      return;
+    }
+    const res = await CameraRoll.getPhotos({first: 20, assetType: 'Videos'});
     console.log("res: ", res);
   };
 
