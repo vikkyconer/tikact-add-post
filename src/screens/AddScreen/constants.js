@@ -53,3 +53,6 @@ export const carouselItems = [
     title: "60s",
   },
 ];
+
+export const speeds = [0.3, 0.5, 1, 2, 3];
+export const timers = [10, 3];

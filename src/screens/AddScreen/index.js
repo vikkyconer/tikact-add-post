@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, TouchableOpacity, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import { RNCamera } from "react-native-camera";
-import Feather from "react-native-vector-icons/Feather";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { RecordButton, StopRecordingButton, style } from "./styles";
 import Carousel from "react-native-snap-carousel";
-import { crossIcon, soundIcon, cameraFlipIcon, uploadIcon } from "./constants";
+import {
+  crossIcon,
+  soundIcon,
+  cameraFlipIcon,
+  uploadIcon,
+  speeds,
+  timers,
+} from "./constants";
 import { getIcon } from "./utility";
 
 const AddScreen = (props) => {
@@ -15,16 +20,20 @@ const AddScreen = (props) => {
   const [cameraSide, setCamreraSide] = useState("front");
   const [cameraFlash, setCameraFlash] = useState("off");
   const [recording, setRecording] = useState(false);
-  const [timerValue, setTimerValue] = useState(3);
   const [showTimer, setShowTimer] = useState(false);
-  var timeLeft = 3;
+  const [currentSpeed, setCurrentSpeed] = useState(2);
+  const [currentTimer, setCurrentTimer] = useState(1);
+  const [timerValue, setTimerValue] = useState(timers[1]);
+  const [showSpeedOptions, setShowSpeedOptions] = useState(false);
+  const [showTimerOptions, setShowTimerOptions] = useState(false);
 
   const runCounter = async () => {
     return new Promise((resolve, reject) => {
+      let _currentTimer = timers[currentTimer];
       var interval = setInterval(() => {
-        timeLeft -= 1;
-        setTimerValue(timeLeft);
-        if (timeLeft <= 0) {
+        _currentTimer -= 1;
+        setTimerValue(_currentTimer);
+        if (_currentTimer <= 0) {
           clearInterval(interval);
           resolve();
         }
@@ -38,7 +47,7 @@ const AddScreen = (props) => {
       await runCounter();
       setRecording(true);
       setShowTimer(false);
-      setTimerValue(3);
+      setTimerValue(timers[currentTimer]);
       const { uri, codec = "mp4" } = await camera.recordAsync({
         maxDuration: 5,
       });
@@ -62,21 +71,97 @@ const AddScreen = (props) => {
     );
   };
 
+  const getMultipleOptions = (arr, unit, currentValue) => {
+    return arr.map((data, key) => {
+      return (
+        <View key={key}>
+          {currentValue == key ? (
+            <TouchableOpacity>
+              <View
+                style={{
+                  alignItems: "center",
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                  backgroundColor: "white",
+                }}
+              >
+                <Text>
+                  {data} {unit}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                if (unit === "x") {
+                  setCurrentSpeed(key);
+                } else {
+                  setCurrentTimer(key);
+                  setTimerValue(timers[key]);
+                }
+              }}
+            >
+              <View
+                style={{
+                  alignItems: "center",
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                }}
+              >
+                <View style={style.background} />
+                <Text style={{ color: "white" }}>
+                  {data} {unit}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
+      );
+    });
+  };
+
   const getVideoEditTools = () => {
     return (
-      <View style={{ alignSelf: "center" }}>
+      <View
+        style={{
+          alignItems: "flex-end",
+          position: "absolute",
+          right: 0,
+        }}
+      >
         <View style={{ marginVertical: 10 }}>
           {getIcon("color-filter-outline")}
           <Text style={{ color: "white" }}>Filters</Text>
         </View>
-        <View style={{ marginVertical: 10 }}>
-          {getIcon("speedometer-outline")}
-          <Text style={{ color: "white" }}>Speed</Text>
+
+        <View style={{ marginVertical: 10, flexDirection: "row" }}>
+          {showSpeedOptions ? (
+            <View style={{ flexDirection: "row", marginRight: 8 }}>
+              {getMultipleOptions(speeds, "x", currentSpeed)}
+            </View>
+          ) : null}
+          <TouchableOpacity
+            onPress={() => setShowSpeedOptions(!showSpeedOptions)}
+          >
+            {getIcon("speedometer-outline")}
+            <Text style={{ color: "white" }}>Speed</Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ marginVertical: 10 }}>
-          {getIcon("stopwatch-outline")}
-          <Text style={{ color: "white" }}>Timer</Text>
+
+        <View style={{ marginVertical: 10, flexDirection: "row" }}>
+          {showTimerOptions ? (
+            <View style={{ flexDirection: "row", marginRight: 8 }}>
+              {getMultipleOptions(timers, "s", currentTimer)}
+            </View>
+          ) : null}
+          <TouchableOpacity
+            onPress={() => setShowTimerOptions(!showTimerOptions)}
+          >
+            {getIcon("stopwatch-outline")}
+            <Text style={{ color: "white" }}>Timer</Text>
+          </TouchableOpacity>
         </View>
+
         <TouchableOpacity
           style={{ marginVertical: 10 }}
           onPress={() => {
@@ -104,7 +189,14 @@ const AddScreen = (props) => {
         }}
       >
         {crossIcon}
-        <View style={{ flexDirection: "row" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            position: "absolute",
+            left: "45%",
+            top: 10,
+          }}
+        >
           {soundIcon}
           <Text style={{ color: "white" }}>Sounds</Text>
         </View>
@@ -144,7 +236,7 @@ const AddScreen = (props) => {
         {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
 
         <View style={style.bottomContainer}>
-          <View style={style.bottomBackground} />
+          <View style={style.background} />
           <View style={style.bottomVideoIconsContainer}>
             {!recording && !showTimer ? (
               <View>

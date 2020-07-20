@@ -48,7 +48,7 @@ export const style = {
     right: 0,
     height: 180,
   },
-  bottomBackground: {
+  background: {
     position: "absolute",
     top: 0,
     right: 0,
