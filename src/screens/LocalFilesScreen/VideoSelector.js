@@ -84,14 +84,15 @@ const VideoSelector = (props) => {
           >
             You can select both videos and photos
           </Text>
-          <TouchableOpacity style={[{ width: 80 }]}>
+          <View style={[{ width: 80 }]}>
             <Button
               title="Next"
               onPress={() => {
                 props.navigation.navigate("VideoPreview");
               }}
+              disabled={props.selectedVideo ? false : true}
             />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
