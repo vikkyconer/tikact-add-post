@@ -49,7 +49,14 @@ const LocalVideos = (props) => {
 
           return (
             <View style={{ flex: 1, flexDirection: "column", margin: 1 }}>
-              <TouchableOpacity onPress={() => setSelectedVideo(item)}>
+              <TouchableOpacity
+                onPress={() => {
+                  selectedVideo &&
+                  selectedVideo.node.image.uri === item.node.image.uri
+                    ? setSelectedVideo(null)
+                    : setSelectedVideo(item);
+                }}
+              >
                 <Image
                   style={{
                     justifyContent: "center",
@@ -58,6 +65,31 @@ const LocalVideos = (props) => {
                   }}
                   source={{ uri: item.node.image.uri }}
                 />
+                <View
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: 15,
+                    backgroundColor: "black",
+                  }}
+                />
+                {selectedVideo &&
+                selectedVideo.node.image.uri === item.node.image.uri ? (
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: "blue",
+                      opacity: 0.3,
+                    }}
+                  />
+                ) : null}
+
                 <Text
                   style={{
                     position: "absolute",
@@ -89,58 +121,72 @@ const LocalVideos = (props) => {
           borderWidth: 1,
         }}
       >
-        {selectedVideo ? (
-          <View>
-            <Image
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                height: 100,
-                width: 100,
-              }}
-              source={{ uri: selectedVideo.node.image.uri }}
-            />
+        <View>
+          <View style={{ height: 100 }}>
+            {selectedVideo ? (
+              <View>
+                <Image
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 100,
+                    width: 100,
+                  }}
+                  source={{ uri: selectedVideo.node.image.uri }}
+                />
+                <View
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    bottom: 0,
+                    height: 20,
+                    width: 100,
+                    backgroundColor: "black",
+                  }}
+                />
+                <Text
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    color: "white",
+                    marginRight: 5,
+                    fontSize: 20,
+                    marginLeft: 35,
+                  }}
+                >
+                  {getDuration()}
+                </Text>
+              </View>
+            ) : null}
+          </View>
+          <View
+            style={{
+              marginTop: 5,
+              borderBottomColor: "black",
+              borderBottomWidth: 1,
+            }}
+          />
+          <View
+            style={{
+              margin: 10,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
             <Text
               style={{
-                position: "absolute",
-                bottom: '37%',
-                color: "white",
-                marginRight: 5,
-                fontSize: 20,
-                marginLeft: 35,
+                paddingTop: 10,
+                color: "grey",
+                fontSize: 15,
               }}
             >
-              {getDuration()}
+              You can select both videos and photos
             </Text>
-            <View
-              style={{
-                marginTop: 5,
-                borderBottomColor: "black",
-                borderBottomWidth: 1,
-              }}
-            />
-            <View
-              style={{
-                margin: 10,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text
-                style={{
-                  paddingTop: 10,
-                  color: "grey",
-                  fontSize: 15,
-                }}
-              >
-                You can select both videos and photos
-              </Text>
-              <View style={[{ width: 80 }]}>
-                <Button title="Next" />
-              </View>
+            <View style={[{ width: 80 }]}>
+              <Button title="Next" />
             </View>
           </View>
-        ) : null}
+        </View>
       </View>
     </View>
   );
