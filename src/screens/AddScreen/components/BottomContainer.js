@@ -3,14 +3,13 @@ import { style, StopRecordingButton, RecordButton } from "../styles";
 import { View, Text, TouchableOpacity } from "react-native";
 import { cameraFlipIcon, uploadIcon } from "../constants";
 
-const BottomContainer = (props) => {  
-
+const BottomContainer = (props) => {
   return (
     <View style={style.bottomContainer}>
       <View style={style.background} />
       <View style={style.bottomVideoIconsContainer}>
         {!props.recording && !props.showTimer ? (
-          <TouchableOpacity onPress={getLocalVideos}>
+          <TouchableOpacity onPress={() => props.setScreen(1)}>
             {uploadIcon}
             <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
           </TouchableOpacity>
@@ -60,7 +59,7 @@ const BottomContainer = (props) => {
       inactiveSlideOpacity={1}
       onSnapToItem={(index) => setActiveIndex(index)}
     /> */}
-      </View>      
+      </View>
     </View>
   );
 };
