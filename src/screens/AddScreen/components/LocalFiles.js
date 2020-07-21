@@ -3,16 +3,9 @@ import { View, Text } from "react-native";
 import { style } from "../styles";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import LocalVideos from "./LocalVideos";
+import LocalImages from "./LocalImages";
 
 const Tab = createMaterialTopTabNavigator();
-
-const ImageScreen = () => {
-  return (
-    <View>
-      <Text>ImageScreen</Text>
-    </View>
-  );
-};
 
 const LocalFiles = (props) => {
   return (
@@ -37,7 +30,7 @@ const LocalFiles = (props) => {
         />
         <Tab.Screen
           name="Images"
-          component={ImageScreen}
+          component={LocalImages}
           options={{ tabBarLabel: "Images" }}
         />
       </Tab.Navigator>

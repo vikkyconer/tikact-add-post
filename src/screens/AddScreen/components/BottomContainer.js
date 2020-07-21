@@ -1,18 +1,9 @@
 import React from "react";
 import { style, StopRecordingButton, RecordButton } from "../styles";
 import { View, Text, TouchableOpacity } from "react-native";
-import CameraRoll from "@react-native-community/cameraroll";
 import { cameraFlipIcon, uploadIcon } from "../constants";
-import { hasAndroidPermission } from "../utility";
 
-const BottomContainer = (props) => {
-  const getLocalVideos = async () => {
-    if (Platform.OS === "android" && !(await hasAndroidPermission())) {
-      return;
-    }
-    const res = await CameraRoll.getPhotos({ first: 20, assetType: "Videos" });
-    console.log("res: ", res.edges[0]);
-  };
+const BottomContainer = (props) => {  
 
   return (
     <View style={style.bottomContainer}>
