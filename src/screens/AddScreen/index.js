@@ -15,7 +15,7 @@ const AddScreen = (props) => {
       {screen === 0 ? (
         <CameraScreen setScreen={setScreen} />
       ) : (
-        <LocalFiles />
+        <LocalFiles setScreen={setScreen} />
       )}
     </View>
   );

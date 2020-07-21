@@ -4,13 +4,30 @@ import { style } from "../styles";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import LocalVideos from "./LocalVideos";
 import LocalImages from "./LocalImages";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createMaterialTopTabNavigator();
 
 const LocalFiles = (props) => {
   return (
-    <View style={{ flex: 1, justifyContnet: "row", backgroundColor: "white" }}>
-      <Text style={{ alignSelf: "center", margin: 30 }}>All Videos</Text>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View
+        style={{
+          marginVertical: 30,
+          marginHorizontal: 5,
+          width: "100%",
+        }}
+      >
+        <Ionicons
+          name="arrow-back-outline"
+          color="black"
+          size={20}
+          style={{ position: "absolute" }}
+          onPress={() => props.setScreen(0)}
+        />
+        <Text style={{ alignSelf: "center" }}>All Videos</Text>
+      </View>
+
       <Tab.Navigator
         tabBarOptions={{
           activeTintColor: "black",
