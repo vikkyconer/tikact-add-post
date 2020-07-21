@@ -69,7 +69,7 @@ const BottomContainer = (props) => {
       inactiveSlideOpacity={1}
       onSnapToItem={(index) => setActiveIndex(index)}
     /> */}
-      </View>
+      </View>      
     </View>
   );
 };

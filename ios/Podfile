@@ -10,6 +10,8 @@ target 'tikActAddPost' do
 
   pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
 
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
   target 'tikActAddPostTests' do
     inherit! :complete
     # Pods for testing

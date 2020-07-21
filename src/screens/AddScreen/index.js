@@ -7,6 +7,7 @@ import { timers } from "./constants";
 import BottomContainer from "./components/BottomContainer";
 import VideoOtherOptions from "./components/VideoOtherOptions";
 import { style } from "./styles";
+import LocalFiles from "./components/LocalFiles";
 
 const AddScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -94,46 +95,7 @@ const AddScreen = (props) => {
         justifyContent: "flex-start",
       }}
     >
-      <View>
-        <StatusBar hidden={true} />
-      </View>
-      <RNCamera
-        ref={(ref) => {
-          setCamera(ref);
-        }}
-        captureAudio={false}
-        style={{ flex: 1 }}
-        type={cameraSide}
-        flashMode={cameraFlash}
-        androidCameraPermissionOptions={{
-          title: "Permission to use camera",
-          message: "We need your permission to use your camera",
-          buttonPositive: "Ok",
-          buttonNegative: "Cancel",
-        }}
-      >
-        {!recording && !showTimer ? (
-          <VideoOtherOptions
-            crossIcon={crossIcon}
-            flashCamera={flashCamera}
-            flashIcon={flashIcon}
-            currentTimer={currentTimer}
-            setCurrentTimer={setCurrentTimer}
-            setTimerValue={setTimerValue}
-          />
-        ) : null}
-
-        <View style={style.timer} />
-        {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
-        <BottomContainer
-          recordVideo={recordVideo}
-          stopRecording={stopRecording}
-          recording={recording}
-          showTimer={showTimer}
-          cameraSide={cameraSide}
-          setCameraSide={setCameraSide}
-        />
-      </RNCamera>
+      <LocalFiles />
     </View>
   );
 };
