@@ -50,7 +50,7 @@ const LocalFiles = (props) => {
           component={LocalImages}
           options={{ tabBarLabel: "Images" }}
         />
-      </Tab.Navigator>      
+      </Tab.Navigator>         
     </View>
   );
 };
