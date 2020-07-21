@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { getIcon } from "../utility";
+import { timers, speeds } from "../constants";
+import { style } from "../styles";
 
 const VideoEditTools = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(2);
@@ -32,8 +34,8 @@ const VideoEditTools = (props) => {
                 if (unit === "x") {
                   setCurrentSpeed(key);
                 } else {
-                  setCurrentTimer(key);
-                  setTimerValue(timers[key]);
+                  props.setCurrentTimer(key);
+                  props.setTimerValue(timers[key]);
                 }
               }}
             >
@@ -86,7 +88,7 @@ const VideoEditTools = (props) => {
       <View style={{ marginVertical: 10, flexDirection: "row" }}>
         {showTimerOptions ? (
           <View style={{ flexDirection: "row", marginRight: 8 }}>
-            {getMultipleOptions(timers, "s", currentTimer)}
+            {getMultipleOptions(timers, "s", props.currentTimer)}
           </View>
         ) : null}
         <TouchableOpacity

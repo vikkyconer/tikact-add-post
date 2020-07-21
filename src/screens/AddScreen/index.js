@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-  Platform,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StatusBar } from "react-native";
 import { RNCamera } from "react-native-camera";
-import { style } from "./styles";
 import Carousel from "react-native-snap-carousel";
 import Feather from "react-native-vector-icons/Feather";
-import { soundIcon, speeds, timers } from "./constants";
-import { getIcon, hasAndroidPermission } from "./utility";
+import { timers } from "./constants";
 import BottomContainer from "./components/BottomContainer";
 import VideoOtherOptions from "./components/VideoOtherOptions";
+import { style } from "./styles";
 
 const AddScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -70,6 +63,7 @@ const AddScreen = (props) => {
   };
 
   const stopRecording = async () => {
+    console.log("stopRecording");
     await camera.stopRecording();
     setRecording(false);
   };
@@ -123,19 +117,22 @@ const AddScreen = (props) => {
             crossIcon={crossIcon}
             flashCamera={flashCamera}
             flashIcon={flashIcon}
+            currentTimer={currentTimer}
+            setCurrentTimer={setCurrentTimer}
+            setTimerValue={setTimerValue}
           />
         ) : null}
 
-        {/* <View style={style.timer} /> */}
-        {/* {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null} */}
-        {/* <BottomContainer
+        <View style={style.timer} />
+        {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
+        <BottomContainer
           recordVideo={recordVideo}
           stopRecording={stopRecording}
           recording={recording}
           showTimer={showTimer}
           cameraSide={cameraSide}
           setCameraSide={setCameraSide}
-        /> */}
+        />
       </RNCamera>
     </View>
   );

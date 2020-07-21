@@ -3,6 +3,7 @@ import { style, StopRecordingButton, RecordButton } from "../styles";
 import { View, Text, TouchableOpacity } from "react-native";
 import CameraRoll from "@react-native-community/cameraroll";
 import { cameraFlipIcon, uploadIcon } from "../constants";
+import { hasAndroidPermission } from "../utility";
 
 const BottomContainer = (props) => {
   const getLocalVideos = async () => {
@@ -18,19 +19,19 @@ const BottomContainer = (props) => {
       <View style={style.background} />
       <View style={style.bottomVideoIconsContainer}>
         {!props.recording && !props.showTimer ? (
-          <TouchableOpacity onPress={() => getLocalVideos()}>
+          <TouchableOpacity onPress={getLocalVideos}>
             {uploadIcon}
             <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
           </TouchableOpacity>
         ) : null}
 
         {props.recording ? (
-          <View>
-            <StopRecordingButton onPress={() => props.stopRecording()} />
+          <TouchableOpacity onPress={props.stopRecording}>
+            <StopRecordingButton />
             <View style={style.stopRecordingSquare} />
-          </View>
+          </TouchableOpacity>
         ) : !props.showTimer ? (
-          <RecordButton onPress={() => props.recordVideo()} />
+          <RecordButton onPress={props.recordVideo} />
         ) : null}
 
         {!props.recording && !props.showTimer ? (

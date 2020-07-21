@@ -27,6 +27,9 @@ const VideoOtherOptions = (props) => {
       <VideoEditTools
         flashCamera={props.flashCamera}
         flashIcon={props.flashIcon}
+        currentTimer={props.currentTimer}
+        setCurrentTimer={props.setCurrentTimer}
+        setTimerValue={props.setTimerValue}
       />
     </View>
   );
