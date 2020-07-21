@@ -25,8 +25,8 @@ const VideoOtherOptions = (props) => {
         <Text style={{ color: "white" }}>Sounds</Text>
       </View>
       <VideoEditTools
-        cameraFlash={props.cameraFlash}
-        setCameraFlash={props.setCameraFlash}
+        flashCamera={props.flashCamera}
+        flashIcon={props.flashIcon}
       />
     </View>
   );

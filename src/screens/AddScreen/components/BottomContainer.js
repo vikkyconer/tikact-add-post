@@ -1,7 +1,6 @@
 import React from "react";
 import { style, StopRecordingButton, RecordButton } from "../styles";
-import { View, Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, TouchableOpacity } from "react-native";
 import CameraRoll from "@react-native-community/cameraroll";
 import { cameraFlipIcon, uploadIcon } from "../constants";
 

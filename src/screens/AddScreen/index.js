@@ -25,6 +25,7 @@ const AddScreen = (props) => {
   const [showTimer, setShowTimer] = useState(false);
   const [currentTimer, setCurrentTimer] = useState(1);
   const [timerValue, setTimerValue] = useState(timers[1]);
+  const [flashIcon, setFlashIcon] = useState("flash-off-outline");
 
   const crossIcon = (
     <Feather
@@ -81,6 +82,17 @@ const AddScreen = (props) => {
     );
   };
 
+  const flashCamera = () => {
+    console.log("flash Camera");
+    if (cameraFlash === "off") {
+      setCameraFlash("torch");
+      setFlashIcon("flash-outline");
+    } else {
+      setCameraFlash("off");
+      setFlashIcon("flash-off-outline");
+    }
+  };
+
   return (
     <View
       style={{
@@ -109,21 +121,21 @@ const AddScreen = (props) => {
         {!recording && !showTimer ? (
           <VideoOtherOptions
             crossIcon={crossIcon}
-            cameraFlash={cameraFlash}
-            setCameraFlash={setCameraFlash}
+            flashCamera={flashCamera}
+            flashIcon={flashIcon}
           />
         ) : null}
 
-        <View style={style.timer} />
-        {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
-        <BottomContainer
+        {/* <View style={style.timer} /> */}
+        {/* {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null} */}
+        {/* <BottomContainer
           recordVideo={recordVideo}
           stopRecording={stopRecording}
           recording={recording}
           showTimer={showTimer}
           cameraSide={cameraSide}
           setCameraSide={setCameraSide}
-        />
+        /> */}
       </RNCamera>
     </View>
   );
