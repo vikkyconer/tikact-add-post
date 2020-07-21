@@ -23,7 +23,7 @@ const CameraScreen = (props) => {
       color="white"
       size={30}
       onPress={() => {
-        props.navigation.navigate("Home");
+        props.navigation.goBack(null);
       }}
     />
   );
@@ -119,7 +119,7 @@ const CameraScreen = (props) => {
           showTimer={showTimer}
           cameraSide={cameraSide}
           setCameraSide={setCameraSide}
-          setScreen={props.setScreen}
+          navigation={props.navigation}
         />
       </RNCamera>
     </View>

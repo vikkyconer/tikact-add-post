@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CameraRoll from "@react-native-community/cameraroll";
-import { hasAndroidPermission } from "../utility";
 import { FlatList, View, TouchableOpacity, Image, Text } from "react-native";
+import { hasAndroidPermission } from "../../utility";
 
 const LocalVideoGrid = (props) => {
   const [videos, setVideos] = useState([]);

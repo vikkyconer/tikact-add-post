@@ -12,7 +12,10 @@ const LocalVideos = (props) => {
         setSelectedVideo={setSelectedVideo}
         selectedVideo={selectedVideo}
       />
-      <VideoSelector selectedVideo={selectedVideo} />
+      <VideoSelector
+        selectedVideo={selectedVideo}
+        navigation={props.navigation}
+      />
     </View>
   );
 };

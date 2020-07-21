@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text } from "react-native";
-import { style } from "../styles";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import LocalVideos from "./LocalVideos";
-import LocalImages from "./LocalImages";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import LocalVideos from "../screens/LocalFilesScreen/LocalVideos";
+import LocalImages from "../screens/LocalFilesScreen/LocalImages";
 
 const Tab = createMaterialTopTabNavigator();
 
 const LocalFiles = (props) => {
+  useEffect(() => {}, []);
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <View
@@ -23,7 +23,7 @@ const LocalFiles = (props) => {
           color="black"
           size={20}
           style={{ position: "absolute" }}
-          onPress={() => props.setScreen(0)}
+          onPress={() => props.navigation.goBack(null)}
         />
         <Text style={{ alignSelf: "center" }}>All Videos</Text>
       </View>
@@ -50,7 +50,7 @@ const LocalFiles = (props) => {
           component={LocalImages}
           options={{ tabBarLabel: "Images" }}
         />
-      </Tab.Navigator>         
+      </Tab.Navigator>
     </View>
   );
 };

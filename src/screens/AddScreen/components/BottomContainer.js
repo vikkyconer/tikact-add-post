@@ -9,7 +9,9 @@ const BottomContainer = (props) => {
       <View style={style.background} />
       <View style={style.bottomVideoIconsContainer}>
         {!props.recording && !props.showTimer ? (
-          <TouchableOpacity onPress={() => props.setScreen(1)}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("LocalFiles")}
+          >
             {uploadIcon}
             <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
           </TouchableOpacity>

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import CameraScreen from "./components/CameraScreen";
-import LocalFiles from "./components/LocalFiles";
 
 const AddScreen = (props) => {
-  const [screen, setScreen] = useState(0);
   return (
     <View
       style={{
@@ -12,11 +10,7 @@ const AddScreen = (props) => {
         justifyContent: "flex-start",
       }}
     >
-      {screen === 0 ? (
-        <CameraScreen setScreen={setScreen} />
-      ) : (
-        <LocalFiles setScreen={setScreen} />
-      )}
+      <CameraScreen navigation={props.navigation} />
     </View>
   );
 };
