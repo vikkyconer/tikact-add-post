@@ -59,7 +59,13 @@ const Body = (props) => {
       <ListTile icon={downloadIcon} title="Allow downloads" switch={true} />
       <HorizontalLine />
       <ListTile icon={saveIcon} title="Save to drive" switch={true} />
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 60,
+        }}
+      >
         <CustomButton title="Save to draft" filled={false} icon={draftIcon} />
         <CustomButton title="Post" filled={true} />
       </View>
