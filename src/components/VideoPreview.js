@@ -48,7 +48,9 @@ const VideoPreview = (props) => {
         <View style={{ width: 80, marginRight: 10, paddingRight: 10 }}>
           <Button
             title="Next"
-            onPress={() => props.navigation.navigate("PostScreen")}
+            onPress={() =>
+              props.navigation.navigate("PostScreen", { selectedVideo })
+            }
           />
         </View>
       </View>
