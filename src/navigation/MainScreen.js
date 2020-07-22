@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BottomTab from "../components/BottomTab";
 import VideoPreview from "../components/VideoPreview";
 import LocalFiles from "../components/LocalFiles";
+import PostScreen from "../components/PostScreen";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,15 @@ export default function MainScreen() {
       <Stack.Screen
         name="VideoPreview"
         component={VideoPreview}
+        options={{
+          title: null,
+          headerTransparent: true,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PostScreen"
+        component={PostScreen}
         options={{
           title: null,
           headerTransparent: true,

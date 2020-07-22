@@ -46,7 +46,10 @@ const VideoPreview = (props) => {
           onPress={() => props.navigation.goBack(null)}
         />
         <View style={{ width: 80, marginRight: 10, paddingRight: 10 }}>
-          <Button title="Next" />
+          <Button
+            title="Next"
+            onPress={() => props.navigation.navigate("PostScreen")}
+          />
         </View>
       </View>
       <View
