@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { getIcon } from "../utility";
 import { timers, speeds } from "../constants";
 import { style } from "../styles";
+import { getIcon } from "../../../utility";
 
 const VideoEditTools = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(2);

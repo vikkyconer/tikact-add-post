@@ -88,7 +88,9 @@ const VideoSelector = (props) => {
             <Button
               title="Next"
               onPress={() => {
-                props.navigation.navigate("VideoPreview");
+                props.navigation.navigate("VideoPreview", {
+                  selectedVideo: props.selectedVideo,
+                });
               }}
               disabled={props.selectedVideo ? false : true}
             />

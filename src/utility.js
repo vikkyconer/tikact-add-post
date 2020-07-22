@@ -1,3 +1,5 @@
+import React from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { PermissionsAndroid } from "react-native";
 
 export async function hasAndroidPermission() {
@@ -11,3 +13,7 @@ export async function hasAndroidPermission() {
   const status = await PermissionsAndroid.request(permission);
   return status === 'granted';
 }
+
+export const getIcon = (name) => {
+  return <Ionicons name={name} color="white" size={30} />;
+};

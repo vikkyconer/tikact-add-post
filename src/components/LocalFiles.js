@@ -23,7 +23,7 @@ const LocalFiles = (props) => {
           color="black"
           size={20}
           style={{ position: "absolute" }}
-          onPress={() => props.navigation.goBack(null)}
+          onPress={() => props.navigation.goBack()}
         />
         <Text style={{ alignSelf: "center" }}>All Videos</Text>
       </View>
