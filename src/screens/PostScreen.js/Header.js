@@ -4,7 +4,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Header = (props) => {
   return (
-    <View>
+    <View style={{ backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", padding: 10 }}>
         <Ionicons
           name="arrow-back-outline"
