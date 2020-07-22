@@ -12,6 +12,8 @@ target 'tikActAddPost' do
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
   target 'tikActAddPostTests' do
     inherit! :complete
     # Pods for testing

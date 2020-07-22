@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CameraRoll from "@react-native-community/cameraroll";
 import { FlatList, View, TouchableOpacity, Image, Text } from "react-native";
 import { hasAndroidPermission } from "../../utility";
+import Video from "react-native-video";
 
 const LocalVideoGrid = (props) => {
   const [videos, setVideos] = useState([]);
@@ -43,7 +44,7 @@ const LocalVideoGrid = (props) => {
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  height: 100,
+                  height: 180,
                 }}
                 source={{ uri: item.node.image.uri }}
               />
