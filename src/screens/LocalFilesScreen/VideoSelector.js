@@ -17,21 +17,21 @@ const VideoSelector = (props) => {
         bottom: 0,
         left: 0,
         right: 0,
-        height: 170,
+        height: 200,
         padding: 10,
         borderColor: "black",
         borderWidth: 1,
       }}
     >
       <View>
-        <View style={{ height: 100 }}>
+        <View style={{ height: 130 }}>
           {props.selectedVideo ? (
             <View>
               <Image
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  height: 100,
+                  height: 130,
                   width: 100,
                 }}
                 source={{ uri: props.selectedVideo.node.image.uri }}

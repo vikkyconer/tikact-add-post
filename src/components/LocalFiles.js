@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import LocalVideos from "../screens/LocalFilesScreen/LocalVideos";
@@ -11,9 +11,10 @@ const LocalFiles = (props) => {
   useEffect(() => {}, []);
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar hidden={false} />
       <View
         style={{
-          marginVertical: 30,
+          marginVertical: 10,
           marginHorizontal: 5,
           width: "100%",
         }}
