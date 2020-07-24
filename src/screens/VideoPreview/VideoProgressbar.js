@@ -12,6 +12,8 @@ const VideoProgressbar = (props) => {
         position: "absolute",
         height: 100,
         width: window.width - 20,
+        paddingLeft: 10,
+        paddingRight: 30,
         borderColor: "#000",
         borderWidth: 2,
         borderRadius: 5,
@@ -19,8 +21,8 @@ const VideoProgressbar = (props) => {
     >
       <View
         style={{
-          backgroundColor: "grey",
-          height: 100,
+          backgroundColor: "#8b8b8b",
+          height: 95,
           width: 10,
           marginLeft: `${props.currentPosition}%`,
         }}

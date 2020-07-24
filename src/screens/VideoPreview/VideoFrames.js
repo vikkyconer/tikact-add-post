@@ -39,8 +39,10 @@ const VideoFrames = (props) => {
         flex: 1,
         width: window.width - 20,
         flexDirection: "row",
-        padding: 10,
-        backgroundColor: "blue",
+        opacity: frames && frames.length ? 1 : 0,
+        backgroundColor: "#5395ea",
+        paddingTop: 8,
+        paddingLeft: 10
       }}
     >
       {frames.map((frame, index) => {
@@ -52,6 +54,7 @@ const VideoFrames = (props) => {
           />
         );
       })}
+
       <VideoProgressbar currentPosition={props.currentPosition} />
     </View>
   );
