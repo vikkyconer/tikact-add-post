@@ -16,6 +16,8 @@ target 'tikActAddPost' do
 
   pod 'react-native-ffmpeg', :path => '../node_modules/react-native-ffmpeg'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'tikActAddPostTests' do
     inherit! :complete
     # Pods for testing

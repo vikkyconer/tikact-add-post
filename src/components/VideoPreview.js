@@ -6,7 +6,7 @@ import { getIcon } from "../utility";
 import { style } from "../screens/AddScreen/styles";
 import Video from "react-native-video";
 import { speeds } from "../screens/AddScreen/constants";
-import { RNFFmpeg } from "react-native-ffmpeg";
+import VideoFrames from "../screens/VideoPreview/VideoFrames";
 
 const VideoPreview = (props) => {
   const { selectedVideo } = props.route.params;
@@ -16,15 +16,8 @@ const VideoPreview = (props) => {
   const [rotation, setRotation] = useState(0);
   const [currentSpeed, setCurrentSpeed] = useState(1);
   const [showSpeeds, setShowSpeeds] = useState(true);
-
-  useEffect(() => {
-    console.log("uri: ", selectedVideo.node.image.uri);
-    RNFFmpeg.execute(
-      `-i ${selectedVideo.node.image.uri} -vf fps=1 out%d.bmp`
-    ).then((result) =>
-      console.log("FFmpeg process exited with rc " + result.rc)
-    );
-  }, []);
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const [totalLength, setTotalLength] = useState(0);
 
   const getMultipleOptions = (arr, unit, currentValue) => {
     return arr.map((data, key) => {
@@ -36,7 +29,7 @@ const VideoPreview = (props) => {
                 style={{
                   alignItems: "center",
                   paddingVertical: 10,
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 27,
                   backgroundColor: "white",
                 }}
               >
@@ -55,7 +48,7 @@ const VideoPreview = (props) => {
                 style={{
                   alignItems: "center",
                   paddingVertical: 10,
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 27,
                 }}
               >
                 <View style={style.background} />
@@ -80,6 +73,13 @@ const VideoPreview = (props) => {
           fullscreen={true}
           volume={0}
           rate={currentSpeed}
+          onProgress={({ currentTime, playableDuration }) => {
+            const _currentPosition =
+              (currentTime / selectedVideo.node.image.playableDuration) * 100;
+            console.log("currentPosition: ", _currentPosition);
+            setCurrentPosition(_currentPosition);
+            setTotalLength(playableDuration);
+          }}
           repeat={true}
           paused={paused}
           resizeMode={"cover"}
@@ -143,6 +143,7 @@ const VideoPreview = (props) => {
           />
         </View>
       </View>
+
       <View
         style={{
           position: "absolute",
@@ -204,7 +205,12 @@ const VideoPreview = (props) => {
             />
           </View>
         </View>
-        <View></View>
+
+        <VideoFrames
+          uri={selectedVideo.node.image.uri}
+          currentPosition={currentPosition}
+          totalLength={totalLength}
+        />
       </View>
     </View>
   );
