@@ -46,11 +46,11 @@ const LocalFiles = (props) => {
           component={LocalVideos}
           options={{ tabBarLabel: "Videos" }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Images"
           component={LocalImages}
           options={{ tabBarLabel: "Images" }}
-        />
+        /> */}
       </Tab.Navigator>
     </View>
   );
