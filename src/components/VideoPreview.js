@@ -208,6 +208,7 @@ const VideoPreview = (props) => {
         <VideoFrames
           uri={selectedVideo.node.image.uri}
           currentPosition={currentPosition}
+          length={selectedVideo.node.image.playableDuration}
         />
       </View>
     </View>

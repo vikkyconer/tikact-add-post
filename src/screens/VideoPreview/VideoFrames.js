@@ -18,14 +18,29 @@ const VideoFrames = (props) => {
 
   const getFrames = async () => {
     console.log("uri: ", props.uri);
-    const result = await RNFS.mkdir(`${RNFS.DocumentDirectoryPath}/frames/`);
-    const sourceFile = props.uri;
-    const images = await RNFFmpeg.execute(
-      `-i ${sourceFile} -vf fps=1/20 ${RNFS.DocumentDirectoryPath}/frames/output%d.png`
-    );
-    const createdImages = await RNFS.readDir(
-      `${RNFS.DocumentDirectoryPath}/frames`
-    );
+    const splitPath = props.uri.split("/");
+    const fileName = splitPath[splitPath.length - 1];
+    const fileNameWithoutExtension = fileName.split(".")[0];
+    console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
+    setFrames([]);
+    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/`;
+    const exist = await RNFS.exists(path);
+    console.log("exist: ", exist);
+
+    if (!exist) {
+      const result = await RNFS.mkdir(path);
+      const staleImages = await RNFS.readDir(path);
+      console.log("staleImages: ", staleImages);
+      const sourceFile = props.uri;
+      console.log("sourceFile: ", sourceFile);
+      const fps = props.length / 10;
+      const images = await RNFFmpeg.execute(
+        `-i '${sourceFile}' -vf fps=1/${fps} ${path}output%d.png`
+      );
+    }
+
+    const createdImages = await RNFS.readDir(path);
+    console.log("createdImages: ", createdImages);
     const _frames = createdImages.map((images) => {
       return images.path;
     });
@@ -42,7 +57,7 @@ const VideoFrames = (props) => {
         opacity: frames && frames.length ? 1 : 0,
         backgroundColor: "#5395ea",
         paddingTop: 8,
-        paddingLeft: 10
+        paddingLeft: 10,
       }}
     >
       {frames.map((frame, index) => {
