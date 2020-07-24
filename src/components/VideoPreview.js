@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, Dimensions, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
@@ -6,6 +6,7 @@ import { getIcon } from "../utility";
 import { style } from "../screens/AddScreen/styles";
 import Video from "react-native-video";
 import { speeds } from "../screens/AddScreen/constants";
+import { RNFFmpeg } from "react-native-ffmpeg";
 
 const VideoPreview = (props) => {
   const { selectedVideo } = props.route.params;
@@ -15,6 +16,15 @@ const VideoPreview = (props) => {
   const [rotation, setRotation] = useState(0);
   const [currentSpeed, setCurrentSpeed] = useState(1);
   const [showSpeeds, setShowSpeeds] = useState(true);
+
+  useEffect(() => {
+    console.log("uri: ", selectedVideo.node.image.uri);
+    RNFFmpeg.execute(
+      `-i ${selectedVideo.node.image.uri} -vf fps=1 out%d.bmp`
+    ).then((result) =>
+      console.log("FFmpeg process exited with rc " + result.rc)
+    );
+  }, []);
 
   const getMultipleOptions = (arr, unit, currentValue) => {
     return arr.map((data, key) => {

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.arthenica.reactnative.RNFFmpegPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
