@@ -66,10 +66,13 @@ const VideoEditTools = (props) => {
         right: 0,
       }}
     >
-      <View style={{ marginVertical: 10 }}>
+      <TouchableOpacity
+        style={{ marginVertical: 10 }}
+        onPress={() => props.setShowFilters(!props.showFilters)}
+      >
         {getIcon("color-filter-outline")}
         <Text style={{ color: "white" }}>Filters</Text>
-      </View>
+      </TouchableOpacity>
 
       <View style={{ marginVertical: 10, flexDirection: "row" }}>
         {showSpeedOptions ? (

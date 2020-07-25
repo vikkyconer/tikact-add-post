@@ -66,8 +66,17 @@ const Body = (props) => {
           marginTop: 60,
         }}
       >
-        <CustomButton title="Save to draft" filled={false} icon={draftIcon} />
-        <CustomButton title="Post" filled={true} />
+        <CustomButton
+          title="Save to draft"
+          filled={false}
+          icon={draftIcon}
+          navigation={props.navigation}
+        />
+        <CustomButton
+          title="Post"
+          filled={true}
+          navigation={props.navigation}
+        />
       </View>
     </View>
   );

@@ -9,7 +9,7 @@ const PostScreen = (props) => {
     <View>
       <StatusBar hidden={false} />
       <Header navigation={props.navigation} />
-      <Body selectedVideo={selectedVideo} />
+      <Body selectedVideo={selectedVideo} navigation={props.navigation} />
     </View>
   );
 };

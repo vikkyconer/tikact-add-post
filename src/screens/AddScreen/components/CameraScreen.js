@@ -6,6 +6,7 @@ import BottomContainer from "./BottomContainer";
 import Feather from "react-native-vector-icons/Feather";
 import { timers } from "../constants";
 import { style } from "../styles";
+import Filters from "./Filters";
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -16,6 +17,7 @@ const CameraScreen = (props) => {
   const [currentTimer, setCurrentTimer] = useState(1);
   const [timerValue, setTimerValue] = useState(timers[1]);
   const [flashIcon, setFlashIcon] = useState("flash-off-outline");
+  const [showFilters, setShowFilters] = useState(false);
 
   const crossIcon = (
     <Feather
@@ -89,6 +91,7 @@ const CameraScreen = (props) => {
           setCamera(ref);
         }}
         captureAudio={false}
+        whiteBalance={RNCamera.Constants.WhiteBalance.fluorescent}
         style={{ flex: 1 }}
         type={cameraSide}
         flashMode={cameraFlash}
@@ -107,20 +110,26 @@ const CameraScreen = (props) => {
             currentTimer={currentTimer}
             setCurrentTimer={setCurrentTimer}
             setTimerValue={setTimerValue}
+            showFilters={showFilters}
+            setShowFilters={setShowFilters}
           />
         ) : null}
 
         <View style={style.timer} />
         {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
-        <BottomContainer
-          recordVideo={recordVideo}
-          stopRecording={stopRecording}
-          recording={recording}
-          showTimer={showTimer}
-          cameraSide={cameraSide}
-          setCameraSide={setCameraSide}
-          navigation={props.navigation}
-        />
+        {showFilters ? (
+          <Filters />
+        ) : (
+          <BottomContainer
+            recordVideo={recordVideo}
+            stopRecording={stopRecording}
+            recording={recording}
+            showTimer={showTimer}
+            cameraSide={cameraSide}
+            setCameraSide={setCameraSide}
+            navigation={props.navigation}
+          />
+        )}
       </RNCamera>
     </View>
   );

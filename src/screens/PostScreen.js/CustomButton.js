@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 const CustomButton = (props) => {
   return (
-    <View
+    <TouchableOpacity
       style={{
         borderColor: props.filled ? "blue" : "grey",
         borderWidth: 1,
@@ -12,16 +12,17 @@ const CustomButton = (props) => {
         width: "49%",
         alignItems: "center",
         borderRadius: 5,
-        backgroundColor: props.filled ? "blue" : "white",
+        backgroundColor: props.filled ? "#5395ea" : "white",
       }}
+      onPress={() => props.navigation.navigate('BottomTab')}
     >
       <View style={{ flexDirection: "row" }}>
         {props.icon}
-        <Text style={{ color: props.filled ? "white" : "black", fontSize: 20 }}>
+        <Text style={{ color: props.filled ? "white" : "#949494", fontSize: 20 }}>
           {props.title}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

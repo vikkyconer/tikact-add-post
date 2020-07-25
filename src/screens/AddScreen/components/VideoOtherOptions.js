@@ -30,6 +30,8 @@ const VideoOtherOptions = (props) => {
         currentTimer={props.currentTimer}
         setCurrentTimer={props.setCurrentTimer}
         setTimerValue={props.setTimerValue}
+        setShowFilters={props.setShowFilters}
+        showFilters={props.showFilters}
       />
     </View>
   );
