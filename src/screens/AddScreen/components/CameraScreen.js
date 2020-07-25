@@ -18,6 +18,10 @@ const CameraScreen = (props) => {
   const [timerValue, setTimerValue] = useState(timers[1]);
   const [flashIcon, setFlashIcon] = useState("flash-off-outline");
   const [showFilters, setShowFilters] = useState(false);
+  const [whiteBalance, setWhiteBalance] = useState(
+    RNCamera.Constants.WhiteBalance.auto
+  );
+  const [selectedFilter, setSelectedFilter] = useState(0);
 
   const crossIcon = (
     <Feather
@@ -91,7 +95,7 @@ const CameraScreen = (props) => {
           setCamera(ref);
         }}
         captureAudio={false}
-        whiteBalance={RNCamera.Constants.WhiteBalance.fluorescent}
+        whiteBalance={whiteBalance}
         style={{ flex: 1 }}
         type={cameraSide}
         flashMode={cameraFlash}
@@ -118,7 +122,12 @@ const CameraScreen = (props) => {
         <View style={style.timer} />
         {showTimer ? <Text style={style.timerValue}>{timerValue}</Text> : null}
         {showFilters ? (
-          <Filters />
+          <Filters
+            setWhiteBalance={setWhiteBalance}
+            camera={camera}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+          />
         ) : (
           <BottomContainer
             recordVideo={recordVideo}

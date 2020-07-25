@@ -5,7 +5,12 @@ const profilePic = require("../../../assets/images/profile.jpeg");
 
 const ProfilePic = (props) => {
   return (
-    <TouchableOpacity onPress={() => props.setSelectedFilter(props.keyIndex)}>
+    <TouchableOpacity
+      onPress={() => {
+        props.setSelectedFilter(props.keyIndex);
+        props.setWhiteBalance(props.filter.value);
+      }}
+    >
       <View
         style={{
           backgroundColor: props.selected ? "#5395ea" : "transparent",
@@ -36,7 +41,7 @@ const ProfilePic = (props) => {
           alignSelf: "center",
         }}
       >
-        {props.filter}
+        {props.filter.name}
       </Text>
     </TouchableOpacity>
   );
