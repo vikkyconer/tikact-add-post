@@ -36,6 +36,7 @@
 		E8705D8E84DC48688C6B8D18 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEE80A0EEE1E4A1B9952A84F /* FontAwesome5_Regular.ttf */; };
 		F53D03C9C0C8392607429875 /* libPods-tikActAddPost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BEE93650A7C4CE3928C3C2E /* libPods-tikActAddPost.a */; };
 		F6828F0DF4DA4508BFEFDEB9 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E10B0CBAD7994A56BC79F470 /* FontAwesome5_Solid.ttf */; };
+		7D3C45219E664AC8BE6064DD /* libRNDeviceBrightness.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A469A4058B4C618EF5A654 /* libRNDeviceBrightness.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,8 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FCC0821DCAA5E3E460934AA2 /* Pods-tikActAddPost-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tikActAddPost-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-tikActAddPost-tvOS/Pods-tikActAddPost-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FE6807F45FA943DB9601A544 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		1DA4F6C9176147239B985F61 /* RNDeviceBrightness.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceBrightness.xcodeproj"; path = "../node_modules/react-native-device-brightness/RNDeviceBrightness.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		37A469A4058B4C618EF5A654 /* libRNDeviceBrightness.a */ = {isa = PBXFileReference; name = "libRNDeviceBrightness.a"; path = "libRNDeviceBrightness.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53D03C9C0C8392607429875 /* libPods-tikActAddPost.a in Frameworks */,
+				7D3C45219E664AC8BE6064DD /* libRNDeviceBrightness.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +204,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1DA4F6C9176147239B985F61 /* RNDeviceBrightness.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -763,6 +768,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tikActAddPost.app/tikActAddPost";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Debug;
 		};
@@ -783,6 +796,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tikActAddPost.app/tikActAddPost";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Release;
 		};
@@ -806,6 +827,10 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Debug;
 		};
@@ -827,6 +852,10 @@
 				PRODUCT_NAME = tikActAddPost;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Release;
 		};
@@ -855,6 +884,14 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Debug;
 		};
@@ -883,6 +920,14 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Release;
 		};
@@ -910,6 +955,14 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tikActAddPost-tvOS.app/tikActAddPost-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Debug;
 		};
@@ -937,6 +990,14 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tikActAddPost-tvOS.app/tikActAddPost-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-brightness/RNDeviceBrightness",
+				);
 			};
 			name = Release;
 		};
