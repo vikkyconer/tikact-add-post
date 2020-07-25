@@ -4,11 +4,23 @@ import ProfilePic from "./ProfilePic";
 import { RNCamera } from "react-native-camera";
 import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
+import Feather from "react-native-vector-icons/Feather";
 const { View } = require("react-native");
 
 const Filters = (props) => {
   const [filters, setFilters] = useState([]);
   const [filterBrightness, setFilterBrightness] = useState(1);
+
+  const crossIcon = (
+    <Feather
+      name="x"
+      color="white"
+      size={20}
+      onPress={() => {
+        props.setShowFilters(false);
+      }}
+    />
+  );
 
   useEffect(() => {
     DeviceBrightness.setBrightnessLevel(filterBrightness);
@@ -53,6 +65,9 @@ const Filters = (props) => {
       }}
     >
       <View style={style.background} />
+      <View style={{ position: "absolute", right: 10, top: 0 }}>
+        {crossIcon}
+      </View>
       <View>
         <Slider
           style={{ width: "100%", height: 40 }}

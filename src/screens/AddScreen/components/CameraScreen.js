@@ -87,9 +87,7 @@ const CameraScreen = (props) => {
         justifyContent: "flex-start",
       }}
     >
-      <View>
-        <StatusBar hidden={true} />
-      </View>
+      <StatusBar hidden={true} />
       <RNCamera
         ref={(ref) => {
           setCamera(ref);
@@ -106,7 +104,7 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-        {!recording && !showTimer ? (
+        {!recording && !showTimer && !showFilters ? (
           <VideoOtherOptions
             crossIcon={crossIcon}
             flashCamera={flashCamera}
@@ -127,6 +125,7 @@ const CameraScreen = (props) => {
             camera={camera}
             selectedFilter={selectedFilter}
             setSelectedFilter={setSelectedFilter}
+            setShowFilters={setShowFilters}
           />
         ) : (
           <BottomContainer

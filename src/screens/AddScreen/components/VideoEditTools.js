@@ -68,7 +68,7 @@ const VideoEditTools = (props) => {
     >
       <TouchableOpacity
         style={{ marginVertical: 10 }}
-        onPress={() => props.setShowFilters(!props.showFilters)}
+        onPress={() => props.setShowFilters(true)}
       >
         {getIcon("color-filter-outline")}
         <Text style={{ color: "white" }}>Filters</Text>
