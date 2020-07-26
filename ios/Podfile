@@ -18,6 +18,8 @@ target 'tikActAddPost' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+  pod 'OGReactNativeWaveform', :path => '../node_modules/react-native-audiowaveform'
+
   target 'tikActAddPostTests' do
     inherit! :complete
     # Pods for testing

@@ -5,6 +5,7 @@ import BottomTab from "../components/BottomTab";
 import VideoPreview from "../components/VideoPreview";
 import LocalFiles from "../components/LocalFiles";
 import PostScreen from "../components/PostScreen";
+import AudioScreen from "../components/AudioScreen";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,15 @@ export default function MainScreen() {
       <Stack.Screen
         name="PostScreen"
         component={PostScreen}
+        options={{
+          title: null,
+          headerTransparent: true,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AudioScreen"
+        component={AudioScreen}
         options={{
           title: null,
           headerTransparent: true,

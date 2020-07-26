@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { RNFFmpeg } from "react-native-ffmpeg";
-const { View } = require("react-native");
+import WaveForm from "react-native-audiowaveform";
+var RNFS = require("react-native-fs");
+const { View, Text } = require("react-native");
 
-const ExtractAudio = (props) => {
+const AudioScreen = (props) => {
+  const { videoUri } = props.route.params;
   const [audioFile, setAudioFile] = useState(null);
 
   useEffect(() => {
@@ -10,8 +13,7 @@ const ExtractAudio = (props) => {
   });
 
   const getAudio = async () => {
-    console.log("uri: ", props.uri);
-    const splitPath = props.uri.split("/");
+    const splitPath = videoUri.split("/");
     const fileName = splitPath[splitPath.length - 1];
     const fileNameWithoutExtension = fileName.split(".")[0];
     console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
@@ -21,7 +23,7 @@ const ExtractAudio = (props) => {
 
     if (!exist) {
       const result = await RNFS.mkdir(path);
-      const sourceFile = props.uri;
+      const sourceFile = videoUri;
       const audio = await RNFFmpeg.execute(
         `-i '${sourceFile}' ${path}output-audio.mp3`
       );
@@ -33,9 +35,13 @@ const ExtractAudio = (props) => {
   };
   return (
     <View>
-      <Text>Hello</Text>
+      {/* <WaveForm
+        source={audioFile}
+        waveFormStyle={{ waveColor: "red", scrubColor: "white" }}
+      ></WaveForm> */}
+      <Text>H</Text>
     </View>
   );
 };
 
-export default ExtractAudio;
+export default AudioScreen;

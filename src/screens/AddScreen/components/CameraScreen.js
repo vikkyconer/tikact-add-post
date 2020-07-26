@@ -167,6 +167,7 @@ const CameraScreen = (props) => {
               setCameraSide={setCameraSide}
               navigation={props.navigation}
               recorded={recorded}
+              videoUri={videoUri}
             />
           </View>
         </View>

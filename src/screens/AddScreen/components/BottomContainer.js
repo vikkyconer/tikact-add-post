@@ -46,6 +46,12 @@ const BottomContainer = (props) => {
             color="#5395ea"
             size={40}
             style={{ top: 45, position: "absolute", right: 40 }}
+            onPress={() => {
+              console.log("uri: ", props.videoUri);
+              props.navigation.navigate("AudioScreen", {
+                videoUri: props.videoUri,
+              });
+            }}
           />
         ) : null}
       </View>
