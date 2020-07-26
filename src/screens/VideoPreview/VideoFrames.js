@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { RNFFmpeg } from "react-native-ffmpeg";
-import { FlatList } from "react-native-gesture-handler";
-import Animated from "react-native-reanimated";
 import VideoProgressbar from "./VideoProgressbar";
 const { View, Text, Image, Dimensions, StyleSheet } = require("react-native");
 var RNFS = require("react-native-fs");

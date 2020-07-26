@@ -2,13 +2,14 @@ import React from "react";
 import { style, StopRecordingButton, RecordButton } from "../styles";
 import { View, Text, TouchableOpacity } from "react-native";
 import { cameraFlipIcon, uploadIcon } from "../constants";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const BottomContainer = (props) => {
   return (
     <View style={style.bottomContainer}>
       <View style={style.background} />
       <View style={style.bottomVideoIconsContainer}>
-        {!props.recording && !props.showTimer ? (
+        {!props.recording && !props.showTimer && !props.recorded ? (
           <TouchableOpacity
             onPress={() => props.navigation.navigate("LocalFiles")}
           >
@@ -26,7 +27,7 @@ const BottomContainer = (props) => {
           <RecordButton onPress={props.recordVideo} />
         ) : null}
 
-        {!props.recording && !props.showTimer ? (
+        {!props.recording && !props.showTimer && !props.recorded ? (
           <TouchableOpacity
             onPress={() => {
               console.log("Flip");
@@ -38,6 +39,14 @@ const BottomContainer = (props) => {
             {cameraFlipIcon}
             <Text style={{ color: "white", alignSelf: "center" }}>Flip</Text>
           </TouchableOpacity>
+        ) : null}
+        {props.recorded ? (
+          <Ionicons
+            name="checkmark-circle-outline"
+            color="#5395ea"
+            size={40}
+            style={{ top: 45, position: "absolute", right: 40 }}
+          />
         ) : null}
       </View>
       <View
