@@ -9,7 +9,7 @@ import { speeds } from "../screens/AddScreen/constants";
 import VideoFrames from "../screens/VideoPreview/VideoFrames";
 
 const VideoPreview = (props) => {
-  const { selectedVideo } = props.route.params;
+  const { videoUri, videoDuration } = props.route.params;
 
   const [videoPlayer, setVideoPlayer] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -74,9 +74,8 @@ const VideoPreview = (props) => {
           rate={currentSpeed}
           filter={"CIPhotoEffectInstant"}
           filterEnabled={true}
-          onProgress={({ currentTime, playableDuration }) => {
-            const _currentPosition =
-              (currentTime / selectedVideo.node.image.playableDuration) * 100;
+          onProgress={({ currentTime }) => {
+            const _currentPosition = (currentTime / videoDuration) * 100;
             setCurrentPosition(_currentPosition);
           }}
           repeat={true}
@@ -90,7 +89,7 @@ const VideoPreview = (props) => {
             backgroundColor: "black",
             transform: [{ rotate: `${rotation}deg` }],
           }}
-          source={{ uri: selectedVideo.node.image.uri }}
+          source={{ uri: videoUri }}
         />
         {paused ? (
           <Ionicons
@@ -137,7 +136,7 @@ const VideoPreview = (props) => {
           <Button
             title="Next"
             onPress={() =>
-              props.navigation.navigate("PostScreen", { selectedVideo })
+              props.navigation.navigate("PostScreen", { videoUri })
             }
           />
         </View>
@@ -206,9 +205,9 @@ const VideoPreview = (props) => {
         </View>
 
         <VideoFrames
-          uri={selectedVideo.node.image.uri}
+          uri={videoUri}
           currentPosition={currentPosition}
-          length={selectedVideo.node.image.playableDuration}
+          length={videoDuration}
         />
       </View>
     </View>

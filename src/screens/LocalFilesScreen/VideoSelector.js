@@ -89,7 +89,9 @@ const VideoSelector = (props) => {
               title="Next"
               onPress={() => {
                 props.navigation.navigate("VideoPreview", {
-                  selectedVideo: props.selectedVideo,
+                  videoUri: props.selectedVideo.node.image.uri,
+                  videoDuration:
+                    props.selectedVideo.node.image.playableDuration,
                 });
               }}
               disabled={props.selectedVideo ? false : true}

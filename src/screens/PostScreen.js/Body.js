@@ -48,7 +48,7 @@ const Body = (props) => {
       }}
     >
       <View style={{ flexDirection: "row" }}>
-        <VideoThumbnail selectedVideo={props.selectedVideo} />
+        <VideoThumbnail videoUri={props.videoUri} />
         <VideoDescription />
       </View>
       <HorizontalLine />

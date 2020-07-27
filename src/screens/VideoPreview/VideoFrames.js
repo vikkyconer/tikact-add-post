@@ -21,7 +21,7 @@ const VideoFrames = (props) => {
     const fileNameWithoutExtension = fileName.split(".")[0];
     console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
     setFrames([]);
-    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/`;
+    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/frames/`;
     const exist = await RNFS.exists(path);
     console.log("exist: ", exist);
 

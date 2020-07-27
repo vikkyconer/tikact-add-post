@@ -24,6 +24,7 @@ const CameraScreen = (props) => {
   const [selectedFilter, setSelectedFilter] = useState(0);
   const [videoUri, setVideoUri] = useState(null);
   const [recorded, setRecorded] = useState(false);
+  const [videoDuration, setVideoDuration] = useState(0);
 
   const crossIcon = (
     <Feather
@@ -68,9 +69,10 @@ const CameraScreen = (props) => {
       setShowTimer(false);
       setTimerValue(timers[currentTimer]);
       const { uri, codec = "mp4" } = await camera.recordAsync({
-        maxDuration: 15,
+        maxDuration: 5,
       });
       setVideoUri(uri);
+      setVideoDuration(5);
       setRecorded(true);
       setRecording(false);
     } catch (error) {
@@ -98,6 +100,7 @@ const CameraScreen = (props) => {
           }}
           whiteBalance={whiteBalance}
           style={{ flex: 1 }}
+          captureAudio={true}
           type={cameraSide}
           flashMode={cameraFlash}
           androidCameraPermissionOptions={{
@@ -168,6 +171,7 @@ const CameraScreen = (props) => {
               navigation={props.navigation}
               recorded={recorded}
               videoUri={videoUri}
+              videoDuration={videoDuration}
             />
           </View>
         </View>

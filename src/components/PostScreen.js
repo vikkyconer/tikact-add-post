@@ -4,12 +4,12 @@ import Body from "../screens/PostScreen.js/Body";
 const { View, StatusBar } = require("react-native");
 
 const PostScreen = (props) => {
-  const { selectedVideo } = props.route.params;
+  const { videoUri } = props.route.params;
   return (
     <View>
       <StatusBar hidden={false} />
       <Header navigation={props.navigation} />
-      <Body selectedVideo={selectedVideo} navigation={props.navigation} />
+      <Body videoUri={videoUri} navigation={props.navigation} />
     </View>
   );
 };

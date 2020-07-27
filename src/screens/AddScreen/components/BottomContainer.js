@@ -50,6 +50,7 @@ const BottomContainer = (props) => {
               console.log("uri: ", props.videoUri);
               props.navigation.navigate("AudioScreen", {
                 videoUri: props.videoUri,
+                videoDuration: props.videoDuration
               });
             }}
           />

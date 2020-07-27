@@ -11,7 +11,7 @@ const VideoThumbnail = (props) => {
           width: "100%",
           height: "100%",
         }}
-        source={{ uri: props.selectedVideo.node.image.uri }}
+        source={{ uri: props.videoUri }}
       />
       <View
         style={{
