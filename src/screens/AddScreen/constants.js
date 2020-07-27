@@ -28,7 +28,17 @@ export const uploadIcon = (
     color="white"
     size={30}
     style={{
-      padding: 10,
+      marginTop: 20,
+    }}
+  />
+);
+
+export const effectsIcon = (
+  <Ionicons
+    name="happy-outline"
+    color="yellow"
+    size={30}
+    style={{
       marginTop: 20,
     }}
   />

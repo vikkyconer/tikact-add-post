@@ -38,7 +38,7 @@ const BottomTab = (props) => {
           backgroundColor: "#5395ea",
         }}
         onPress={() => {
-          props.navigation.navigate("VideoPreview", {
+          props.navigation.navigate("RecordAudio", {
             videoUri: props.videoUri,
             videoDuration: props.videoDuration,
           });
