@@ -120,6 +120,8 @@ const CameraScreen = (props) => {
               setTimerValue={setTimerValue}
               showFilters={showFilters}
               setShowFilters={setShowFilters}
+              cameraSide={cameraSide}
+              setCameraSide={setCameraSide}
             />
           ) : null}
 
@@ -141,8 +143,6 @@ const CameraScreen = (props) => {
               stopRecording={stopRecording}
               recording={recording}
               showTimer={showTimer}
-              cameraSide={cameraSide}
-              setCameraSide={setCameraSide}
               navigation={props.navigation}
             />
           )}
@@ -160,14 +160,14 @@ const CameraScreen = (props) => {
               setTimerValue={setTimerValue}
               showFilters={showFilters}
               setShowFilters={setShowFilters}
+              cameraSide={cameraSide}
+              setCameraSide={setCameraSide}
             />
             <BottomContainer
               recordVideo={recordVideo}
               stopRecording={stopRecording}
               recording={recording}
               showTimer={showTimer}
-              cameraSide={cameraSide}
-              setCameraSide={setCameraSide}
               navigation={props.navigation}
               recorded={recorded}
               videoUri={videoUri}

@@ -9,53 +9,10 @@ const VideoEditTools = (props) => {
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   const [showTimerOptions, setShowTimerOptions] = useState(false);
 
-  const getMultipleOptions = (arr, unit, currentValue) => {
-    return arr.map((data, key) => {
-      return (
-        <View key={key}>
-          {currentValue == key ? (
-            <TouchableOpacity>
-              <View
-                style={{
-                  alignItems: "center",
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                  backgroundColor: "white",
-                }}
-              >
-                <Text>
-                  {data} {unit}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                if (unit === "x") {
-                  setCurrentSpeed(key);
-                } else {
-                  props.setCurrentTimer(key);
-                  props.setTimerValue(timers[key]);
-                }
-              }}
-            >
-              <View
-                style={{
-                  alignItems: "center",
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                }}
-              >
-                <View style={style.background} />
-                <Text style={{ color: "white" }}>
-                  {data} {unit}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-      );
-    });
+  const flipCamera = () => {
+    return props.cameraSide === "front"
+      ? props.setCameraSide("back")
+      : props.setCameraSide("front");
   };
 
   return (
@@ -68,7 +25,7 @@ const VideoEditTools = (props) => {
         justifyContent: "space-around",
       }}
     >
-      <TouchableOpacity style={{ alignItems: "center" }}>
+      <TouchableOpacity style={{ alignItems: "center" }} onPress={flipCamera}>
         {getIcon("camera-reverse-outline")}
         <Text style={{ color: "white" }}>Flip</Text>
       </TouchableOpacity>
