@@ -28,7 +28,17 @@ export const uploadIcon = (
     color="white"
     size={30}
     style={{
-      padding: 10,
+      marginTop: 20,
+    }}
+  />
+);
+
+export const effectsIcon = (
+  <Ionicons
+    name="happy-outline"
+    color="yellow"
+    size={30}
+    style={{
       marginTop: 20,
     }}
   />
@@ -45,3 +55,9 @@ export const carouselItems = [
 
 export const speeds = [0.3, 0.5, 1, 2, 3];
 export const timers = [10, 3];
+
+export const bottomContainers = {
+  DEFAULT: 0,
+  FILTER: 1,
+  TIMER: 2,
+};

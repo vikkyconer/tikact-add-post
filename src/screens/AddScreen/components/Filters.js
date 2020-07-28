@@ -5,6 +5,7 @@ import { RNCamera } from "react-native-camera";
 import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
 import Feather from "react-native-vector-icons/Feather";
+import { bottomContainers } from "../constants";
 const { View } = require("react-native");
 
 const Filters = (props) => {
@@ -17,7 +18,7 @@ const Filters = (props) => {
       color="white"
       size={20}
       onPress={() => {
-        props.setShowFilters(false);
+        props.setBottomContainer(bottomContainers.DEFAULT);
       }}
     />
   );

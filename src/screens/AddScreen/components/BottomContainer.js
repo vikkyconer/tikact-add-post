@@ -1,45 +1,62 @@
 import React from "react";
-import { style, StopRecordingButton, RecordButton } from "../styles";
-import { View, Text, TouchableOpacity } from "react-native";
-import { cameraFlipIcon, uploadIcon } from "../constants";
+import { style, StopRecordingButton } from "../styles";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { effectsIcon, uploadIcon } from "../constants";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import RecordButton from "./RecordButton";
+import SpeedBar from "./SpeedBar";
+const uploadPic = require("../../../assets/images/upload.jpg");
 
 const BottomContainer = (props) => {
   return (
     <View style={style.bottomContainer}>
-      <View style={style.background} />
+      <SpeedBar showSpeedOptions={props.showSpeedOptions} />
       <View style={style.bottomVideoIconsContainer}>
-        {!props.recording && !props.showTimer && !props.recorded ? (
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate("LocalFiles")}
-          >
-            {uploadIcon}
-            <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
-          </TouchableOpacity>
-        ) : null}
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("LocalFiles")}
+          style={{ alignItems: "center" }}
+        >
+          {effectsIcon}
+          <Text style={{ color: "white", alignSelf: "center" }}>Effects</Text>
+        </TouchableOpacity>
 
         {props.recording ? (
           <TouchableOpacity onPress={props.stopRecording}>
             <StopRecordingButton />
             <View style={style.stopRecordingSquare} />
           </TouchableOpacity>
-        ) : !props.showTimer ? (
-          <RecordButton onPress={props.recordVideo} />
-        ) : null}
+        ) : (
+          <RecordButton />
+        )}
 
-        {!props.recording && !props.showTimer && !props.recorded ? (
-          <TouchableOpacity
-            onPress={() => {
-              console.log("Flip");
-              props.cameraSide === "front"
-                ? props.setCameraSide("back")
-                : props.setCameraSide("front");
+        <TouchableOpacity
+          style={{ alignItems: "center", marginTop: 20 }}
+          onPress={() => props.navigation.navigate("LocalFiles")}
+        >
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 5,
+              borderColor: "white",
+              borderWidth: 2,
             }}
           >
-            {cameraFlipIcon}
-            <Text style={{ color: "white", alignSelf: "center" }}>Flip</Text>
-          </TouchableOpacity>
-        ) : null}
+            <Image
+              source={uploadPic}
+              style={{ height: "100%", width: "100%" }}
+            />
+          </View>
+          <Text style={{ color: "white" }}>Upload</Text>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity
+          onPress={() => props.navigation.navigate("LocalFiles")}
+          style={{ alignItems: "center" }}
+        >
+          {uploadIcon}
+          <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
+        </TouchableOpacity> */}
         {props.recorded ? (
           <Ionicons
             name="checkmark-circle-outline"
@@ -50,7 +67,7 @@ const BottomContainer = (props) => {
               console.log("uri: ", props.videoUri);
               props.navigation.navigate("AudioScreen", {
                 videoUri: props.videoUri,
-                videoDuration: props.videoDuration
+                videoDuration: props.videoDuration,
               });
             }}
           />

@@ -1,61 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { timers, speeds } from "../constants";
+import { timers, speeds, cameraFlipIcon, bottomContainers } from "../constants";
 import { style } from "../styles";
 import { getIcon } from "../../../utility";
 
 const VideoEditTools = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(2);
-  const [showSpeedOptions, setShowSpeedOptions] = useState(false);
-  const [showTimerOptions, setShowTimerOptions] = useState(false);
-
-  const getMultipleOptions = (arr, unit, currentValue) => {
-    return arr.map((data, key) => {
-      return (
-        <View key={key}>
-          {currentValue == key ? (
-            <TouchableOpacity>
-              <View
-                style={{
-                  alignItems: "center",
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                  backgroundColor: "white",
-                }}
-              >
-                <Text>
-                  {data} {unit}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                if (unit === "x") {
-                  setCurrentSpeed(key);
-                } else {
-                  props.setCurrentTimer(key);
-                  props.setTimerValue(timers[key]);
-                }
-              }}
-            >
-              <View
-                style={{
-                  alignItems: "center",
-                  paddingVertical: 10,
-                  paddingHorizontal: 20,
-                }}
-              >
-                <View style={style.background} />
-                <Text style={{ color: "white" }}>
-                  {data} {unit}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-      );
-    });
+  const flipCamera = () => {
+    return props.cameraSide === "front"
+      ? props.setCameraSide("back")
+      : props.setCameraSide("front");
   };
 
   return (
@@ -63,51 +17,35 @@ const VideoEditTools = (props) => {
       style={{
         alignItems: "flex-end",
         position: "absolute",
-        right: 0,
+        right: 5,
+        height: 320,
+        justifyContent: "space-around",
       }}
     >
+      <TouchableOpacity style={{ alignItems: "center" }} onPress={flipCamera}>
+        {getIcon("camera-reverse-outline")}
+        <Text style={{ color: "white" }}>Flip</Text>
+      </TouchableOpacity>
       <TouchableOpacity
-        style={{ marginVertical: 10 }}
-        onPress={() => props.setShowFilters(true)}
+        style={{ alignItems: "center" }}
+        onPress={() => props.setShowSpeedOptions(!props.showSpeedOptions)}
+      >
+        {getIcon("speedometer-outline")}
+        <Text style={{ color: "white" }}>Speed</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ alignItems: "center" }}
+        onPress={() => props.setBottomContainer(bottomContainers.FILTER)}
       >
         {getIcon("color-filter-outline")}
         <Text style={{ color: "white" }}>Filters</Text>
       </TouchableOpacity>
-
-      <View style={{ marginVertical: 10, flexDirection: "row" }}>
-        {showSpeedOptions ? (
-          <View style={{ flexDirection: "row", marginRight: 8 }}>
-            {getMultipleOptions(speeds, "x", currentSpeed)}
-          </View>
-        ) : null}
-        <TouchableOpacity
-          onPress={() => setShowSpeedOptions(!showSpeedOptions)}
-        >
-          {getIcon("speedometer-outline")}
-          <Text style={{ color: "white" }}>Speed</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={{ marginVertical: 10, flexDirection: "row" }}>
-        {showTimerOptions ? (
-          <View style={{ flexDirection: "row", marginRight: 8 }}>
-            {getMultipleOptions(timers, "s", props.currentTimer)}
-          </View>
-        ) : null}
-        <TouchableOpacity
-          onPress={() => setShowTimerOptions(!showTimerOptions)}
-        >
-          {getIcon("stopwatch-outline")}
-          <Text style={{ color: "white" }}>Timer</Text>
-        </TouchableOpacity>
-      </View>
-
       <TouchableOpacity
-        style={{ marginVertical: 10 }}
-        onPress={props.flashCamera}
+        style={{ alignItems: "center" }}
+        onPress={() => props.setBottomContainer(bottomContainers.TIMER)}
       >
-        {getIcon(props.flashIcon)}
-        <Text style={{ color: "white" }}>Flash</Text>
+        {getIcon("stopwatch-outline")}
+        <Text style={{ color: "white" }}>Timer</Text>
       </TouchableOpacity>
     </View>
   );
