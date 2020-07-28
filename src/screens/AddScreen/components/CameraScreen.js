@@ -8,7 +8,7 @@ import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
 import Filters from "./Filters";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import TimerContainer from "./TimerContainer";
+import TimerContainer from "./TimerContainer/TimerContainer";
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);

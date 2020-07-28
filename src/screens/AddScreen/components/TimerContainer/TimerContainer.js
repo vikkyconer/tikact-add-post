@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
 import Timers from "./Timers";
+import SetRecordTimeBar from "./SetRecordTimeBar";
+import StartShootingBtn from "./StartShootingBtn";
 
 const TimerContainer = () => {
   return (
@@ -10,7 +12,7 @@ const TimerContainer = () => {
         bottom: 0,
         left: 0,
         right: 0,
-        height: 200,
+        height: 220,
       }}
     >
       <View
@@ -38,14 +40,14 @@ const TimerContainer = () => {
             height: 30,
             justifyContent: "space-between",
             flexDirection: "row",
+            marginBottom: 15,
           }}
         >
           <Text style={{ color: "white" }}>Drag to set recording limit</Text>
           <Timers />
         </View>
-        <View>
-          <Text style={{ color: "white" }}>Drag to set recording limit</Text>
-        </View>
+        <SetRecordTimeBar />
+        <StartShootingBtn />
       </View>
     </View>
   );
