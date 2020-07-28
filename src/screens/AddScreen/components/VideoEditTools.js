@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { timers, speeds, cameraFlipIcon } from "../constants";
+import { timers, speeds, cameraFlipIcon, bottomContainers } from "../constants";
 import { style } from "../styles";
 import { getIcon } from "../../../utility";
 
@@ -38,7 +38,7 @@ const VideoEditTools = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center" }}
-        onPress={() => props.setShowFilters(true)}
+        onPress={() => props.setBottomContainer(bottomContainers.FILTER)}
       >
         {getIcon("color-filter-outline")}
         <Text style={{ color: "white" }}>Filters</Text>

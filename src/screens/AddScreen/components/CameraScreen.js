@@ -4,7 +4,7 @@ import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
 import BottomContainer from "./BottomContainer";
 import Feather from "react-native-vector-icons/Feather";
-import { timers } from "../constants";
+import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
 import Filters from "./Filters";
 
@@ -26,6 +26,9 @@ const CameraScreen = (props) => {
   const [recorded, setRecorded] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
+  const [bottomContainer, setBottomContainer] = useState(
+    bottomContainers.DEFAULT
+  );
 
   const crossIcon = (
     <Feather
@@ -62,6 +65,70 @@ const CameraScreen = (props) => {
     });
   };
 
+  const getCamera = () => {
+    return (
+      <RNCamera
+        ref={(ref) => {
+          setCamera(ref);
+        }}
+        whiteBalance={whiteBalance}
+        style={{ flex: 1 }}
+        captureAudio={true}
+        type={cameraSide}
+        flashMode={cameraFlash}
+        androidCameraPermissionOptions={{
+          title: "Permission to use camera",
+          message: "We need your permission to use your camera",
+          buttonPositive: "Ok",
+          buttonNegative: "Cancel",
+        }}
+      >
+        {!recording && !showTimer && !showFilters ? (
+          <VideoOtherOptions
+            crossIcon={crossIcon}
+            flashCamera={flashCamera}
+            flashIcon={flashIcon}
+            showFilters={showFilters}
+            setShowFilters={setShowFilters}
+            cameraSide={cameraSide}
+            setCameraSide={setCameraSide}
+            setShowSpeedOptions={setShowSpeedOptions}
+            showSpeedOptions={showSpeedOptions}
+            setBottomContainer={setBottomContainer}
+          />
+        ) : null}
+
+        {getBottomContainer()}
+      </RNCamera>
+    );
+  };
+
+  const getBottomContainer = () => {
+    switch (bottomContainer) {
+      case bottomContainers.DEFAULT:
+        return (
+          <BottomContainer
+            recordVideo={recordVideo}
+            stopRecording={stopRecording}
+            recording={recording}
+            showTimer={showTimer}
+            navigation={props.navigation}
+            showSpeedOptions={showSpeedOptions}
+          />
+        );
+      case bottomContainers.FILTER:
+        return (
+          <Filters
+            setWhiteBalance={setWhiteBalance}
+            camera={camera}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            setBottomContainer={setBottomContainer}
+          />
+        );
+    }
+  };
+
   const recordVideo = async () => {
     try {
       setShowTimer(true);
@@ -86,6 +153,39 @@ const CameraScreen = (props) => {
     await camera.stopRecording();
     setRecording(false);
   };
+
+  const getCameraOptions = () => {
+    return (
+      <View style={{ width: "100%", height: "100%" }}>
+        <Image source={{ uri: videoUri }} style={{ flex: 1 }} />
+        <View style={{ position: "absolute", width: "100%", height: "100%" }}>
+          <VideoOtherOptions
+            crossIcon={crossIcon}
+            flashCamera={flashCamera}
+            flashIcon={flashIcon}
+            showFilters={showFilters}
+            setBottomContainer={setBottomContainer}
+            cameraSide={cameraSide}
+            setCameraSide={setCameraSide}
+            setShowSpeedOptions={setShowSpeedOptions}
+            showSpeedOptions={showSpeedOptions}
+          />
+          <BottomContainer
+            recordVideo={recordVideo}
+            stopRecording={stopRecording}
+            recording={recording}
+            showTimer={showTimer}
+            navigation={props.navigation}
+            recorded={recorded}
+            videoUri={videoUri}
+            videoDuration={videoDuration}
+            showSpeedOptions={showSpeedOptions}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View
       style={{
@@ -94,95 +194,7 @@ const CameraScreen = (props) => {
       }}
     >
       <StatusBar hidden={true} />
-      {!recorded ? (
-        <RNCamera
-          ref={(ref) => {
-            setCamera(ref);
-          }}
-          whiteBalance={whiteBalance}
-          style={{ flex: 1 }}
-          captureAudio={true}
-          type={cameraSide}
-          flashMode={cameraFlash}
-          androidCameraPermissionOptions={{
-            title: "Permission to use camera",
-            message: "We need your permission to use your camera",
-            buttonPositive: "Ok",
-            buttonNegative: "Cancel",
-          }}
-        >
-          {!recording && !showTimer && !showFilters ? (
-            <VideoOtherOptions
-              crossIcon={crossIcon}
-              flashCamera={flashCamera}
-              flashIcon={flashIcon}
-              currentTimer={currentTimer}
-              setCurrentTimer={setCurrentTimer}
-              setTimerValue={setTimerValue}
-              showFilters={showFilters}
-              setShowFilters={setShowFilters}
-              cameraSide={cameraSide}
-              setCameraSide={setCameraSide}
-              setShowSpeedOptions={setShowSpeedOptions}
-              showSpeedOptions={showSpeedOptions}
-            />
-          ) : null}
-
-          <View style={style.timer} />
-          {showTimer ? (
-            <Text style={style.timerValue}>{timerValue}</Text>
-          ) : null}
-          {showFilters ? (
-            <Filters
-              setWhiteBalance={setWhiteBalance}
-              camera={camera}
-              selectedFilter={selectedFilter}
-              setSelectedFilter={setSelectedFilter}
-              setShowFilters={setShowFilters}
-            />
-          ) : (
-            <BottomContainer
-              recordVideo={recordVideo}
-              stopRecording={stopRecording}
-              recording={recording}
-              showTimer={showTimer}
-              navigation={props.navigation}
-              showSpeedOptions={showSpeedOptions}
-            />
-          )}
-        </RNCamera>
-      ) : (
-        <View style={{ width: "100%", height: "100%" }}>
-          <Image source={{ uri: videoUri }} style={{ flex: 1 }} />
-          <View style={{ position: "absolute", width: "100%", height: "100%" }}>
-            <VideoOtherOptions
-              crossIcon={crossIcon}
-              flashCamera={flashCamera}
-              flashIcon={flashIcon}
-              currentTimer={currentTimer}
-              setCurrentTimer={setCurrentTimer}
-              setTimerValue={setTimerValue}
-              showFilters={showFilters}
-              setShowFilters={setShowFilters}
-              cameraSide={cameraSide}
-              setCameraSide={setCameraSide}
-              setShowSpeedOptions={setShowSpeedOptions}
-              showSpeedOptions={showSpeedOptions}
-            />
-            <BottomContainer
-              recordVideo={recordVideo}
-              stopRecording={stopRecording}
-              recording={recording}
-              showTimer={showTimer}
-              navigation={props.navigation}
-              recorded={recorded}
-              videoUri={videoUri}
-              videoDuration={videoDuration}
-              showSpeedOptions={showSpeedOptions}
-            />
-          </View>
-        </View>
-      )}
+      {!recorded ? getCamera() : getCameraOptions()}
     </View>
   );
 };

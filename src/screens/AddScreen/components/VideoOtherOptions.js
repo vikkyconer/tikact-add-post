@@ -27,10 +27,7 @@ const VideoOtherOptions = (props) => {
       <VideoEditTools
         flashCamera={props.flashCamera}
         flashIcon={props.flashIcon}
-        currentTimer={props.currentTimer}
-        setCurrentTimer={props.setCurrentTimer}
-        setTimerValue={props.setTimerValue}
-        setShowFilters={props.setShowFilters}
+        setBottomContainer={props.setBottomContainer}
         showFilters={props.showFilters}
         cameraSide={props.cameraSide}
         setCameraSide={props.setCameraSide}

@@ -55,3 +55,9 @@ export const carouselItems = [
 
 export const speeds = [0.3, 0.5, 1, 2, 3];
 export const timers = [10, 3];
+
+export const bottomContainers = {
+  DEFAULT: 0,
+  FILTER: 1,
+  TIMER: 2,
+};
