@@ -12,8 +12,8 @@ const StopRecordButton = (props) => {
         marginTop: -20,
       }}
       onPress={() => {
-        props.setRecording(false)
-        props.setRecordingPaused(true);
+        props.setRecording(false);
+        // props.setRecordingPaused(true);
       }}
     >
       <View
