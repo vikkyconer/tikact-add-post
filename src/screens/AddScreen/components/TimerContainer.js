@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { style } from "../styles";
+import Timers from "./Timers";
 
 const TimerContainer = () => {
   return (
@@ -41,20 +41,10 @@ const TimerContainer = () => {
           }}
         >
           <Text style={{ color: "white" }}>Drag to set recording limit</Text>
-          <View
-            style={{
-              backgroundColor: "grey",
-              width: 100,
-              flexDirection: "row",
-            }}
-          >
-            <View>
-              <Text>3s</Text>
-            </View>
-            <View>
-              <Text>10s</Text>
-            </View>
-          </View>
+          <Timers />
+        </View>
+        <View>
+          <Text style={{ color: "white" }}>Drag to set recording limit</Text>
         </View>
       </View>
     </View>
