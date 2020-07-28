@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StatusBar, Text, Image } from "react-native";
+import { View, StatusBar, TouchableOpacity, Image } from "react-native";
 import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
 import BottomContainer from "./BottomContainer";
@@ -7,7 +7,6 @@ import Feather from "react-native-vector-icons/Feather";
 import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
 import Filters from "./Filters";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import TimerContainer from "./TimerContainer/TimerContainer";
 
 const CameraScreen = (props) => {
@@ -83,6 +82,15 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+          }}
+          onPress={() => setBottomContainer(bottomContainers.DEFAULT)}
+        />
+
         {bottomContainer === bottomContainers.DEFAULT ? (
           <VideoOtherOptions
             crossIcon={crossIcon}
