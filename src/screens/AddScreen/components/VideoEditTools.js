@@ -6,9 +6,6 @@ import { getIcon } from "../../../utility";
 
 const VideoEditTools = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(2);
-
-  const [showTimerOptions, setShowTimerOptions] = useState(false);
-
   const flipCamera = () => {
     return props.cameraSide === "front"
       ? props.setCameraSide("back")
@@ -45,7 +42,7 @@ const VideoEditTools = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center" }}
-        onPress={() => setShowTimerOptions(!showTimerOptions)}
+        onPress={() => props.setBottomContainer(bottomContainers.TIMER)}
       >
         {getIcon("stopwatch-outline")}
         <Text style={{ color: "white" }}>Timer</Text>

@@ -17,7 +17,6 @@ const CameraScreen = (props) => {
   const [currentTimer, setCurrentTimer] = useState(1);
   const [timerValue, setTimerValue] = useState(timers[1]);
   const [flashIcon, setFlashIcon] = useState("flash-off-outline");
-  const [showFilters, setShowFilters] = useState(false);
   const [whiteBalance, setWhiteBalance] = useState(
     RNCamera.Constants.WhiteBalance.auto
   );
@@ -83,13 +82,11 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-        {!recording && !showTimer && !showFilters ? (
+        {!recording && !showTimer ? (
           <VideoOtherOptions
             crossIcon={crossIcon}
             flashCamera={flashCamera}
             flashIcon={flashIcon}
-            showFilters={showFilters}
-            setShowFilters={setShowFilters}
             cameraSide={cameraSide}
             setCameraSide={setCameraSide}
             setShowSpeedOptions={setShowSpeedOptions}
@@ -163,7 +160,6 @@ const CameraScreen = (props) => {
             crossIcon={crossIcon}
             flashCamera={flashCamera}
             flashIcon={flashIcon}
-            showFilters={showFilters}
             setBottomContainer={setBottomContainer}
             cameraSide={cameraSide}
             setCameraSide={setCameraSide}

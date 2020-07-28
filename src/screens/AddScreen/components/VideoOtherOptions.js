@@ -28,7 +28,6 @@ const VideoOtherOptions = (props) => {
         flashCamera={props.flashCamera}
         flashIcon={props.flashIcon}
         setBottomContainer={props.setBottomContainer}
-        showFilters={props.showFilters}
         cameraSide={props.cameraSide}
         setCameraSide={props.setCameraSide}
         setShowSpeedOptions={props.setShowSpeedOptions}
