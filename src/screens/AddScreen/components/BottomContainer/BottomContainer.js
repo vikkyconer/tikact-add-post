@@ -1,11 +1,11 @@
 import React from "react";
-import { style, StopRecordingButton } from "../styles";
+import { style, StopRecordingButton } from "../../styles";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { effectsIcon, uploadIcon } from "../constants";
+import { effectsIcon, uploadIcon } from "../../constants";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RecordButton from "./RecordButton";
 import SpeedBar from "./SpeedBar";
-const uploadPic = require("../../../assets/images/upload.jpg");
+const uploadPic = require("../../../../assets/images/upload.jpg");
 
 const BottomContainer = (props) => {
   return (

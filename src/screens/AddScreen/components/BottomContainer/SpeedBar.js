@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { speeds } from "../constants";
-import { style } from "../styles";
+import { speeds } from "../../constants";
 
 const SpeedBar = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(1);

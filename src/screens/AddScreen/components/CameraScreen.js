@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StatusBar, TouchableOpacity, Image } from "react-native";
 import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
-import BottomContainer from "./BottomContainer";
+import BottomContainer from "./BottomContainer/BottomContainer";
 import Feather from "react-native-vector-icons/Feather";
 import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
