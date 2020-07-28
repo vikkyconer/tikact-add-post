@@ -6,7 +6,7 @@ const Timers = () => {
     <View
       style={{
         backgroundColor: "grey",
-        width: 100,
+        width: 80,
         flexDirection: "row",
         borderRadius: 20,
       }}
@@ -23,7 +23,7 @@ const Timers = () => {
           paddingVertical: 5,
         }}
       >
-        <Text style={{ color: "white" }}>3s</Text>
+        <Text style={{ color: "white", fontSize: 12 }}>3s</Text>
       </View>
       <View
         style={{
@@ -37,7 +37,7 @@ const Timers = () => {
           paddingVertical: 5,
         }}
       >
-        <Text style={{ color: "black" }}>10s</Text>
+        <Text style={{ color: "black", fontSize: 12}}>10s</Text>
       </View>
     </View>
   );

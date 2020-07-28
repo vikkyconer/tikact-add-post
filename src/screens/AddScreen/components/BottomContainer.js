@@ -17,7 +17,7 @@ const BottomContainer = (props) => {
           style={{ alignItems: "center" }}
         >
           {effectsIcon}
-          <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
+          <Text style={{ color: "white", alignSelf: "center" }}>Effects</Text>
         </TouchableOpacity>
 
         {props.recording ? (
