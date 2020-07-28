@@ -1,10 +1,11 @@
 import React from "react";
 import { style, StopRecordingButton } from "../styles";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { effectsIcon, uploadIcon } from "../constants";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RecordButton from "./RecordButton";
 import SpeedBar from "./SpeedBar";
+const uploadPic = require("../../../assets/images/upload.jpg");
 
 const BottomContainer = (props) => {
   return (
@@ -29,12 +30,33 @@ const BottomContainer = (props) => {
         ) : null}
 
         <TouchableOpacity
+          style={{ alignItems: "center", marginTop: 20 }}
+          onPress={() => props.navigation.navigate("LocalFiles")}
+        >
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 5,
+              borderColor: "white",
+              borderWidth: 2,
+            }}
+          >
+            <Image
+              source={uploadPic}
+              style={{ height: "100%", width: "100%" }}
+            />
+          </View>
+          <Text style={{ color: "white" }}>Upload</Text>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity
           onPress={() => props.navigation.navigate("LocalFiles")}
           style={{ alignItems: "center" }}
         >
           {uploadIcon}
           <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {props.recorded ? (
           <Ionicons
             name="checkmark-circle-outline"
