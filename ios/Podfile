@@ -20,6 +20,8 @@ target 'tikActAddPost' do
 
   pod 'OGReactNativeWaveform', :path => '../node_modules/react-native-audiowaveform'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'tikActAddPostTests' do
     inherit! :complete
     # Pods for testing
