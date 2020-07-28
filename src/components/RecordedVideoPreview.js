@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 import Video from "react-native-video";
 import BottomBar from "../screens/RecordedVideoPreview/BottomBar";
+import VideoEditOptions from "../screens/RecordedVideoPreview/VideoEditOptions";
+import BackButton from "../screens/RecordedVideoPreview/BackButton";
 
 const RecordedVideoPreview = (props) => {
   const { videoUri, videoDuration } = props.route.params;
@@ -24,6 +26,8 @@ const RecordedVideoPreview = (props) => {
         }}
         source={{ uri: videoUri }}
       />
+      <BackButton />
+      <VideoEditOptions />
       <BottomBar />
     </View>
   );
