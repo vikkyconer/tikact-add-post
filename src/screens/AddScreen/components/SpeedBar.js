@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { speeds } from "../constants";
 import { style } from "../styles";
 
 const SpeedBar = (props) => {
-  const getMultipleOptions = (arr, currentValue) => {
+  const [currentSpeed, setCurrentSpeed] = useState(1);
+  const getMultipleOptions = (arr) => {
     return (
       <View
         style={{
@@ -14,11 +15,12 @@ const SpeedBar = (props) => {
         }}
       >
         {arr.map((data, key) => {
-          const isSelectedValue = key === currentValue;
+          const isSelectedValue = data === currentSpeed;
           const initialBox = key === 0;
           const lastBox = key === arr.length - 1;
           return (
-            <View
+            <TouchableOpacity
+              onPress={() => setCurrentSpeed(data)}
               key={key}
               style={{
                 width: 68,
@@ -49,14 +51,14 @@ const SpeedBar = (props) => {
               />
               <Text
                 style={{
-                  color: key === currentValue ? "black" : "white",
+                  color: data === currentSpeed ? "black" : "white",
                   fontSize: 15,
                   marginTop: 9,
                 }}
               >
                 {data}x
               </Text>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -71,7 +73,7 @@ const SpeedBar = (props) => {
         marginBottom: 10,
       }}
     >
-      {props.showSpeedOptions ? getMultipleOptions(speeds, 2) : null}
+      {props.showSpeedOptions ? getMultipleOptions(speeds) : null}
     </View>
   );
 };
