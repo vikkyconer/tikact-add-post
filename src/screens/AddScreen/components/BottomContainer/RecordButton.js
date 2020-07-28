@@ -9,9 +9,12 @@ const RecordButton = (props) => {
         width: 80,
         height: 80,
         borderRadius: 70,
-        alignItems: "center",      
+        alignItems: "center",
       }}
-      onPress={() => props.setRecording(true)}
+      onPress={() => {
+        props.recordVideo();
+        props.setRecording(true);
+      }}
     >
       <View
         style={{

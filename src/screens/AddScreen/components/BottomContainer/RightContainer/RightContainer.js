@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Dimensions, TouchableOpacity, Image, Text } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 const uploadPic = require("../../../../../assets/images/upload.jpg");
 
 const RightContainer = (props) => {
@@ -12,20 +13,38 @@ const RightContainer = (props) => {
         alignItems: "center",
       }}
     >
-      <TouchableOpacity onPress={() => props.navigation.navigate("LocalFiles")}>
-        <View
-          style={{
-            height: 30,
-            width: 30,
-            borderRadius: 5,
-            borderColor: "white",
-            borderWidth: 2,
-          }}
-        >
-          <Image source={uploadPic} style={{ height: "100%", width: "100%" }} />
+      {props.recording ? (
+        <View style={{ flexDirection: "row" }}>
+          <Ionicons
+            name="backspace"
+            style={{ fontSize: 30, color: "white", paddingRight: 30 }}
+          />
+          <Ionicons
+            name="checkmark-circle"
+            style={{ fontSize: 30, color: "red" }}
+          />
         </View>
-        <Text style={{ color: "white" }}>Upload</Text>
-      </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("LocalFiles")}
+        >
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 5,
+              borderColor: "white",
+              borderWidth: 2,
+            }}
+          >
+            <Image
+              source={uploadPic}
+              style={{ height: "100%", width: "100%" }}
+            />
+          </View>
+          <Text style={{ color: "white" }}>Upload</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -22,8 +22,12 @@ const BottomContainer = (props) => {
         <MiddleContainer
           setRecording={props.setRecording}
           recording={props.recording}
+          recordVideo={props.recordVideo}
         />
-        <RightContainer />
+        <RightContainer
+          recording={props.recording}
+          navigation={props.navigation}
+        />
       </View>
       <View
         style={{
@@ -39,57 +43,3 @@ const BottomContainer = (props) => {
 };
 
 export default BottomContainer;
-
-{
-  /* 
-        <View>
-          {props.recording ? (
-            <StopRecordButton
-              setRecordingPaused={props.setRecordingPaused}
-              
-            />
-          ) : (
-            
-          )}
-        </View>
-        <View>
-          {!props.recording ? (
-            
-          ) : (
-            <TouchableOpacity
-              style={{
-                alignItems: "center",
-                marginTop: 20,
-                width: 80,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-              onPress={() => props.navigation.navigate("LocalFiles")}
-            >
-              <Ionicons
-                name="backspace"
-                style={{ fontSize: 30, color: "white" }}
-              />
-              <Ionicons
-                name="checkmark-circle"
-                style={{ fontSize: 30, color: "red" }}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
-        {props.recorded ? (
-          <Ionicons
-            name="checkmark-circle-outline"
-            color="#5395ea"
-            size={40}
-            style={{ top: 45, position: "absolute", right: 40 }}
-            onPress={() => {
-              console.log("uri: ", props.videoUri);
-              props.navigation.navigate("AudioScreen", {
-                videoUri: props.videoUri,
-                videoDuration: props.videoDuration,
-              });
-            }}
-          />
-        ) : null} */
-}

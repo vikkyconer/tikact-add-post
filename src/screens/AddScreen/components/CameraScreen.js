@@ -143,12 +143,11 @@ const CameraScreen = (props) => {
 
   const recordVideo = async () => {
     try {
-      await runCounter();
-      setRecording(true);
-      setTimerValue(timers[currentTimer]);
+      console.log("recording");
       const { uri, codec = "mp4" } = await camera.recordAsync({
         maxDuration: 5,
       });
+      console.log("uri: ", uri);
       setVideoUri(uri);
       setVideoDuration(5);
       setRecorded(true);
