@@ -7,6 +7,7 @@ import LocalFiles from "../components/LocalFiles";
 import PostScreen from "../components/PostScreen";
 import AudioScreen from "../components/AudioScreen";
 import RecordAudio from "../components/RecordAudio";
+import RecordedVideoPreview from "../components/RecordedVideoPreview";
 
 const Stack = createStackNavigator();
 
@@ -61,6 +62,15 @@ export default function MainScreen() {
       <Stack.Screen
         name="RecordAudio"
         component={RecordAudio}
+        options={{
+          title: null,
+          headerTransparent: true,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RecordedVideoPreview"
+        component={RecordedVideoPreview}
         options={{
           title: null,
           headerTransparent: true,

@@ -1,7 +1,6 @@
 import React from "react";
 import { style } from "../../styles";
-import { View, Text, TouchableOpacity, Image, Dimensions } from "react-native";
-import { effectsIcon, uploadIcon } from "../../constants";
+import { View} from "react-native";
 
 import RecordButton from "./RecordButton";
 import SpeedBar from "./SpeedBar";
@@ -27,6 +26,8 @@ const BottomContainer = (props) => {
         <RightContainer
           recording={props.recording}
           navigation={props.navigation}
+          recorded={props.recorded}
+          videoUri={props.videoUri}
         />
       </View>
       <View

@@ -13,15 +13,20 @@ const RightContainer = (props) => {
         alignItems: "center",
       }}
     >
-      {props.recording ? (
+      {props.recording || props.recorded ? (
         <View style={{ flexDirection: "row" }}>
           <Ionicons
             name="backspace"
-            style={{ fontSize: 30, color: "white", paddingRight: 30 }}
+            style={{ fontSize: 30, color: "white", paddingRight: 20 }}
           />
           <Ionicons
             name="checkmark-circle"
             style={{ fontSize: 30, color: "red" }}
+            onPress={() =>
+              props.navigation.navigate("RecordedVideoPreview", {
+                videoUri: props.videoUri,
+              })
+            }
           />
         </View>
       ) : (

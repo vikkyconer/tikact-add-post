@@ -124,6 +124,8 @@ const CameraScreen = (props) => {
             setRecording={setRecording}
             setRecordingPaused={setRecordingPaused}
             recordingPaused={recordingPaused}
+            recorded={recorded}
+            videoUri={videoUri}
           />
         );
       case bottomContainers.FILTER:
@@ -188,6 +190,8 @@ const CameraScreen = (props) => {
             setRecording={setRecording}
             setRecordingPaused={setRecordingPaused}
             recordingPaused={recordingPaused}
+            recorded={recorded}
+            videoUri={videoUri}
           />
         </View>
       </View>
