@@ -1,34 +1,51 @@
 import React from "react";
-import { style, StopRecordingButton } from "../../styles";
+import { style } from "../../styles";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { effectsIcon, uploadIcon } from "../../constants";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RecordButton from "./RecordButton";
 import SpeedBar from "./SpeedBar";
+import StopRecordButton from "./StopRecordButton";
 const uploadPic = require("../../../../assets/images/upload.jpg");
 
 const BottomContainer = (props) => {
   return (
     <View style={style.bottomContainer}>
-      <SpeedBar showSpeedOptions={props.showSpeedOptions} />
+      <SpeedBar
+        showSpeedOptions={props.showSpeedOptions}
+        recording={props.recording}
+      />
       <View style={style.bottomVideoIconsContainer}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate("LocalFiles")}
-          style={{ alignItems: "center" }}
+          onPress={() => null}
+          style={{ alignItems: "center", marginTop: 15 }}
         >
-          {effectsIcon}
-          <Text style={{ color: "white", alignSelf: "center" }}>Effects</Text>
+          <Ionicons
+            name="happy-outline"
+            color="yellow"
+            size={30}
+            style={{ opacity: props.recording ? 0 : 1 }}
+          />
+          <Text
+            style={{
+              color: "white",
+              alignSelf: "center",
+              opacity: props.recording ? 0 : 1,
+            }}
+          >
+            Effects
+          </Text>
         </TouchableOpacity>
-
-        {props.recording ? (
-          <TouchableOpacity onPress={props.stopRecording}>
-            <StopRecordingButton />
-            <View style={style.stopRecordingSquare} />
-          </TouchableOpacity>
-        ) : (
-          <RecordButton />
-        )}
-
+        <View>
+          {props.recording ? (
+            <StopRecordButton
+              setRecordingPaused={props.setRecordingPaused}
+              setRecording={props.setRecording}
+            />
+          ) : (
+            <RecordButton setRecording={props.setRecording} />
+          )}
+        </View>
         <TouchableOpacity
           style={{ alignItems: "center", marginTop: 20 }}
           onPress={() => props.navigation.navigate("LocalFiles")}
@@ -49,14 +66,6 @@ const BottomContainer = (props) => {
           </View>
           <Text style={{ color: "white" }}>Upload</Text>
         </TouchableOpacity>
-
-        {/* <TouchableOpacity
-          onPress={() => props.navigation.navigate("LocalFiles")}
-          style={{ alignItems: "center" }}
-        >
-          {uploadIcon}
-          <Text style={{ color: "white", alignSelf: "center" }}>Upload</Text>
-        </TouchableOpacity> */}
         {props.recorded ? (
           <Ionicons
             name="checkmark-circle-outline"
@@ -81,20 +90,7 @@ const BottomContainer = (props) => {
           height: 10,
           width: 180,
         }}
-      >
-        {/* <Carousel
-      ref={(c) => {
-        carousel = c;
-      }}
-      layout={"stack"}
-      data={carouselItems}
-      renderItem={_renderItem}
-      sliderWidth={100}
-      itemWidth={50}
-      inactiveSlideOpacity={1}
-      onSnapToItem={(index) => setActiveIndex(index)}
-    /> */}
-      </View>
+      ></View>
     </View>
   );
 };

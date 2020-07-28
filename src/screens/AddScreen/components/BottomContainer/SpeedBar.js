@@ -72,7 +72,9 @@ const SpeedBar = (props) => {
         marginBottom: 10,
       }}
     >
-      {props.showSpeedOptions ? getMultipleOptions(speeds) : null}
+      {props.showSpeedOptions && props.recording === false
+        ? getMultipleOptions(speeds)
+        : null}
     </View>
   );
 };

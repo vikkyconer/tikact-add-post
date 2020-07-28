@@ -1,26 +1,5 @@
 import styled from "styled-components/native";
 
-export const RecordButton = styled.TouchableOpacity`
-  padding: 5px;
-  width: 70px;
-  height: 70px;
-  border-radius: 40px;
-  align-self: center;
-  bottom: 5%;
-  background-color: #ed3a50;
-`;
-
-export const StopRecordingButton = styled.TouchableOpacity`
-  padding: 5px;
-  width: 80px;
-  height: 80px;
-  border-width: 6px;
-  border-color: #8c2142;
-  border-radius: 40px;
-  align-self: center;
-  bottom: -10%;
-`;
-
 export const style = {
   timer: {
     position: "absolute",

@@ -25,6 +25,7 @@ const CameraScreen = (props) => {
   const [recorded, setRecorded] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
+  const [recordingPaused, setRecordingPaused] = useState(false);
   const [bottomContainer, setBottomContainer] = useState(
     bottomContainers.DEFAULT
   );
@@ -91,7 +92,7 @@ const CameraScreen = (props) => {
           onPress={() => setBottomContainer(bottomContainers.DEFAULT)}
         />
 
-        {bottomContainer === bottomContainers.DEFAULT ? (
+        {bottomContainer === bottomContainers.DEFAULT && recording === false ? (
           <VideoOtherOptions
             crossIcon={crossIcon}
             flashCamera={flashCamera}
@@ -119,6 +120,10 @@ const CameraScreen = (props) => {
             recording={recording}
             navigation={props.navigation}
             showSpeedOptions={showSpeedOptions}
+            setBottomContainer={setBottomContainer}
+            setRecording={setRecording}
+            setRecordingPaused={setRecordingPaused}
+            recordingPaused={recordingPaused}
           />
         );
       case bottomContainers.FILTER:
@@ -179,10 +184,11 @@ const CameraScreen = (props) => {
             stopRecording={stopRecording}
             recording={recording}
             navigation={props.navigation}
-            recorded={recorded}
-            videoUri={videoUri}
-            videoDuration={videoDuration}
             showSpeedOptions={showSpeedOptions}
+            setBottomContainer={setBottomContainer}
+            setRecording={setRecording}
+            setRecordingPaused={setRecordingPaused}
+            recordingPaused={recordingPaused}
           />
         </View>
       </View>

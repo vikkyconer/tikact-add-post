@@ -1,40 +1,43 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
-import { bottomContainers } from "../../constants";
 
-const RecordButton = (props) => {
+const StopRecordButton = (props) => {
   return (
     <TouchableOpacity
       style={{
         width: 80,
         height: 80,
         borderRadius: 70,
-        alignItems: "center",      
+        alignItems: "center",
+        marginTop: -20,
       }}
-      onPress={() => props.setRecording(true)}
+      onPress={() => {
+        props.setRecording(false)
+        props.setRecordingPaused(true);
+      }}
     >
       <View
         style={{
-          width: 80,
-          height: 80,
+          width: 120,
+          height: 120,
           borderRadius: 70,
           borderColor: "#ed3a50",
-          borderWidth: 6,
+          borderWidth: 20,
           opacity: 0.5,
           position: "absolute",
         }}
       />
       <View
         style={{
-          width: 60,
-          height: 60,
-          borderRadius: 70,
+          width: 40,
+          height: 40,
+          borderRadius: 10,
           backgroundColor: "#ed3a50",
-          marginTop: 10,
+          marginTop: 40,
         }}
       />
     </TouchableOpacity>
   );
 };
 
-export default RecordButton;
+export default StopRecordButton;

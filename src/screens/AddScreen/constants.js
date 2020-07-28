@@ -33,17 +33,6 @@ export const uploadIcon = (
   />
 );
 
-export const effectsIcon = (
-  <Ionicons
-    name="happy-outline"
-    color="yellow"
-    size={30}
-    style={{
-      marginTop: 20,
-    }}
-  />
-);
-
 export const carouselItems = [
   {
     title: "15s",

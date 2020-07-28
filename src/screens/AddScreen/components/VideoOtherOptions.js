@@ -10,8 +10,8 @@ const VideoOtherOptions = (props) => {
       <View style={{ margin: 10 }}>
         <ProgressBar
           progress={0}
-          color="red"
-          style={{ height: 8, borderRadius: 5 }}
+          color="yellow"
+          style={{ height: 7, borderRadius: 5 }}
         />
       </View>
       <View
