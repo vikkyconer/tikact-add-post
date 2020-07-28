@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const BackButton = () => {
+const BackButton = (props) => {
   return (
     <View
       style={{
@@ -16,6 +16,7 @@ const BackButton = () => {
       <Ionicons
         name="arrow-back-outline"
         style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+        onPress={() => props.navigation.goBack()}
       />
     </View>
   );

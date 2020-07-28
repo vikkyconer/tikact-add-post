@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { style } from "../AddScreen/styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const BottomBar = () => {
+const BottomBar = (props) => {
   return (
     <View
       style={{
@@ -37,9 +37,7 @@ const BottomBar = () => {
             name="text-outline"
             style={{ fontSize: 30, color: "white", paddingRight: 20 }}
           />
-          <Text style={{ color: "white", fontSize: 10 }}>
-            Texts
-          </Text>
+          <Text style={{ color: "white", fontSize: 10 }}>Texts</Text>
         </View>
         <View>
           <Ionicons
@@ -49,7 +47,7 @@ const BottomBar = () => {
           <Text style={{ color: "white", fontSize: 10 }}>Stickers</Text>
         </View>
       </View>
-      <View
+      <TouchableOpacity
         style={{
           backgroundColor: "red",
           borderRadius: 5,
@@ -59,9 +57,12 @@ const BottomBar = () => {
           alignItems: "center",
           paddingVertical: 10,
         }}
+        onPress={() =>
+          props.navigation.navigate("PostScreen", { videoUri: props.videoUri })
+        }
       >
         <Text style={{ color: "white" }}>Next</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -26,9 +26,9 @@ const RecordedVideoPreview = (props) => {
         }}
         source={{ uri: videoUri }}
       />
-      <BackButton />
+      <BackButton navigation={props.navigation} />
       <VideoEditOptions />
-      <BottomBar />
+      <BottomBar navigation={props.navigation} videoUri={videoUri} />
     </View>
   );
 };
