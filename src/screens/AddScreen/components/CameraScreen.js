@@ -6,7 +6,7 @@ import BottomContainer from "./BottomContainer";
 import Feather from "react-native-vector-icons/Feather";
 import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
-import Filters from "./Filters";
+import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 
 const CameraScreen = (props) => {

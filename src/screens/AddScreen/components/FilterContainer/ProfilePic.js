@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
 
-const profilePic = require("../../../assets/images/profile.jpeg");
+const profilePic = require("../../../../assets/images/profile.jpeg");
 
 const ProfilePic = (props) => {
   return (
@@ -13,31 +13,22 @@ const ProfilePic = (props) => {
     >
       <View
         style={{
-          backgroundColor: props.selected ? "#5395ea" : "transparent",
+          borderColor: props.selected ? "red" : "transparent",
           height: 60,
           width: 60,
           alignItems: "center",
           borderRadius: 100,
-          padding: 5,
+          borderWidth: props.selected ? 2 : 0,
         }}
       >
-        <View
-          style={{
-            height: "100%",
-            width: "100%",
-            alignItems: "center",
-            borderRadius: 100,
-          }}
-        >
-          <Image
-            source={profilePic}
-            style={{ height: "100%", width: "100%", borderRadius: 100 }}
-          />
-        </View>
+        <Image
+          source={profilePic}
+          style={{ height: "100%", width: "100%", borderRadius: 100 }}
+        />
       </View>
       <Text
         style={{
-          color: props.selected ? "#5395ea" : "white",
+          color: props.selected ? "red" : "white",
           alignSelf: "center",
         }}
       >

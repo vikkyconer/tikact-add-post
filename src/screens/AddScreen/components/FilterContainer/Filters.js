@@ -1,27 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { style } from "../styles";
 import ProfilePic from "./ProfilePic";
 import { RNCamera } from "react-native-camera";
 import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
-import Feather from "react-native-vector-icons/Feather";
-import { bottomContainers } from "../constants";
 const { View } = require("react-native");
 
 const Filters = (props) => {
   const [filters, setFilters] = useState([]);
   const [filterBrightness, setFilterBrightness] = useState(1);
-
-  const crossIcon = (
-    <Feather
-      name="x"
-      color="white"
-      size={20}
-      onPress={() => {
-        props.setBottomContainer(bottomContainers.DEFAULT);
-      }}
-    />
-  );
 
   useEffect(() => {
     DeviceBrightness.setBrightnessLevel(filterBrightness);
@@ -60,29 +46,46 @@ const Filters = (props) => {
   return (
     <View
       style={{
-        ...style.bottomContainer,
-        justifyContent: "space-around",
-        paddingTop: 10,
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 200,
       }}
     >
-      <View style={style.background} />
-      <View style={{ position: "absolute", right: 10, top: 0 }}>
-        {crossIcon}
-      </View>
+      <View
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "black",
+          opacity: 0.8,
+          marginTop: 50,
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+        }}
+      />
+
       <View>
         <Slider
           style={{ width: "100%", height: 40 }}
           minimumValue={0}
           maximumValue={1}
           value={filterBrightness}
-          minimumTrackTintColor="#FFFFFF"
+          minimumTrackTintColor="red"
           maximumTrackTintColor="#000000"
           onValueChange={(value) => {
             setFilterBrightness(value);
           }}
         />
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          paddingTop: 50,
+        }}
+      >
         {renderFilters()}
       </View>
     </View>
