@@ -27,14 +27,14 @@ const BottomBar = () => {
         </View>
         <View>
           <Ionicons
-            name="musical-notes-outline"
+            name="hand-left-outline"
             style={{ fontSize: 30, color: "white", paddingRight: 20 }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>Effects</Text>
         </View>
         <View>
           <Ionicons
-            name="musical-notes-outline"
+            name="text-outline"
             style={{ fontSize: 30, color: "white", paddingRight: 20 }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>
@@ -43,7 +43,7 @@ const BottomBar = () => {
         </View>
         <View>
           <Ionicons
-            name="musical-notes-outline"
+            name="happy-outline"
             style={{ fontSize: 30, color: "white", paddingRight: 20 }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>Stickers</Text>
