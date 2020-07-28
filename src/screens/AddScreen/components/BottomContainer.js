@@ -9,7 +9,7 @@ import SpeedBar from "./SpeedBar";
 const BottomContainer = (props) => {
   return (
     <View style={style.bottomContainer}>
-      <SpeedBar />
+      <SpeedBar showSpeedOptions={props.showSpeedOptions} />
       <View style={style.bottomVideoIconsContainer}>
         <TouchableOpacity
           onPress={() => props.navigation.navigate("LocalFiles")}

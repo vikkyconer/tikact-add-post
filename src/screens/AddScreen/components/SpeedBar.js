@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { speeds } from "../constants";
 import { style } from "../styles";
 
-const SpeedBar = () => {
+const SpeedBar = (props) => {
   const getMultipleOptions = (arr, currentValue) => {
     return (
       <View
@@ -71,7 +71,7 @@ const SpeedBar = () => {
         marginBottom: 10,
       }}
     >
-      {getMultipleOptions(speeds, 2)}
+      {props.showSpeedOptions ? getMultipleOptions(speeds, 2) : null}
     </View>
   );
 };

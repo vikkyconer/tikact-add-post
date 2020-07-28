@@ -6,7 +6,7 @@ import { getIcon } from "../../../utility";
 
 const VideoEditTools = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(2);
-  const [showSpeedOptions, setShowSpeedOptions] = useState(false);
+
   const [showTimerOptions, setShowTimerOptions] = useState(false);
 
   const flipCamera = () => {
@@ -31,7 +31,7 @@ const VideoEditTools = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center" }}
-        onPress={() => setShowSpeedOptions(!showSpeedOptions)}
+        onPress={() => props.setShowSpeedOptions(!props.showSpeedOptions)}
       >
         {getIcon("speedometer-outline")}
         <Text style={{ color: "white" }}>Speed</Text>

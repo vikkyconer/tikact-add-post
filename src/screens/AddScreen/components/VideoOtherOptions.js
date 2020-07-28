@@ -34,6 +34,8 @@ const VideoOtherOptions = (props) => {
         showFilters={props.showFilters}
         cameraSide={props.cameraSide}
         setCameraSide={props.setCameraSide}
+        setShowSpeedOptions={props.setShowSpeedOptions}
+        showSpeedOptions={props.showSpeedOptions}
       />
     </View>
   );

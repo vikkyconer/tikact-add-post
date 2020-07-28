@@ -25,6 +25,7 @@ const CameraScreen = (props) => {
   const [videoUri, setVideoUri] = useState(null);
   const [recorded, setRecorded] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [showSpeedOptions, setShowSpeedOptions] = useState(true);
 
   const crossIcon = (
     <Feather
@@ -122,6 +123,8 @@ const CameraScreen = (props) => {
               setShowFilters={setShowFilters}
               cameraSide={cameraSide}
               setCameraSide={setCameraSide}
+              setShowSpeedOptions={setShowSpeedOptions}
+              showSpeedOptions={showSpeedOptions}
             />
           ) : null}
 
@@ -144,6 +147,7 @@ const CameraScreen = (props) => {
               recording={recording}
               showTimer={showTimer}
               navigation={props.navigation}
+              showSpeedOptions={showSpeedOptions}
             />
           )}
         </RNCamera>
@@ -162,6 +166,8 @@ const CameraScreen = (props) => {
               setShowFilters={setShowFilters}
               cameraSide={cameraSide}
               setCameraSide={setCameraSide}
+              setShowSpeedOptions={setShowSpeedOptions}
+              showSpeedOptions={showSpeedOptions}
             />
             <BottomContainer
               recordVideo={recordVideo}
@@ -172,6 +178,7 @@ const CameraScreen = (props) => {
               recorded={recorded}
               videoUri={videoUri}
               videoDuration={videoDuration}
+              showSpeedOptions={showSpeedOptions}
             />
           </View>
         </View>
