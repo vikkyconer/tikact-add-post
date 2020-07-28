@@ -7,13 +7,14 @@ import Feather from "react-native-vector-icons/Feather";
 import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
 import Filters from "./Filters";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import TimerContainer from "./TimerContainer";
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
   const [cameraSide, setCameraSide] = useState("front");
   const [cameraFlash, setCameraFlash] = useState("off");
   const [recording, setRecording] = useState(false);
-  const [showTimer, setShowTimer] = useState(false);
   const [currentTimer, setCurrentTimer] = useState(1);
   const [timerValue, setTimerValue] = useState(timers[1]);
   const [flashIcon, setFlashIcon] = useState("flash-off-outline");
@@ -82,7 +83,7 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-        {!recording && !showTimer ? (
+        {bottomContainer === bottomContainers.DEFAULT ? (
           <VideoOtherOptions
             crossIcon={crossIcon}
             flashCamera={flashCamera}
@@ -108,7 +109,6 @@ const CameraScreen = (props) => {
             recordVideo={recordVideo}
             stopRecording={stopRecording}
             recording={recording}
-            showTimer={showTimer}
             navigation={props.navigation}
             showSpeedOptions={showSpeedOptions}
           />
@@ -123,15 +123,15 @@ const CameraScreen = (props) => {
             setBottomContainer={setBottomContainer}
           />
         );
+      case bottomContainers.TIMER:
+        return <TimerContainer />;
     }
   };
 
   const recordVideo = async () => {
     try {
-      setShowTimer(true);
       await runCounter();
       setRecording(true);
-      setShowTimer(false);
       setTimerValue(timers[currentTimer]);
       const { uri, codec = "mp4" } = await camera.recordAsync({
         maxDuration: 5,
@@ -170,7 +170,6 @@ const CameraScreen = (props) => {
             recordVideo={recordVideo}
             stopRecording={stopRecording}
             recording={recording}
-            showTimer={showTimer}
             navigation={props.navigation}
             recorded={recorded}
             videoUri={videoUri}
@@ -190,7 +189,8 @@ const CameraScreen = (props) => {
       }}
     >
       <StatusBar hidden={true} />
-      {!recorded ? getCamera() : getCameraOptions()}
+      {getCamera()}
+      {/* {!recorded ? getCamera() : getCameraOptions()} */}
     </View>
   );
 };

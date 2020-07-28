@@ -25,9 +25,9 @@ const BottomContainer = (props) => {
             <StopRecordingButton />
             <View style={style.stopRecordingSquare} />
           </TouchableOpacity>
-        ) : !props.showTimer ? (
+        ) : (
           <RecordButton />
-        ) : null}
+        )}
 
         <TouchableOpacity
           style={{ alignItems: "center", marginTop: 20 }}
