@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import Video from "react-native-video";
-import BottomBar from "../screens/RecordedVideoPreview/BottomBar";
+import BottomBar from "../screens/RecordedVideoPreview/BottomBar/BottomBar";
 import VideoEditOptions from "../screens/RecordedVideoPreview/VideoEditOptions";
 import BackButton from "../screens/RecordedVideoPreview/BackButton";
 import Filters from "../screens/RecordedVideoPreview/FilterContainer/Filters";

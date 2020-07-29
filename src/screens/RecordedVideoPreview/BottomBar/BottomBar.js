@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { style } from "../AddScreen/styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import TextInput from "./TextInputModal";
+import TextInputModal from "./TextInputModal";
+import CaptionDisplay from "./CaptionDisplay";
 
 const BottomBar = (props) => {
+  const [enteredText, setEnteredText] = useState("");
+  const [allowEnterText, setAllowEnterText] = useState(false);
   return (
     <View
       style={{
@@ -18,31 +22,34 @@ const BottomBar = (props) => {
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <View>
+        <View style={{ alignItems: "center", paddingRight: 20 }}>
           <Ionicons
             name="musical-notes-outline"
-            style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+            style={{ fontSize: 30, color: "white" }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>Sounds</Text>
         </View>
-        <View>
+        <View style={{ alignItems: "center", paddingRight: 20 }}>
           <Ionicons
             name="hand-left-outline"
-            style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+            style={{ fontSize: 30, color: "white" }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>Effects</Text>
         </View>
-        <View>
+        <TouchableOpacity
+          style={{ alignItems: "center", paddingRight: 20 }}
+          onPress={() => setAllowEnterText(true)}
+        >
           <Ionicons
             name="text-outline"
-            style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+            style={{ fontSize: 30, color: "white" }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>Texts</Text>
-        </View>
-        <View>
+        </TouchableOpacity>
+        <View style={{ alignItems: "center", paddingRight: 20 }}>
           <Ionicons
             name="happy-outline"
-            style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+            style={{ fontSize: 30, color: "white" }}
           />
           <Text style={{ color: "white", fontSize: 10 }}>Stickers</Text>
         </View>
@@ -63,6 +70,14 @@ const BottomBar = (props) => {
       >
         <Text style={{ color: "white" }}>Next</Text>
       </TouchableOpacity>
+      {allowEnterText ? (
+        <TextInputModal
+          enteredText={enteredText}
+          setEnteredText={setEnteredText}
+          setAllowEnterText={setAllowEnterText}
+        />
+      ) : null}
+      {enteredText !== "" ? <CaptionDisplay enteredText={enteredText} /> : null}
     </View>
   );
 };
