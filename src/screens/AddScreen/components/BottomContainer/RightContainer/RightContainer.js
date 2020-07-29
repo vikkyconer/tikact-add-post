@@ -23,7 +23,7 @@ const RightContainer = (props) => {
       case 3:
         return 0.3;
       default:
-        return 1;
+        return 0.5;
     }
   };
 
@@ -36,14 +36,19 @@ const RightContainer = (props) => {
         return `${path}output_${index}.mp4`;
       })
     );
-    // const videos = processedVideos.map((processedVideo) => {
-    //   return `'${processedVideo}'`;
-    // });
-    const query = processedVideos.join("|");
+    const videos = processedVideos.map((processedVideo) => {
+      return `-i '${processedVideo}'`;
+    });
+    const videoAudios = processedVideos.map((processedVideo, index) => {
+      return `[${index}:v][${index}:a]`;
+    });
+    const query = `${videos.join(" ")} -filter_complex "${videoAudios.join(
+      ""
+    )} concat=n=${processedVideos.length}:v=1:a=1 [outv] [outa]"`;
     console.log("query: ", query);
 
     const response = await RNFFmpeg.execute(
-      `-i ${processedVideos[0]} -i ${processedVideos[1]} -filter_complex "[0:v][0:a][1:v][1:a] concat=n=2:v=1:a=1 [outv] [outa]" -map "[outv]" -map "[outa]" ${path}final.mp4`
+      `${query} -map "[outv]" -map "[outa]" ${path}final.mp4`
     );
     console.log("response: ", response);
     return `${path}final.mp4`;
@@ -118,6 +123,7 @@ const RightContainer = (props) => {
           setRecorded={props.setRecorded}
           setRecording={props.setRecording}
           setVideoUris={props.setVideoUris}
+          videoUris={props.videoUris}
         />
       ) : null}
     </View>

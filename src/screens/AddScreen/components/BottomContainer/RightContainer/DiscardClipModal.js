@@ -1,9 +1,24 @@
 import React from "react";
 import { View, Modal, Text, TouchableOpacity } from "react-native";
+var RNFS = require("react-native-fs");
 
 const DiscardClipModal = (props) => {
-  const discardClip = () => {
+  const discardClip = async () => {
+    console.log("uris: ", props.videoUris);
+    const splitPath = props.videoUris[0].split("/");
+    const fileName = splitPath[splitPath.length - 1];
+    const fileNameWithoutExtension = fileName.split(".")[0];
+    console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
+    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
+    const exist = await RNFS.exists(path);
+    if(exist) {
+      await RNFS.unlink(path)
+    }
+    await Promise.all(props.videoUris.map(async(videoUri) => {
+      await RNFS.unlink(videoUri)
+    }))
     props.setVideoUris([]);
+
     props.setRecording(false);
     props.setRecorded(false);
     props.setShowDiscardModal(false);
