@@ -5,7 +5,7 @@ var RNFS = require("react-native-fs");
 const DiscardClipModal = (props) => {
   const discardClip = async () => {
     console.log("uris: ", props.videoUris);
-    const splitPath = props.videoUris[0].split("/");
+    const splitPath = props.videoUris[0].uri.split("/");
     const fileName = splitPath[splitPath.length - 1];
     const fileNameWithoutExtension = fileName.split(".")[0];
     console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
@@ -14,8 +14,8 @@ const DiscardClipModal = (props) => {
     if(exist) {
       await RNFS.unlink(path)
     }
-    await Promise.all(props.videoUris.map(async(videoUri) => {
-      await RNFS.unlink(videoUri)
+    await Promise.all(props.videoUris.map(async(video) => {
+      await RNFS.unlink(video.uri)
     }))
     props.setVideoUris([]);
 

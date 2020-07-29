@@ -10,8 +10,8 @@ const RightContainer = (props) => {
   const window = Dimensions.get("window");
   const [showDiscardModal, setShowDiscardModal] = useState(false);
 
-  const getVideoSpeed = () => {
-    switch (props.currentSpeed) {
+  const getVideoSpeed = (currentSpeed) => {
+    switch (currentSpeed) {
       case 0.3:
         return 3;
       case 0.5:
@@ -23,15 +23,17 @@ const RightContainer = (props) => {
       case 3:
         return 0.3;
       default:
-        return 0.5;
+        return 1;
     }
   };
 
   const mergeVideos = async (path) => {
     const processedVideos = await Promise.all(
-      props.videoUris.map(async (videoUri, index) => {
+      props.videoUris.map(async (video, index) => {
         const _processedVideo = await RNFFmpeg.execute(
-          `-i '${videoUri}' -filter:v "setpts=${getVideoSpeed()}*PTS" ${path}output_${index}.mp4`
+          `-i '${video.uri}' -filter:v "setpts=${getVideoSpeed(
+            video.currentSpeed
+          )}*PTS" ${path}output_${index}.mp4`
         );
         return `${path}output_${index}.mp4`;
       })
@@ -57,7 +59,7 @@ const RightContainer = (props) => {
   const processVideo = async () => {
     props.setVideoProcessing(true);
     console.log("uris: ", props.videoUris);
-    const splitPath = props.videoUris[0].split("/");
+    const splitPath = props.videoUris[0].uri.split("/");
     const fileName = splitPath[splitPath.length - 1];
     const fileNameWithoutExtension = fileName.split(".")[0];
     console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);

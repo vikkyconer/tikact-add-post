@@ -10,14 +10,14 @@ import LeftContainer from "./LeftContainer/LeftContainer";
 import RightContainer from "./RightContainer/RightContainer";
 
 const BottomContainer = (props) => {
-  const [currentSpeed, setCurrentSpeed] = useState(1);
+  
   return (
     <View style={style.bottomContainer}>
       <SpeedBar
         showSpeedOptions={props.showSpeedOptions}
         recording={props.recording}
-        setCurrentSpeed={setCurrentSpeed}
-        currentSpeed={currentSpeed}
+        setCurrentSpeed={props.setCurrentSpeed}
+        currentSpeed={props.currentSpeed}
       />
       <View style={style.bottomVideoIconsContainer}>
         <LeftContainer recording={props.recording} />
@@ -33,7 +33,7 @@ const BottomContainer = (props) => {
           recorded={props.recorded}
           videoUris={props.videoUris}
           setVideoProcessing={props.setVideoProcessing}
-          currentSpeed={currentSpeed}
+          currentSpeed={props.currentSpeed}
           setRecording={props.setRecording}
           setRecorded={props.setRecorded}
           setVideoUris={props.setVideoUris}

@@ -37,6 +37,7 @@ const CameraScreen = (props) => {
   const [bottomContainer, setBottomContainer] = useState(
     bottomContainers.DEFAULT
   );
+  const [currentSpeed, setCurrentSpeed] = useState(1);
   const window = Dimensions.get("window");
 
   const crossIcon = (
@@ -153,6 +154,8 @@ const CameraScreen = (props) => {
             setVideoProcessing={setVideoProcessing}
             setRecorded={setRecorded}
             setVideoUris={setVideoUris}
+            setCurrentSpeed={setCurrentSpeed}
+            currentSpeed={currentSpeed}
           />
         );
       case bottomContainers.FILTER:
@@ -176,7 +179,7 @@ const CameraScreen = (props) => {
         maxDuration: 20,
       });
       console.log("uri: ", videoUris);
-      setVideoUris([...videoUris, uri]);
+      setVideoUris([...videoUris, { uri, currentSpeed }]);
       setVideoDuration(20);
       setRecorded(true);
       setRecording(false);
@@ -221,6 +224,8 @@ const CameraScreen = (props) => {
             setVideoProcessing={setVideoProcessing}
             setRecorded={setRecorded}
             setVideoUris={setVideoUris}
+            setCurrentSpeed={setCurrentSpeed}
+            currentSpeed={currentSpeed}
           />
         </View>
       </View>
