@@ -37,7 +37,7 @@ const CameraScreen = (props) => {
   const [bottomContainer, setBottomContainer] = useState(
     bottomContainers.DEFAULT
   );
-  const window = Dimensions.get("window");  
+  const window = Dimensions.get("window");
 
   const crossIcon = (
     <Feather
@@ -151,6 +151,8 @@ const CameraScreen = (props) => {
             recorded={recorded}
             videoUri={videoUri}
             setVideoProcessing={setVideoProcessing}
+            setVideoUri={setVideoUri}
+            setRecorded={setRecorded}
           />
         );
       case bottomContainers.FILTER:
@@ -217,6 +219,8 @@ const CameraScreen = (props) => {
             recorded={recorded}
             videoUri={videoUri}
             setVideoProcessing={setVideoProcessing}
+            setVideoUri={setVideoUri}
+            setRecorded={setRecorded}
           />
         </View>
       </View>

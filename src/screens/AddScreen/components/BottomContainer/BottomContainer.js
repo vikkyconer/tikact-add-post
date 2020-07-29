@@ -33,6 +33,9 @@ const BottomContainer = (props) => {
           videoUri={props.videoUri}
           setVideoProcessing={props.setVideoProcessing}
           currentSpeed={currentSpeed}
+          setVideoUri={props.setVideoUri}
+          setRecording={props.setRecording}
+          setRecorded={props.setRecorded}
         />
       </View>
       <View

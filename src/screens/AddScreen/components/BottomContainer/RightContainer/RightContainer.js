@@ -2,21 +2,28 @@ import React, { useState } from "react";
 import { View, Dimensions, TouchableOpacity, Image, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RNFFmpeg } from "react-native-ffmpeg";
+import DiscardClipModal from "./DiscardClipModal";
 var RNFS = require("react-native-fs");
 const uploadPic = require("../../../../../assets/images/upload.jpg");
 
 const RightContainer = (props) => {
   const window = Dimensions.get("window");
+  const [showDiscardModal, setShowDiscardModal] = useState(false);
 
   const getVideoSpeed = () => {
-    switch(props.currentSpeed) {
-      case 0.3 : return 3
-      case 0.5: return 2
-      case 1: return 1
-      case 2: return 0.5
-      case 3: return 0.3
+    switch (props.currentSpeed) {
+      case 0.3:
+        return 3;
+      case 0.5:
+        return 2;
+      case 1:
+        return 1;
+      case 2:
+        return 0.5;
+      case 3:
+        return 0.3;
     }
-  }
+  };
 
   const processVideo = async () => {
     props.setVideoProcessing(true);
@@ -28,7 +35,9 @@ const RightContainer = (props) => {
     const exist = await RNFS.exists(path);
     const result = !exist ? await RNFS.mkdir(path) : null;
     const _processedVideo = await RNFFmpeg.execute(
-      `-i '${props.videoUri}' -filter:v "setpts=${getVideoSpeed()}*PTS" ${path}output.mp4`
+      `-i '${
+        props.videoUri
+      }' -filter:v "setpts=${getVideoSpeed()}*PTS" ${path}output.mp4`
     );
     props.setVideoProcessing(false);
     props.navigation.navigate("RecordedVideoPreview", {
@@ -49,11 +58,12 @@ const RightContainer = (props) => {
           <Ionicons
             name="backspace"
             style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+            onPress={() => setShowDiscardModal(true)}
           />
           <Ionicons
             name="checkmark-circle"
             style={{ fontSize: 30, color: "red" }}
-            onPress={() => processVideo()}
+            onPress={processVideo}
           />
         </View>
       ) : (
@@ -77,6 +87,13 @@ const RightContainer = (props) => {
           <Text style={{ color: "white" }}>Upload</Text>
         </TouchableOpacity>
       )}
+      {showDiscardModal ? (
+        <DiscardClipModal
+          setShowDiscardModal={setShowDiscardModal}
+          setRecorded={props.setRecorded}
+          setRecording={props.setRecording}
+        />
+      ) : null}
     </View>
   );
 };
