@@ -14,7 +14,10 @@ const MiddleContainer = (props) => {
       }}
     >
       {props.recording ? (
-        <StopRecordButton setRecording={props.setRecording} />
+        <StopRecordButton
+          setRecording={props.setRecording}
+          stopRecording={props.stopRecording}
+        />
       ) : (
         <RecordButton
           setRecording={props.setRecording}

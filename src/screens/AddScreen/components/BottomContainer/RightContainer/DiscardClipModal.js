@@ -3,6 +3,7 @@ import { View, Modal, Text, TouchableOpacity } from "react-native";
 
 const DiscardClipModal = (props) => {
   const discardClip = () => {
+    props.setVideoUris([]);
     props.setRecording(false);
     props.setRecorded(false);
     props.setShowDiscardModal(false);

@@ -70,14 +70,14 @@ const BottomBar = (props) => {
       >
         <Text style={{ color: "white" }}>Next</Text>
       </TouchableOpacity>
-      {allowEnterText ? (
+      {/* {allowEnterText ? (
         <TextInputModal
           enteredText={enteredText}
           setEnteredText={setEnteredText}
           setAllowEnterText={setAllowEnterText}
         />
       ) : null}
-      {enteredText !== "" ? <CaptionDisplay enteredText={enteredText} /> : null}
+      {enteredText !== "" ? <CaptionDisplay enteredText={enteredText} /> : null} */}
     </View>
   );
 };

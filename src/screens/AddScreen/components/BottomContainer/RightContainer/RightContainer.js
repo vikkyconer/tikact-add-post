@@ -22,26 +22,51 @@ const RightContainer = (props) => {
         return 0.5;
       case 3:
         return 0.3;
+      default:
+        return 1;
     }
+  };
+
+  const mergeVideos = async (path) => {
+    const processedVideos = await Promise.all(
+      props.videoUris.map(async (videoUri, index) => {
+        const _processedVideo = await RNFFmpeg.execute(
+          `-i '${videoUri}' -filter:v "setpts=${getVideoSpeed()}*PTS" ${path}output_${index}.mp4`
+        );
+        return `${path}output_${index}.mp4`;
+      })
+    );
+    // const videos = processedVideos.map((processedVideo) => {
+    //   return `'${processedVideo}'`;
+    // });
+    const query = processedVideos.join("|");
+    console.log("query: ", query);
+
+    const response = await RNFFmpeg.execute(
+      `-i ${processedVideos[0]} -i ${processedVideos[1]} -filter_complex "[0:v][0:a][1:v][1:a] concat=n=2:v=1:a=1 [outv] [outa]" -map "[outv]" -map "[outa]" ${path}final.mp4`
+    );
+    console.log("response: ", response);
+    return `${path}final.mp4`;
   };
 
   const processVideo = async () => {
     props.setVideoProcessing(true);
-    const splitPath = props.videoUri.split("/");
+    console.log("uris: ", props.videoUris);
+    const splitPath = props.videoUris[0].split("/");
     const fileName = splitPath[splitPath.length - 1];
     const fileNameWithoutExtension = fileName.split(".")[0];
     console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
     const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
     const exist = await RNFS.exists(path);
+    console.log("exist: ", exist);
     const result = !exist ? await RNFS.mkdir(path) : null;
-    const _processedVideo = await RNFFmpeg.execute(
-      `-i '${
-        props.videoUri
-      }' -filter:v "setpts=${getVideoSpeed()}*PTS" ${path}output.mp4`
-    );
+    const videoPath = await mergeVideos(path);
+    const files = await RNFS.readDir(path);
+    console.log("files: ", files);
+
     props.setVideoProcessing(false);
     props.navigation.navigate("RecordedVideoPreview", {
-      videoUri: `${path}output.mp4`,
+      videoUri: videoPath,
     });
   };
 
@@ -92,6 +117,7 @@ const RightContainer = (props) => {
           setShowDiscardModal={setShowDiscardModal}
           setRecorded={props.setRecorded}
           setRecording={props.setRecording}
+          setVideoUris={props.setVideoUris}
         />
       ) : null}
     </View>

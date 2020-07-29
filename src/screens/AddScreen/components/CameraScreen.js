@@ -28,7 +28,7 @@ const CameraScreen = (props) => {
     RNCamera.Constants.WhiteBalance.auto
   );
   const [selectedFilter, setSelectedFilter] = useState(0);
-  const [videoUri, setVideoUri] = useState(null);
+  const [videoUris, setVideoUris] = useState([]);
   const [recorded, setRecorded] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
@@ -149,10 +149,10 @@ const CameraScreen = (props) => {
             setRecordingPaused={setRecordingPaused}
             recordingPaused={recordingPaused}
             recorded={recorded}
-            videoUri={videoUri}
+            videoUris={videoUris}
             setVideoProcessing={setVideoProcessing}
-            setVideoUri={setVideoUri}
             setRecorded={setRecorded}
+            setVideoUris={setVideoUris}
           />
         );
       case bottomContainers.FILTER:
@@ -173,11 +173,11 @@ const CameraScreen = (props) => {
     try {
       console.log("recording");
       const { uri, codec = "mp4" } = await camera.recordAsync({
-        maxDuration: 5,
+        maxDuration: 20,
       });
-      console.log("uri: ", uri);
-      setVideoUri(uri);
-      setVideoDuration(5);
+      console.log("uri: ", videoUris);
+      setVideoUris([...videoUris, uri]);
+      setVideoDuration(20);
       setRecorded(true);
       setRecording(false);
     } catch (error) {
@@ -194,7 +194,7 @@ const CameraScreen = (props) => {
   const getCameraOptions = () => {
     return (
       <View style={{ width: "100%", height: "100%" }}>
-        <Image source={{ uri: videoUri }} style={{ flex: 1 }} />
+        {/* <Image source={{ uri: videoUri }} style={{ flex: 1 }} /> */}
         <View style={{ position: "absolute", width: "100%", height: "100%" }}>
           <VideoOtherOptions
             crossIcon={crossIcon}
@@ -217,10 +217,10 @@ const CameraScreen = (props) => {
             setRecordingPaused={setRecordingPaused}
             recordingPaused={recordingPaused}
             recorded={recorded}
-            videoUri={videoUri}
+            videoUris={videoUris}
             setVideoProcessing={setVideoProcessing}
-            setVideoUri={setVideoUri}
             setRecorded={setRecorded}
+            setVideoUris={setVideoUris}
           />
         </View>
       </View>

@@ -25,17 +25,18 @@ const BottomContainer = (props) => {
           setRecording={props.setRecording}
           recording={props.recording}
           recordVideo={props.recordVideo}
+          stopRecording={props.stopRecording}
         />
         <RightContainer
           recording={props.recording}
           navigation={props.navigation}
           recorded={props.recorded}
-          videoUri={props.videoUri}
+          videoUris={props.videoUris}
           setVideoProcessing={props.setVideoProcessing}
           currentSpeed={currentSpeed}
-          setVideoUri={props.setVideoUri}
           setRecording={props.setRecording}
           setRecorded={props.setRecorded}
+          setVideoUris={props.setVideoUris}
         />
       </View>
       <View
