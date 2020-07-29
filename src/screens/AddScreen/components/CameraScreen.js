@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StatusBar, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  Dimensions,
+} from "react-native";
 import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
 import BottomContainer from "./BottomContainer/BottomContainer";
@@ -26,9 +33,11 @@ const CameraScreen = (props) => {
   const [videoDuration, setVideoDuration] = useState(0);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
   const [recordingPaused, setRecordingPaused] = useState(false);
+  const [videoProcessing, setVideoProcessing] = useState(false);
   const [bottomContainer, setBottomContainer] = useState(
     bottomContainers.DEFAULT
   );
+  const window = Dimensions.get("window");  
 
   const crossIcon = (
     <Feather
@@ -83,14 +92,29 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-          onPress={() => setBottomContainer(bottomContainers.DEFAULT)}
-        />
+        {!recording && !videoProcessing ? (
+          <TouchableOpacity
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+            }}
+            onPress={() => setBottomContainer(bottomContainers.DEFAULT)}
+          />
+        ) : null}
+
+        {videoProcessing ? (
+          <View
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              paddingVertical: window.width / 2,
+            }}
+          >
+            <ActivityIndicator size="large" color="#000000" />
+          </View>
+        ) : null}
 
         {bottomContainer === bottomContainers.DEFAULT && recording === false ? (
           <VideoOtherOptions
@@ -126,13 +150,13 @@ const CameraScreen = (props) => {
             recordingPaused={recordingPaused}
             recorded={recorded}
             videoUri={videoUri}
+            setVideoProcessing={setVideoProcessing}
           />
         );
       case bottomContainers.FILTER:
         return (
           <Filters
             setWhiteBalance={setWhiteBalance}
-            camera={camera}
             selectedFilter={selectedFilter}
             setSelectedFilter={setSelectedFilter}
             setBottomContainer={setBottomContainer}
@@ -192,6 +216,7 @@ const CameraScreen = (props) => {
             recordingPaused={recordingPaused}
             recorded={recorded}
             videoUri={videoUri}
+            setVideoProcessing={setVideoProcessing}
           />
         </View>
       </View>

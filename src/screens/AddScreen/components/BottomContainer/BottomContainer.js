@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { style } from "../../styles";
-import { View} from "react-native";
+import { View } from "react-native";
 
 import RecordButton from "./RecordButton";
 import SpeedBar from "./SpeedBar";
@@ -10,11 +10,14 @@ import LeftContainer from "./LeftContainer/LeftContainer";
 import RightContainer from "./RightContainer/RightContainer";
 
 const BottomContainer = (props) => {
+  const [currentSpeed, setCurrentSpeed] = useState(1);
   return (
     <View style={style.bottomContainer}>
       <SpeedBar
         showSpeedOptions={props.showSpeedOptions}
         recording={props.recording}
+        setCurrentSpeed={setCurrentSpeed}
+        currentSpeed={currentSpeed}
       />
       <View style={style.bottomVideoIconsContainer}>
         <LeftContainer recording={props.recording} />
@@ -28,6 +31,8 @@ const BottomContainer = (props) => {
           navigation={props.navigation}
           recorded={props.recorded}
           videoUri={props.videoUri}
+          setVideoProcessing={props.setVideoProcessing}
+          currentSpeed={currentSpeed}
         />
       </View>
       <View
