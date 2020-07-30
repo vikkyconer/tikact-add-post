@@ -15,6 +15,7 @@ import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
 import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
+import VideoRecordProgress from "./VideoRecordProgress";
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -117,18 +118,22 @@ const CameraScreen = (props) => {
           </View>
         ) : null}
 
-        {bottomContainer === bottomContainers.DEFAULT && recording === false ? (
-          <VideoOtherOptions
-            crossIcon={crossIcon}
-            flashCamera={flashCamera}
-            flashIcon={flashIcon}
-            cameraSide={cameraSide}
-            setCameraSide={setCameraSide}
-            setShowSpeedOptions={setShowSpeedOptions}
-            showSpeedOptions={showSpeedOptions}
-            setBottomContainer={setBottomContainer}
-          />
-        ) : null}
+        <View>
+          <VideoRecordProgress />
+          {bottomContainer === bottomContainers.DEFAULT &&
+          recording === false ? (
+            <VideoOtherOptions
+              crossIcon={crossIcon}
+              flashCamera={flashCamera}
+              flashIcon={flashIcon}
+              cameraSide={cameraSide}
+              setCameraSide={setCameraSide}
+              setShowSpeedOptions={setShowSpeedOptions}
+              showSpeedOptions={showSpeedOptions}
+              setBottomContainer={setBottomContainer}
+            />
+          ) : null}
+        </View>
 
         {getBottomContainer()}
       </RNCamera>
