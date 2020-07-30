@@ -14,8 +14,8 @@ const ProfilePic = (props) => {
       <View
         style={{
           borderColor: props.selected ? "red" : "transparent",
-          height: 60,
-          width: 60,
+          height: 45,
+          width: 45,
           alignItems: "center",
           borderRadius: 100,
           borderWidth: props.selected ? 2 : 0,

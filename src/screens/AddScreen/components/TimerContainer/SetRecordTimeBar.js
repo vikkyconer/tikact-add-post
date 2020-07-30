@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 
 const SetRecordTimeBar = () => {
+  const window = Dimensions.get("window");
   const renderHorizontalBars = () => {
-    const n = 88;
+    const n = parseInt(window.width * 0.18);
 
     return [...Array(n)].map((e, i) => (
       <Text key={i} style={{ color: "white", height: 10, fontSize: 20 }}>
@@ -35,9 +36,7 @@ const SetRecordTimeBar = () => {
         }}
       >
         {renderHorizontalBars()}
-        <View
-          style={{ backgroundColor: "red", height: 60, width: 2 }}
-        ></View>
+        <View style={{ backgroundColor: "red", height: 60, width: 2 }}></View>
       </View>
     </View>
   );
