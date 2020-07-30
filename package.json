@@ -25,6 +25,7 @@
     "react-native": "0.63.1",
     "react-native-camera": "^3.32.0",
     "react-native-device-brightness": "^1.2.0",
+    "react-native-draggable": "^3.3.0",
     "react-native-ffmpeg": "^0.4.4",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.6.1",

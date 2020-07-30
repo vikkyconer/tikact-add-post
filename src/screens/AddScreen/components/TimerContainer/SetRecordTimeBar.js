@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Dimensions } from "react-native";
+import Draggable from "react-native-draggable";
 
 const SetRecordTimeBar = () => {
   const window = Dimensions.get("window");
@@ -36,6 +37,17 @@ const SetRecordTimeBar = () => {
         }}
       >
         {renderHorizontalBars()}
+        {/* <Draggable
+          x={75}
+          y={10}
+          renderSize={56}
+          renderColor="black"
+          renderText="A"
+          isCircle
+          shouldReverse
+          onShortPressRelease={() => {}}
+          onDragRelease={(e) => console.log(Object.keys(e))}
+        /> */}
         <View style={{ backgroundColor: "red", height: 60, width: 2 }}></View>
       </View>
     </View>
