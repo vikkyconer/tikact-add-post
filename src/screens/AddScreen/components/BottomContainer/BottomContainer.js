@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { style } from "../../styles";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 import RecordButton from "./RecordButton";
 import SpeedBar from "./SpeedBar";
@@ -8,9 +8,9 @@ import StopRecordButton from "./StopRecordButton";
 import MiddleContainer from "./MiddleContainer/MiddleContainer";
 import LeftContainer from "./LeftContainer/LeftContainer";
 import RightContainer from "./RightContainer/RightContainer";
+import VideoDurationContainer from "./VideoDurationContainer/VideoDurationContainer";
 
 const BottomContainer = (props) => {
-  
   return (
     <View style={style.bottomContainer}>
       <SpeedBar
@@ -39,15 +39,7 @@ const BottomContainer = (props) => {
           setVideoUris={props.setVideoUris}
         />
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignSelf: "center",
-          height: 10,
-          width: 180,
-        }}
-      ></View>
+      <VideoDurationContainer />
     </View>
   );
 };
