@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { speeds } from "../../constants";
 
-const SpeedBar = (props) => {  
+const SpeedBar = (props) => {
+  const window = Dimensions.get("window");
+
   const getMultipleOptions = (arr) => {
     return (
       <View
         style={{
           flexDirection: "row",
           width: "100%",
-          marginHorizontal: 40,
+          marginHorizontal: window.width * 0.03,
         }}
       >
         {arr.map((data, key) => {

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const VideoDurationContainer = () => {
-  const [justifyContent, setJustifyContent] = useState("flex-start");
-  useEffect(() => {}, [justifyContent]);
+const VideoDurationContainer = (props) => {
+  const [justifyContent, setJustifyContent] = useState(
+    props.videoDuration === 15 ? "flex-start" : "flex-end"
+  );
   return (
     <View
       style={{
@@ -16,13 +17,19 @@ const VideoDurationContainer = () => {
     >
       <TouchableOpacity
         style={{ paddingHorizontal: 20 }}
-        onPress={() => setJustifyContent("flex-end")}
+        onPress={() => {
+          setJustifyContent("flex-end");
+          props.setVideoDuration(60);
+        }}
       >
         <Text style={{ color: "white" }}>60s</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{ paddingHorizontal: 20 }}
-        onPress={() => setJustifyContent("flex-start")}
+        onPress={() => {
+          setJustifyContent("flex-start");
+          props.setVideoDuration(15);
+        }}
       >
         <Text style={{ color: "white" }}>15s</Text>
       </TouchableOpacity>

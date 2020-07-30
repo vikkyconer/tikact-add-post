@@ -31,7 +31,7 @@ const CameraScreen = (props) => {
   const [selectedFilter, setSelectedFilter] = useState(0);
   const [videoUris, setVideoUris] = useState([]);
   const [recorded, setRecorded] = useState(false);
-  const [videoDuration, setVideoDuration] = useState(0);
+  const [videoDuration, setVideoDuration] = useState(15);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
   const [recordingPaused, setRecordingPaused] = useState(false);
   const [videoProcessing, setVideoProcessing] = useState(false);
@@ -161,6 +161,8 @@ const CameraScreen = (props) => {
             setVideoUris={setVideoUris}
             setCurrentSpeed={setCurrentSpeed}
             currentSpeed={currentSpeed}
+            setVideoDuration={setVideoDuration}
+            videoDuration={videoDuration}
           />
         );
       case bottomContainers.FILTER:
@@ -181,11 +183,10 @@ const CameraScreen = (props) => {
     try {
       console.log("recording");
       const { uri, codec = "mp4" } = await camera.recordAsync({
-        maxDuration: 20,
+        maxDuration: 15,
       });
       console.log("uri: ", videoUris);
       setVideoUris([...videoUris, { uri, currentSpeed }]);
-      setVideoDuration(20);
       setRecorded(true);
       setRecording(false);
     } catch (error) {
@@ -231,6 +232,8 @@ const CameraScreen = (props) => {
             setVideoUris={setVideoUris}
             setCurrentSpeed={setCurrentSpeed}
             currentSpeed={currentSpeed}
+            setVideoDuration={setVideoDuration}
+            videoDuration={videoDuration}
           />
         </View>
       </View>

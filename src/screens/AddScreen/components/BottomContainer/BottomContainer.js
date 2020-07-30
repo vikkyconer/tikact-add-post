@@ -39,7 +39,10 @@ const BottomContainer = (props) => {
           setVideoUris={props.setVideoUris}
         />
       </View>
-      <VideoDurationContainer />
+      <VideoDurationContainer
+        setVideoDuration={props.setVideoDuration}
+        videoDuration={props.videoDuration}
+      />
     </View>
   );
 };
