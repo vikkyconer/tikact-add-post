@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text } from "react-native";
 import { soundIcon } from "../constants";
 import VideoEditTools from "./VideoEditTools";
-import { ProgressBar, Colors } from "react-native-paper";
 
 const VideoOtherOptions = (props) => {
   return (
