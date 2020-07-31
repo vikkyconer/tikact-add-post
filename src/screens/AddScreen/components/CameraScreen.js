@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   StatusBar,
   TouchableOpacity,
-  Image,
   ActivityIndicator,
   Dimensions,
+  Animated,
 } from "react-native";
 import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
@@ -15,7 +15,7 @@ import { timers, bottomContainers } from "../constants";
 import { style } from "../styles";
 import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
-import VideoRecordProgress from "./VideoRecordProgress";
+import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -40,6 +40,8 @@ const CameraScreen = (props) => {
   );
   const [currentSpeed, setCurrentSpeed] = useState(1);
   const window = Dimensions.get("window");
+  const progressBarPercent = useRef(new Animated.Value(0)).current;
+  const [pausedTimes, setPausedTimes] = useState([]);
 
   const crossIcon = (
     <Feather
@@ -51,6 +53,15 @@ const CameraScreen = (props) => {
       }}
     />
   );
+
+  const changeProgressBarPercent = () => {
+    const window = Dimensions.get("window");
+    Animated.timing(progressBarPercent, {
+      toValue: window.width * 0.9,
+      duration: videoDuration * 1000,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const flashCamera = () => {
     console.log("flash Camera");
@@ -119,7 +130,10 @@ const CameraScreen = (props) => {
         ) : null}
 
         <View>
-          <VideoRecordProgress />
+          <VideoRecordProgress
+            progressBarPercent={progressBarPercent}
+            pausedTimes={pausedTimes}
+          />
           {bottomContainer === bottomContainers.DEFAULT &&
           recording === false ? (
             <VideoOtherOptions
@@ -182,8 +196,9 @@ const CameraScreen = (props) => {
   const recordVideo = async () => {
     try {
       console.log("recording");
+      changeProgressBarPercent();
       const { uri, codec = "mp4" } = await camera.recordAsync({
-        maxDuration: 15,
+        maxDuration: videoDuration,
       });
       console.log("uri: ", videoUris);
       setVideoUris([...videoUris, { uri, currentSpeed }]);
@@ -196,6 +211,9 @@ const CameraScreen = (props) => {
 
   const stopRecording = async () => {
     console.log("stopRecording");
+    progressBarPercent.stopAnimation((value) =>
+      setPausedTimes([...pausedTimes, parseInt(value)])
+    );
     await camera.stopRecording();
     setRecording(false);
   };
