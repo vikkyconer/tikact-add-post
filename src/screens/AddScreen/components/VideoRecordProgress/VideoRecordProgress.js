@@ -3,10 +3,9 @@ import { View, Animated } from "react-native";
 import VideoPausedMark from "./VideoPausedMark";
 
 const VideoRecordProgress = (props) => {
-  useEffect(() => {}, [props.progressBarPercent]);
-
   const renderPausedMarks = () => {
     return props.pausedTimes.map((pausedTime, index) => {
+      console.log("pausedTimes: ", pausedTime);
       return <VideoPausedMark key={index} position={pausedTime} />;
     });
   };

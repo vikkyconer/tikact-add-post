@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Modal, Text, TouchableOpacity } from "react-native";
+import { View, Modal, Text, TouchableOpacity, Animated } from "react-native";
 var RNFS = require("react-native-fs");
 
 const DiscardClipModal = (props) => {
@@ -11,16 +11,35 @@ const DiscardClipModal = (props) => {
     console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
     const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
     const exist = await RNFS.exists(path);
-    if(exist) {
-      await RNFS.unlink(path)
-    }
-    await Promise.all(props.videoUris.map(async(video) => {
-      await RNFS.unlink(video.uri)
-    }))
-    props.setVideoUris([]);
+    // if(exist) {
+    //   await RNFS.unlink(path)
+    // }
+    // await Promise.all(props.videoUris.map(async(video) => {
+    //   await RNFS.unlink(video.uri)
+    // }))
+    // props.setVideoUris([]);
+    const lastClip = props.videoUris[props.videoUris.length - 1];
 
-    props.setRecording(false);
-    props.setRecorded(false);
+    await RNFS.unlink(lastClip.uri);
+    props.videoUris.pop();
+    props.setVideoUris(props.videoUris);
+
+    props.pausedTimes.pop();
+    props.setPausedTimes(props.pausedTimes);
+
+    // setProgressBarPercent(
+    //   Animated.Value(props.pausedTimes[props.pausedTimes.length - 1])
+    // );
+    props.progressBarPercent.setValue(
+      props.pausedTimes[props.pausedTimes.length - 1]
+    );
+
+    if (!props.videoUris.length) {
+      props.setRecording(false);
+      props.setRecorded(false);
+    }
+    console.log("pausedTimesDiscard: ", props.pausedTimes);
+    console.log("videoUris: ", props.videoUris);
     props.setShowDiscardModal(false);
   };
   return (

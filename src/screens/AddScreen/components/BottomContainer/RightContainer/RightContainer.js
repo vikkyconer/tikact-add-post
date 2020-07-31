@@ -126,6 +126,9 @@ const RightContainer = (props) => {
           setRecording={props.setRecording}
           setVideoUris={props.setVideoUris}
           videoUris={props.videoUris}
+          setPausedTimes={props.setPausedTimes}
+          pausedTimes={props.pausedTimes}
+          progressBarPercent={props.progressBarPercent}
         />
       ) : null}
     </View>

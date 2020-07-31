@@ -177,6 +177,9 @@ const CameraScreen = (props) => {
             currentSpeed={currentSpeed}
             setVideoDuration={setVideoDuration}
             videoDuration={videoDuration}
+            setPausedTimes={setPausedTimes}
+            pausedTimes={pausedTimes}
+            progressBarPercent={progressBarPercent}
           />
         );
       case bottomContainers.FILTER:
@@ -214,6 +217,7 @@ const CameraScreen = (props) => {
     progressBarPercent.stopAnimation((value) =>
       setPausedTimes([...pausedTimes, parseInt(value)])
     );
+
     await camera.stopRecording();
     setRecording(false);
   };
@@ -252,6 +256,9 @@ const CameraScreen = (props) => {
             currentSpeed={currentSpeed}
             setVideoDuration={setVideoDuration}
             videoDuration={videoDuration}
+            setPausedTimes={setPausedTimes}
+            pausedTimes={pausedTimes}
+            progressBarPercent={progressBarPercent}
           />
         </View>
       </View>
