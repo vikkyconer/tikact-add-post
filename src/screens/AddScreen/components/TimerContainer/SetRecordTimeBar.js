@@ -25,7 +25,7 @@ const SetRecordTimeBar = (props) => {
       <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
         <Text style={{ color: "grey", fontSize: 12 }}>0s</Text>
         <Text style={{ color: "white", fontSize: 12 }}>
-          {props.videoDuration}s
+          {props.totalVideoDuration}s
         </Text>
       </View>
       <View
@@ -53,24 +53,36 @@ const SetRecordTimeBar = (props) => {
           }}
         />
         {/* {renderHorizontalBars()} */}
-        <Slider
-          style={{ width: "100%", height: "100%" }}
-          minimumValue={0}
-          maximumValue={50}
-          value={20}
-          onValueChange={(value) => {}}
-          maximumTrackTintColor="transparent"
-          trackStyle={{
-            height: 65,
+
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            flexDirection: "row",
           }}
-          thumbStyle={{
-            width: 5,
-            height: 65,
-            backgroundColor: "red",
-            borderRadius: 5,
-          }}
-          // minimumTrackTintColor="transparent"
-        />
+        >
+          <Animated.View style={{ width: props.progressBarPercent, height: "100%" }} />
+          <Slider
+            style={{ width: "100%", height: "100%" }}
+            minimumValue={0}
+            maximumValue={100}
+            value={80}
+            onValueChange={(value) => {
+              console.log("value: ", value);
+            }}
+            maximumTrackTintColor="transparent"
+            trackStyle={{
+              height: 65,
+              opacity: 0.3,
+            }}
+            thumbStyle={{
+              width: 5,
+              height: 65,
+              backgroundColor: "red",
+              borderRadius: 5,
+            }}
+          />
+        </View>
         {/* <View style={{ backgroundColor: "red", height: 60, width: 2 }}></View> */}
       </View>
     </View>
