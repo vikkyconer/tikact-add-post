@@ -30,9 +30,13 @@ const DiscardClipModal = (props) => {
     // setProgressBarPercent(
     //   Animated.Value(props.pausedTimes[props.pausedTimes.length - 1])
     // );
-    props.progressBarPercent.setValue(
-      props.pausedTimes[props.pausedTimes.length - 1]
-    );
+    if (props.pausedTimes.length) {
+      props.progressBarPercent.setValue(
+        props.pausedTimes[props.pausedTimes.length - 1]
+      );
+    } else {
+      props.progressBarPercent.setValue(0);
+    }
 
     if (!props.videoUris.length) {
       props.setRecording(false);

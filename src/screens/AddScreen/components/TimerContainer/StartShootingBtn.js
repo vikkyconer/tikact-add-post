@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-const StartShootingBtn = () => {
+const StartShootingBtn = (props) => {
   return (
-    <View
+    <TouchableOpacity
       style={{
         width: "100%",
         height: 50,
@@ -13,9 +13,13 @@ const StartShootingBtn = () => {
         alignItems: "center",
         paddingTop: 15,
       }}
+      onPress={() => {
+        props.setShowCameraTimer(true);
+        props.runCounter();
+      }}
     >
       <Text style={{ color: "white" }}>Start shooting</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

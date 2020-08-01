@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-const Timers = () => {
+const Timers = (props) => {
   return (
     <View
       style={{
@@ -11,34 +11,50 @@ const Timers = () => {
         borderRadius: 20,
       }}
     >
-      <View
+      <TouchableOpacity
         style={{
           width: "50%",
           alignSelf: "center",
           alignItems: "center",
-          backgroundColor: "black",
+          backgroundColor: props.currentTimer === 3 ? "black" : "grey",
           height: "100%",
           borderTopLeftRadius: 20,
           borderBottomLeftRadius: 20,
           paddingVertical: 5,
         }}
+        onPress={() => {
+          props.setTimerValue(3);
+          props.setCurrentTimer(3);
+        }}
       >
-        <Text style={{ color: "white", fontSize: 12 }}>3s</Text>
-      </View>
-      <View
+        <Text
+          style={{ color: props.currentTimer === 3 ? "white" : "black", fontSize: 12 }}
+        >
+          3s
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
         style={{
           width: "50%",
           alignSelf: "center",
           alignItems: "center",
-          backgroundColor: "none",
+          backgroundColor: props.currentTimer === 10 ? "black" : "grey",
           height: "100%",
           borderTopRightRadius: 20,
           borderBottomRightRadius: 20,
           paddingVertical: 5,
         }}
+        onPress={() => {
+          props.setTimerValue(10);
+          props.setCurrentTimer(10);
+        }}
       >
-        <Text style={{ color: "black", fontSize: 12}}>10s</Text>
-      </View>
+        <Text
+          style={{ color: props.currentTimer === 10 ? "white" : "black", fontSize: 12 }}
+        >
+          10s
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

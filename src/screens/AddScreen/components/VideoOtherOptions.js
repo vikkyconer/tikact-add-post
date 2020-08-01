@@ -33,6 +33,7 @@ const VideoOtherOptions = (props) => {
           setCameraSide={props.setCameraSide}
           setShowSpeedOptions={props.setShowSpeedOptions}
           showSpeedOptions={props.showSpeedOptions}
+          changeTimerContainerY={props.changeTimerContainerY}
         />
       </View>
     </View>

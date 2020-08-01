@@ -1,18 +1,41 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Animated } from "react-native";
 import Timers from "./Timers";
 import SetRecordTimeBar from "./SetRecordTimeBar";
 import StartShootingBtn from "./StartShootingBtn";
+import { bottomContainers } from "../../constants";
 
-const TimerContainer = () => {
+const TimerContainer = (props) => {
+  const [currentTimer, setCurrentTimer] = useState(3);
+
+  const runCounter = async () => {
+    return new Promise((resolve, reject) => {
+      let _currentTimer = currentTimer;
+      var interval = setInterval(() => {
+        _currentTimer -= 1;
+        props.setTimerValue(_currentTimer);
+        if (_currentTimer <= 0) {
+          clearInterval(interval);
+          props.setTimerValue(currentTimer);
+          props.setRecording(true);
+          props.recordVideo();
+          props.setBottomContainer(bottomContainers.DEFAULT);
+          props.setShowCameraTimer(false);
+          resolve();
+        }
+      }, 1000);
+    });
+  };
+
   return (
-    <View
+    <Animated.View
       style={{
         position: "absolute",
         bottom: 0,
         left: 0,
         right: 0,
         height: 220,
+        transform: [{ translateY: props.timerContainerY }],
       }}
     >
       <View
@@ -44,12 +67,23 @@ const TimerContainer = () => {
           }}
         >
           <Text style={{ color: "white" }}>Drag to set recording limit</Text>
-          <Timers />
+          <Timers
+            setTimerValue={props.setTimerValue}
+            setCurrentTimer={setCurrentTimer}
+            currentTimer={currentTimer}
+          />
         </View>
-        <SetRecordTimeBar />
-        <StartShootingBtn />
+        <SetRecordTimeBar
+          videoDuration={props.videoDuration}
+          progressBarPercent={props.progressBarPercent}
+        />
+        <StartShootingBtn
+          setRecording={props.setRecording}
+          setShowCameraTimer={props.setShowCameraTimer}
+          runCounter={runCounter}
+        />
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

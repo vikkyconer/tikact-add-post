@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Animated,
+  Text,
 } from "react-native";
 import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
@@ -16,14 +17,13 @@ import { style } from "../styles";
 import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
+import TimerDisplay from "./TimerContainer/TimerDisplay";
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
   const [cameraSide, setCameraSide] = useState("front");
   const [cameraFlash, setCameraFlash] = useState("off");
   const [recording, setRecording] = useState(false);
-  const [currentTimer, setCurrentTimer] = useState(1);
-  const [timerValue, setTimerValue] = useState(timers[1]);
   const [flashIcon, setFlashIcon] = useState("flash-off-outline");
   const [whiteBalance, setWhiteBalance] = useState(
     RNCamera.Constants.WhiteBalance.auto
@@ -42,6 +42,9 @@ const CameraScreen = (props) => {
   const window = Dimensions.get("window");
   const progressBarPercent = useRef(new Animated.Value(0)).current;
   const [pausedTimes, setPausedTimes] = useState([]);
+  const [timerValue, setTimerValue] = useState(3);
+  const [showCameraTimer, setShowCameraTimer] = useState(false);
+  const timerContainerY = useRef(new Animated.Value(220)).current;
 
   const crossIcon = (
     <Feather
@@ -63,6 +66,16 @@ const CameraScreen = (props) => {
     }).start();
   };
 
+  const changeTimerContainerY = () => {
+    Animated.spring(timerContainerY, {
+      toValue: 0,
+      velocity: 20,
+      tension: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+  };
+
   const flashCamera = () => {
     console.log("flash Camera");
     if (cameraFlash === "off") {
@@ -72,19 +85,6 @@ const CameraScreen = (props) => {
       setCameraFlash("off");
       setFlashIcon("flash-off-outline");
     }
-  };
-  const runCounter = async () => {
-    return new Promise((resolve, reject) => {
-      let _currentTimer = timers[currentTimer];
-      var interval = setInterval(() => {
-        _currentTimer -= 1;
-        setTimerValue(_currentTimer);
-        if (_currentTimer <= 0) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 1000);
-    });
   };
 
   const getCamera = () => {
@@ -105,6 +105,8 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
+        {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
+
         {!recording && !videoProcessing ? (
           <TouchableOpacity
             style={{
@@ -145,11 +147,12 @@ const CameraScreen = (props) => {
               setShowSpeedOptions={setShowSpeedOptions}
               showSpeedOptions={showSpeedOptions}
               setBottomContainer={setBottomContainer}
+              changeTimerContainerY={changeTimerContainerY}
             />
           ) : null}
         </View>
 
-        {getBottomContainer()}
+        {!showCameraTimer ? getBottomContainer() : null}
       </RNCamera>
     );
   };
@@ -192,7 +195,18 @@ const CameraScreen = (props) => {
           />
         );
       case bottomContainers.TIMER:
-        return <TimerContainer />;
+        return (
+          <TimerContainer
+            setTimerValue={setTimerValue}
+            setRecording={setRecording}
+            setShowCameraTimer={setShowCameraTimer}
+            videoDuration={videoDuration}
+            setBottomContainer={setBottomContainer}
+            recordVideo={recordVideo}
+            timerContainerY={timerContainerY}
+            progressBarPercent={progressBarPercent}
+          />
+        );
     }
   };
 
