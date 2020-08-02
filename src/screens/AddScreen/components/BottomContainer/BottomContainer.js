@@ -44,6 +44,7 @@ const BottomContainer = (props) => {
       </View>
       <VideoDurationContainer
         setTotalVideoDuration={props.setTotalVideoDuration}
+        setPartVideoDuration={props.setPartVideoDuration}
         totalVideoDuration={props.totalVideoDuration}
       />
     </View>

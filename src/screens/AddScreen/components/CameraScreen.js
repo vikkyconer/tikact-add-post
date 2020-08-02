@@ -32,6 +32,7 @@ const CameraScreen = (props) => {
   const [videoUris, setVideoUris] = useState([]);
   const [recorded, setRecorded] = useState(false);
   const [totalVideoDuration, setTotalVideoDuration] = useState(15);
+  const [partVideoDuration, setPartVideoDuration] = useState(15);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
   const [recordingPaused, setRecordingPaused] = useState(false);
   const [videoProcessing, setVideoProcessing] = useState(false);
@@ -45,6 +46,7 @@ const CameraScreen = (props) => {
   const [timerValue, setTimerValue] = useState(3);
   const [showCameraTimer, setShowCameraTimer] = useState(false);
   const timerContainerY = useRef(new Animated.Value(220)).current;
+  const [recordedVideoDuration, setRecordedVideoDuration] = useState(0);
 
   const crossIcon = (
     <Feather
@@ -179,6 +181,7 @@ const CameraScreen = (props) => {
             setCurrentSpeed={setCurrentSpeed}
             currentSpeed={currentSpeed}
             setTotalVideoDuration={setTotalVideoDuration}
+            setPartVideoDuration={setPartVideoDuration}
             totalVideoDuration={totalVideoDuration}
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}
@@ -205,6 +208,7 @@ const CameraScreen = (props) => {
             recordVideo={recordVideo}
             timerContainerY={timerContainerY}
             progressBarPercent={progressBarPercent}
+            setPartVideoDuration={setPartVideoDuration}
           />
         );
     }
@@ -214,9 +218,16 @@ const CameraScreen = (props) => {
     try {
       console.log("recording");
       changeProgressBarPercent();
+      const _videoDuration =
+        totalVideoDuration !== partVideoDuration
+          ? partVideoDuration
+          : totalVideoDuration;
       const { uri, codec = "mp4" } = await camera.recordAsync({
-        maxDuration: totalVideoDuration,
+        maxDuration: _videoDuration,
       });
+      progressBarPercent.stopAnimation((value) =>
+        setPausedTimes([...pausedTimes, parseInt(value)])
+      );
       console.log("uri: ", videoUris);
       setVideoUris([...videoUris, { uri, currentSpeed }]);
       setRecorded(true);
@@ -269,6 +280,7 @@ const CameraScreen = (props) => {
             setCurrentSpeed={setCurrentSpeed}
             currentSpeed={currentSpeed}
             setTotalVideoDuration={setTotalVideoDuration}
+            setPartVideoDuration={setPartVideoDuration}
             totalVideoDuration={totalVideoDuration}
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}

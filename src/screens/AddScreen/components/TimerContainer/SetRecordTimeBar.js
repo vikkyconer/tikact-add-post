@@ -61,14 +61,17 @@ const SetRecordTimeBar = (props) => {
             flexDirection: "row",
           }}
         >
-          <Animated.View style={{ width: props.progressBarPercent, height: "100%" }} />
+          <Animated.View
+            style={{ width: props.progressBarPercent, height: "100%" }}
+          />
           <Slider
             style={{ width: "100%", height: "100%" }}
             minimumValue={0}
-            maximumValue={100}
-            value={80}
+            maximumValue={props.totalVideoDuration}
+            value={props.totalVideoDuration}
             onValueChange={(value) => {
               console.log("value: ", value);
+              props.setPartVideoDuration(value);
             }}
             maximumTrackTintColor="transparent"
             trackStyle={{
