@@ -46,7 +46,7 @@ const CameraScreen = (props) => {
   const [timerValue, setTimerValue] = useState(3);
   const [showCameraTimer, setShowCameraTimer] = useState(false);
   const timerContainerY = useRef(new Animated.Value(220)).current;
-  const [recordedVideoDuration, setRecordedVideoDuration] = useState(0);
+  const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
 
   const crossIcon = (
     <Feather
@@ -186,6 +186,7 @@ const CameraScreen = (props) => {
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}
             progressBarPercent={progressBarPercent}
+            setRemainingVideoDuration={setRemainingVideoDuration}
           />
         );
       case bottomContainers.FILTER:
@@ -209,6 +210,7 @@ const CameraScreen = (props) => {
             timerContainerY={timerContainerY}
             progressBarPercent={progressBarPercent}
             setPartVideoDuration={setPartVideoDuration}
+            remainingVideoDuration={remainingVideoDuration}
           />
         );
     }
@@ -222,6 +224,10 @@ const CameraScreen = (props) => {
         totalVideoDuration !== partVideoDuration
           ? partVideoDuration
           : totalVideoDuration;
+
+      const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
+      console.log("_remainingVideoDuration: ", _remainingVideoDuration);
+      setRemainingVideoDuration(_remainingVideoDuration);
       const { uri, codec = "mp4" } = await camera.recordAsync({
         maxDuration: _videoDuration,
       });
@@ -242,6 +248,10 @@ const CameraScreen = (props) => {
     progressBarPercent.stopAnimation((value) =>
       setPausedTimes([...pausedTimes, parseInt(value)])
     );
+
+    const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
+
+    setRemainingVideoDuration(_remainingVideoDuration);
 
     await camera.stopRecording();
     setRecording(false);
@@ -285,6 +295,7 @@ const CameraScreen = (props) => {
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}
             progressBarPercent={progressBarPercent}
+            setRemainingVideoDuration={setRemainingVideoDuration}
           />
         </View>
       </View>

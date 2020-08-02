@@ -21,6 +21,7 @@ const VideoDurationContainer = (props) => {
           setJustifyContent("flex-end");
           props.setTotalVideoDuration(60);
           props.setPartVideoDuration(60);
+          props.setRemainingVideoDuration(60);
         }}
       >
         <Text style={{ color: "white" }}>60s</Text>
@@ -31,6 +32,7 @@ const VideoDurationContainer = (props) => {
           setJustifyContent("flex-start");
           props.setTotalVideoDuration(15);
           props.setPartVideoDuration(15);
+          props.setRemainingVideoDuration(15);
         }}
       >
         <Text style={{ color: "white" }}>15s</Text>

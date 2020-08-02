@@ -77,6 +77,7 @@ const TimerContainer = (props) => {
           totalVideoDuration={props.totalVideoDuration}
           progressBarPercent={props.progressBarPercent}
           setPartVideoDuration={props.setPartVideoDuration}
+          remainingVideoDuration={props.remainingVideoDuration}
         />
         <StartShootingBtn
           setRecording={props.setRecording}

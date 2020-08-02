@@ -65,10 +65,13 @@ const SetRecordTimeBar = (props) => {
             style={{ width: props.progressBarPercent, height: "100%" }}
           />
           <Slider
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              flex: 1,
+              height: "100%",
+            }}
             minimumValue={0}
-            maximumValue={props.totalVideoDuration}
-            value={props.totalVideoDuration}
+            maximumValue={15}
+            value={15}
             onValueChange={(value) => {
               console.log("value: ", value);
               props.setPartVideoDuration(value);
