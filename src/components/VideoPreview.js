@@ -9,7 +9,7 @@ import { speeds } from "../screens/AddScreen/constants";
 import VideoFrames from "../screens/VideoPreview/VideoFrames";
 
 const VideoPreview = (props) => {
-  const { videoUri, videoDuration } = props.route.params;
+  const { videoUri, totalVideoDuration } = props.route.params;
 
   const [videoPlayer, setVideoPlayer] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -75,7 +75,7 @@ const VideoPreview = (props) => {
           filter={"CIPhotoEffectInstant"}
           filterEnabled={true}
           onProgress={({ currentTime }) => {
-            const _currentPosition = (currentTime / videoDuration) * 100;
+            const _currentPosition = (currentTime / totalVideoDuration) * 100;
             setCurrentPosition(_currentPosition);
           }}
           repeat={true}
@@ -207,7 +207,7 @@ const VideoPreview = (props) => {
         <VideoFrames
           uri={videoUri}
           currentPosition={currentPosition}
-          length={videoDuration}
+          length={totalVideoDuration}
         />
       </View>
     </View>

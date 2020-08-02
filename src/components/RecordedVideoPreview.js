@@ -7,7 +7,7 @@ import BackButton from "../screens/RecordedVideoPreview/BackButton";
 import Filters from "../screens/RecordedVideoPreview/FilterContainer/Filters";
 
 const RecordedVideoPreview = (props) => {
-  const { videoUri, videoDuration } = props.route.params;
+  const { videoUri, totalVideoDuration } = props.route.params;
 
   const [videoPlayer, setVideoPlayer] = useState(null);
   return (

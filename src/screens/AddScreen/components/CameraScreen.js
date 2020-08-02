@@ -31,7 +31,7 @@ const CameraScreen = (props) => {
   const [selectedFilter, setSelectedFilter] = useState(0);
   const [videoUris, setVideoUris] = useState([]);
   const [recorded, setRecorded] = useState(false);
-  const [totalVideoDuration, setVideoDuration] = useState(15);
+  const [totalVideoDuration, setTotalVideoDuration] = useState(15);
   const [showSpeedOptions, setShowSpeedOptions] = useState(true);
   const [recordingPaused, setRecordingPaused] = useState(false);
   const [videoProcessing, setVideoProcessing] = useState(false);
@@ -178,7 +178,7 @@ const CameraScreen = (props) => {
             setVideoUris={setVideoUris}
             setCurrentSpeed={setCurrentSpeed}
             currentSpeed={currentSpeed}
-            setVideoDuration={setVideoDuration}
+            setTotalVideoDuration={setTotalVideoDuration}
             totalVideoDuration={totalVideoDuration}
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}
@@ -268,7 +268,7 @@ const CameraScreen = (props) => {
             setVideoUris={setVideoUris}
             setCurrentSpeed={setCurrentSpeed}
             currentSpeed={currentSpeed}
-            setVideoDuration={setVideoDuration}
+            setTotalVideoDuration={setTotalVideoDuration}
             totalVideoDuration={totalVideoDuration}
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}

@@ -40,7 +40,7 @@ const BottomTab = (props) => {
         onPress={() => {
           props.navigation.navigate("RecordAudio", {
             videoUri: props.videoUri,
-            videoDuration: props.videoDuration,
+            totalVideoDuration: props.totalVideoDuration,
           });
         }}
       >

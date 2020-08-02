@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 
 const VideoDurationContainer = (props) => {
   const [justifyContent, setJustifyContent] = useState(
-    props.videoDuration === 15 ? "flex-start" : "flex-end"
+    props.totalVideoDuration === 15 ? "flex-start" : "flex-end"
   );
   return (
     <View
@@ -19,7 +19,7 @@ const VideoDurationContainer = (props) => {
         style={{ paddingHorizontal: 20 }}
         onPress={() => {
           setJustifyContent("flex-end");
-          props.setVideoDuration(60);
+          props.setTotalVideoDuration(60);
         }}
       >
         <Text style={{ color: "white" }}>60s</Text>
@@ -28,7 +28,7 @@ const VideoDurationContainer = (props) => {
         style={{ paddingHorizontal: 20 }}
         onPress={() => {
           setJustifyContent("flex-start");
-          props.setVideoDuration(15);
+          props.setTotalVideoDuration(15);
         }}
       >
         <Text style={{ color: "white" }}>15s</Text>

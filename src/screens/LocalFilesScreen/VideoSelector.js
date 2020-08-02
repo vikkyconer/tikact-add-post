@@ -90,7 +90,7 @@ const VideoSelector = (props) => {
               onPress={() => {
                 props.navigation.navigate("VideoPreview", {
                   videoUri: props.selectedVideo.node.image.uri,
-                  videoDuration:
+                  totalVideoDuration:
                     props.selectedVideo.node.image.playableDuration,
                 });
               }}

@@ -5,7 +5,7 @@ var RNFS = require("react-native-fs");
 const { View, Text, Image } = require("react-native");
 
 const AudioScreen = (props) => {
-  const { videoUri, videoDuration } = props.route.params;
+  const { videoUri, totalVideoDuration } = props.route.params;
   const [audioFile, setAudioFile] = useState(null);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const AudioScreen = (props) => {
         audioFile={`file://${audioFile}`}
         navigation={props.navigation}
         videoUri={videoUri}
-        videoDuration={videoDuration}
+        totalVideoDuration={totalVideoDuration}
       />
     </View>
   );
