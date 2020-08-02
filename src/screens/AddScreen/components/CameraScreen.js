@@ -221,21 +221,25 @@ const CameraScreen = (props) => {
       console.log("recording");
       changeProgressBarPercent();
       const _videoDuration =
-        totalVideoDuration !== partVideoDuration
+        _remainingVideoDuration !== partVideoDuration
           ? partVideoDuration
-          : totalVideoDuration;
-
+          : _remainingVideoDuration;
+      console.log("_videoDuration: ", _videoDuration);
       const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
       console.log("_remainingVideoDuration: ", _remainingVideoDuration);
       setRemainingVideoDuration(_remainingVideoDuration);
-      const { uri, codec = "mp4" } = await camera.recordAsync({
-        maxDuration: _videoDuration,
-      });
+      if (partVideoDuration) {
+        const { uri, codec = "mp4" } = await camera.recordAsync({
+          maxDuration: _videoDuration,
+        });
+        setVideoUris([...videoUris, { uri, currentSpeed }]);
+      }
+
       progressBarPercent.stopAnimation((value) =>
         setPausedTimes([...pausedTimes, parseInt(value)])
       );
       console.log("uri: ", videoUris);
-      setVideoUris([...videoUris, { uri, currentSpeed }]);
+
       setRecorded(true);
       setRecording(false);
     } catch (error) {
