@@ -48,6 +48,11 @@ const CameraScreen = (props) => {
   const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
 
+  // video recording params
+  const [recordedVideoDuration, setRecordedVideoDuration] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+
   const crossIcon = (
     <Feather
       name="x"
@@ -102,6 +107,8 @@ const CameraScreen = (props) => {
         flashMode={cameraFlash}
         autoFocus={RNCamera.Constants.AutoFocus.on}
         useNativeZoom={true}
+        onRecordingStart={startedRecording}
+        onRecordingEnd={endedRecording}
         androidCameraPermissionOptions={{
           title: "Permission to use camera",
           message: "We need your permission to use your camera",
@@ -188,6 +195,7 @@ const CameraScreen = (props) => {
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}
             progressBarPercent={progressBarPercent}
+            remainingVideoDuration={remainingVideoDuration}
             setRemainingVideoDuration={setRemainingVideoDuration}
           />
         );
@@ -218,39 +226,22 @@ const CameraScreen = (props) => {
     }
   };
 
-  const recordVideo = async () => {
-    try {
-      console.log("recording");
-      changeProgressBarPercent();
-      const _videoDuration =
-        _remainingVideoDuration !== partVideoDuration
-          ? partVideoDuration
-          : _remainingVideoDuration;
-      console.log("_videoDuration: ", _videoDuration);
-      const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
-      console.log("_remainingVideoDuration: ", _remainingVideoDuration);
-      setRemainingVideoDuration(_remainingVideoDuration);
-      if (partVideoDuration) {
-        const { uri, codec = "mp4" } = await camera.recordAsync({
-          maxDuration: _videoDuration,
-        });
-        setVideoUris([...videoUris, { uri, currentSpeed }]);
-      }
-
-      progressBarPercent.stopAnimation((value) =>
-        setPausedTimes([...pausedTimes, parseInt(value)])
-      );
-      console.log("uri: ", videoUris);
-
-      setRecorded(true);
-      setRecording(false);
-    } catch (error) {
-      console.log("error: ", error);
-    }
+  const startedRecording = () => {
+    console.log("started:");
+    const now = new Date();
+    setStartTime(now);
+    changeProgressBarPercent();
+    setRecording(true);
   };
 
-  const stopRecording = async () => {
-    console.log("stopRecording");
+  const endedRecording = () => {
+    const now = new Date();
+    setEndTime(now);
+
+    const diffTime = Math.abs(now - startTime);
+    const _recordedVideo = recordedVideoDuration + Math.ceil(diffTime / 1000);
+    setRecordedVideoDuration(_recordedVideo);
+
     progressBarPercent.stopAnimation((value) =>
       setPausedTimes([...pausedTimes, parseInt(value)])
     );
@@ -258,9 +249,44 @@ const CameraScreen = (props) => {
     const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
 
     setRemainingVideoDuration(_remainingVideoDuration);
-
-    await camera.stopRecording();
+    setRecorded(true);
     setRecording(false);
+  };
+
+  const recordVideo = async () => {
+    try {
+      console.log("recordedVideoDuration : ", recordedVideoDuration);
+
+      const _remainingVideoDuration =
+        totalVideoDuration - recordedVideoDuration;
+
+      const _videoDuration =
+        _remainingVideoDuration !== partVideoDuration
+          ? partVideoDuration
+          : _remainingVideoDuration;
+      console.log("_videoDuration: ", _videoDuration);
+
+      console.log("_remainingVideoDuration: ", _remainingVideoDuration);
+
+      if (_remainingVideoDuration > 0) {
+        setRemainingVideoDuration(_remainingVideoDuration);
+        const { uri, codec = "mp4" } = await camera.recordAsync({
+          maxDuration: _videoDuration,
+        });
+        setVideoUris([...videoUris, { uri, currentSpeed }]);
+      }
+
+      // progressBarPercent.stopAnimation((value) =>
+      //   setPausedTimes([...pausedTimes, parseInt(value)])
+      // );
+      // console.log("uri: ", videoUris);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  const stopRecording = async () => {
+    await camera.stopRecording();
   };
 
   const getCameraOptions = () => {
@@ -301,6 +327,7 @@ const CameraScreen = (props) => {
             setPausedTimes={setPausedTimes}
             pausedTimes={pausedTimes}
             progressBarPercent={progressBarPercent}
+            remainingVideoDuration={remainingVideoDuration}
             setRemainingVideoDuration={setRemainingVideoDuration}
           />
         </View>

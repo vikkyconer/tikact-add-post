@@ -22,7 +22,6 @@ const BottomContainer = (props) => {
       <View style={style.bottomVideoIconsContainer}>
         <LeftContainer recording={props.recording} />
         <MiddleContainer
-          setRecording={props.setRecording}
           recording={props.recording}
           recordVideo={props.recordVideo}
           stopRecording={props.stopRecording}
@@ -42,11 +41,14 @@ const BottomContainer = (props) => {
           progressBarPercent={props.progressBarPercent}
         />
       </View>
-      <VideoDurationContainer
-        setTotalVideoDuration={props.setTotalVideoDuration}
-        setPartVideoDuration={props.setPartVideoDuration}
-        totalVideoDuration={props.totalVideoDuration}
-      />
+      {!props.recording &&
+      props.remainingVideoDuration === props.totalVideoDuration ? (
+        <VideoDurationContainer
+          setTotalVideoDuration={props.setTotalVideoDuration}
+          setPartVideoDuration={props.setPartVideoDuration}
+          totalVideoDuration={props.totalVideoDuration}
+        />
+      ) : null}
     </View>
   );
 };

@@ -11,11 +11,7 @@ const StopRecordButton = (props) => {
         alignItems: "center",
         marginTop: -20,
       }}
-      onPress={() => {
-        props.setRecording(false);
-        props.stopRecording();
-        // props.setRecordingPaused(true);
-      }}
+      onPress={props.stopRecording}
     >
       <View
         style={{

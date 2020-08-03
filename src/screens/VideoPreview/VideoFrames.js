@@ -75,7 +75,10 @@ const VideoFrames = (props) => {
           />
         );
       })}
-      <CustomSlider />
+      <CustomSlider
+        length={props.length}
+        setVideoStartTime={props.setVideoStartTime}
+      />
       {/* <VideoProgressbar currentPosition={props.currentPosition} /> */}
     </View>
   );

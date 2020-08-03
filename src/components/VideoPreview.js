@@ -17,6 +17,7 @@ const VideoPreview = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(1);
   const [showSpeeds, setShowSpeeds] = useState(true);
   const [currentPosition, setCurrentPosition] = useState(0);
+  const [videoStartTime, setVideoStartTime] = useState(0);
 
   const getMultipleOptions = (arr, unit, currentValue) => {
     return arr.map((data, key) => {
@@ -73,6 +74,7 @@ const VideoPreview = (props) => {
           volume={0}
           rate={currentSpeed}
           filter={"CIPhotoEffectInstant"}
+          seek={videoStartTime}
           filterEnabled={true}
           onProgress={({ currentTime }) => {
             const _currentPosition = (currentTime / totalVideoDuration) * 100;
@@ -208,6 +210,7 @@ const VideoPreview = (props) => {
           uri={videoUri}
           currentPosition={currentPosition}
           length={totalVideoDuration}
+          setVideoStartTime={setVideoStartTime}
         />
       </View>
     </View>
