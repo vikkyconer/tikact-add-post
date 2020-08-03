@@ -71,7 +71,7 @@ const CameraScreen = (props) => {
     const window = Dimensions.get("window");
     Animated.timing(progressBarPercent, {
       toValue: window.width * 0.9,
-      duration: totalVideoDuration * 1000,
+      duration: remainingVideoDuration * 1000,
       useNativeDriver: false,
     }).start();
   };
@@ -260,7 +260,7 @@ const CameraScreen = (props) => {
     progressBarPercent.stopAnimation((value) =>
       setPausedTimes([...pausedTimes, parseInt(value)])
     );
-    const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
+    const _remainingVideoDuration = totalVideoDuration - _recordedVideoDuration;
 
     setRemainingVideoDuration(_remainingVideoDuration);
     setRecorded(true);
@@ -269,22 +269,18 @@ const CameraScreen = (props) => {
 
   const recordVideo = async () => {
     try {
-      const _remainingVideoDuration =
-        totalVideoDuration - recordedVideoDuration;
-
       const _videoDuration =
-        _remainingVideoDuration !== partVideoDuration
+        remainingVideoDuration > partVideoDuration
           ? partVideoDuration
-          : _remainingVideoDuration;
+          : remainingVideoDuration;
 
       console.log("totalVideoDuration : ", totalVideoDuration);
       console.log("recordedVideoDuration : ", recordedVideoDuration);
-      console.log("_remainingVideoDuration: ", _remainingVideoDuration);
+      console.log("remainingVideoDuration: ", remainingVideoDuration);
       console.log("partVideoDuration: ", partVideoDuration);
       console.log("_videoDuration: ", _videoDuration);
 
-      if (_remainingVideoDuration > 0) {
-        setRemainingVideoDuration(_remainingVideoDuration);
+      if (remainingVideoDuration > 0) {
         const { uri, codec = "mp4" } = await camera.recordAsync({
           maxDuration: _videoDuration,
         });
