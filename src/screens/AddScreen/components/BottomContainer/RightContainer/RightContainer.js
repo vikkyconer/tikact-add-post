@@ -3,6 +3,7 @@ import { View, Dimensions, TouchableOpacity, Image, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RNFFmpeg } from "react-native-ffmpeg";
 import DiscardClipModal from "./DiscardClipModal";
+import { getVideoSpeed } from "../../../utility";
 var RNFS = require("react-native-fs");
 const uploadPic = require("../../../../../assets/images/upload.jpg");
 
@@ -10,43 +11,21 @@ const RightContainer = (props) => {
   const window = Dimensions.get("window");
   const [showDiscardModal, setShowDiscardModal] = useState(false);
 
-  const getVideoSpeed = (currentSpeed) => {
-    switch (currentSpeed) {
-      case 0.3:
-        return 3;
-      case 0.5:
-        return 2;
-      case 1:
-        return 1;
-      case 2:
-        return 0.5;
-      case 3:
-        return 0.3;
-      default:
-        return 1;
-    }
-  };
-
   const mergeVideos = async (path) => {
-    const processedVideos = await Promise.all(
-      props.videoUris.map(async (video, index) => {
-        const _processedVideo = await RNFFmpeg.execute(
-          `-i '${video.uri}' -filter:v "setpts=${getVideoSpeed(
-            video.currentSpeed
-          )}*PTS" ${path}output_${index}.mp4`
-        );
-        return `${path}output_${index}.mp4`;
-      })
-    );
-    const videos = processedVideos.map((processedVideo) => {
+    const _processedVideos = props.videoUris.every(
+      (videoUri) => videoUri.processed
+    )
+      ? props.processedVideos
+      : [];
+    const videos = _processedVideos.map((processedVideo) => {
       return `-i '${processedVideo}'`;
     });
-    const videoAudios = processedVideos.map((processedVideo, index) => {
+    const videoAudios = _processedVideos.map((processedVideo, index) => {
       return `[${index}:v][${index}:a]`;
     });
     const query = `${videos.join(" ")} -filter_complex "${videoAudios.join(
       ""
-    )} concat=n=${processedVideos.length}:v=1:a=1 [outv] [outa]"`;
+    )} concat=n=${_processedVideos.length}:v=1:a=1 [outv] [outa]"`;
     console.log("query: ", query);
 
     const response = await RNFFmpeg.execute(

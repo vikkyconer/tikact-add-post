@@ -12,12 +12,14 @@ import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
 import BottomContainer from "./BottomContainer/BottomContainer";
 import Feather from "react-native-vector-icons/Feather";
-import { timers, bottomContainers } from "../constants";
-import { style } from "../styles";
+import { bottomContainers } from "../constants";
+import { RNFFmpeg } from "react-native-ffmpeg";
 import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
+import { getVideoSpeed } from "../utility";
+var RNFS = require("react-native-fs");
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -50,6 +52,7 @@ const CameraScreen = (props) => {
 
   // video params
   const [lastVideoUri, setLastVideoUri] = useState(null);
+  const [processedVideos, setProcessedVideos] = useState([]);
 
   // video recording params
   const [recordedVideoDuration, setRecordedVideoDuration] = useState(0);
@@ -202,6 +205,7 @@ const CameraScreen = (props) => {
             setRemainingVideoDuration={setRemainingVideoDuration}
             setRecordedVideoDuration={setRecordedVideoDuration}
             recordedVideoDuration={recordedVideoDuration}
+            processedVideos={processedVideos}
           />
         );
       case bottomContainers.FILTER:
@@ -239,6 +243,36 @@ const CameraScreen = (props) => {
     setRecording(true);
   };
 
+  const getPath = (videoPath) => {
+    const splitPath = videoPath.split("/");
+    const fileName = splitPath[splitPath.length - 1];
+    const fileNameWithoutExtension = fileName.split(".")[0];
+    console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
+    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
+    return path;
+  };
+
+  const applyFilters = async (videoUris, lastVideo, index) => {
+    const videoUri = videoUris[0].uri;
+    const path = getPath(videoUri);
+    const exist = await RNFS.exists(path);
+    console.log("exist: ", exist);
+    const result = !exist ? await RNFS.mkdir(path) : null;
+    const _exist = await RNFS.exists(path);
+    console.log("now exist: ", _exist);
+
+    // apply filter
+    await RNFFmpeg.execute(
+      `-i '${lastVideo.uri}' -filter:v "setpts=${getVideoSpeed(
+        lastVideo.currentSpeed
+      )}*PTS" ${path}output_${index}.mp4`
+    );
+    const _videoUris = videoUris;
+    _videoUris[_videoUris.length - 1] = { ...lastVideo, processed: true };
+    setVideoUris(_videoUris);
+    setProcessedVideos([...processedVideos, `${path}output_${index}.mp4`]);
+  };
+
   const endedRecording = () => {
     const now = new Date();
     setEndTime(now);
@@ -246,14 +280,14 @@ const CameraScreen = (props) => {
     const diffTime = Math.abs(now - startTime);
     const _recordedVideoDuration = recordedVideoDuration + diffTime / 1000;
     console.log("ended");
-    setVideoUris([
-      ...videoUris,
-      {
-        uri: lastVideoUri,
-        currentSpeed,
-        videoDuration: diffTime / 1000,
-      },
-    ]);
+    const lastVideo = {
+      uri: lastVideoUri,
+      currentSpeed,
+      videoDuration: diffTime / 1000,
+      processed: false,
+    };
+    const _videoUris = [...videoUris, lastVideo];
+    setVideoUris(_videoUris);
     console.log("_recordedVideoDuration: ", _recordedVideoDuration);
     setRecordedVideoDuration(_recordedVideoDuration);
 
@@ -261,6 +295,8 @@ const CameraScreen = (props) => {
       setPausedTimes([...pausedTimes, parseInt(value)])
     );
     const _remainingVideoDuration = totalVideoDuration - _recordedVideoDuration;
+
+    applyFilters(_videoUris, lastVideo, _videoUris.length - 1);
 
     setRemainingVideoDuration(_remainingVideoDuration);
     setRecorded(true);
@@ -274,17 +310,10 @@ const CameraScreen = (props) => {
           ? partVideoDuration
           : remainingVideoDuration;
 
-      console.log("totalVideoDuration : ", totalVideoDuration);
-      console.log("recordedVideoDuration : ", recordedVideoDuration);
-      console.log("remainingVideoDuration: ", remainingVideoDuration);
-      console.log("partVideoDuration: ", partVideoDuration);
-      console.log("_videoDuration: ", _videoDuration);
-
       if (remainingVideoDuration > 0) {
         const { uri, codec = "mp4" } = await camera.recordAsync({
           maxDuration: _videoDuration,
         });
-        console.log("uri");
         setLastVideoUri(uri);
       }
     } catch (error) {
@@ -338,6 +367,7 @@ const CameraScreen = (props) => {
             setRemainingVideoDuration={setRemainingVideoDuration}
             setRecordingVideoDuration={setRecordingVideoDuration}
             recordedVideoDuration={recordedVideoDuration}
+            processedVideos={processedVideos}
           />
         </View>
       </View>
