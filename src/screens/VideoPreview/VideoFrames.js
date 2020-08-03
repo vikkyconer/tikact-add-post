@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { RNFFmpeg } from "react-native-ffmpeg";
 import VideoProgressbar from "./VideoProgressbar";
-const { View, Text, Image, Dimensions, StyleSheet } = require("react-native");
+import CustomSlider from "./CustomSlider";
+const {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  StyleSheet,
+  ScrollView,
+} = require("react-native");
 var RNFS = require("react-native-fs");
 
 const VideoFrames = (props) => {
@@ -53,7 +61,7 @@ const VideoFrames = (props) => {
         width: window.width - 20,
         flexDirection: "row",
         opacity: frames && frames.length ? 1 : 0,
-        backgroundColor: "#5395ea",
+        // backgroundColor: "#5395ea",
         paddingTop: 8,
         paddingLeft: 10,
       }}
@@ -67,8 +75,8 @@ const VideoFrames = (props) => {
           />
         );
       })}
-
-      <VideoProgressbar currentPosition={props.currentPosition} />
+      <CustomSlider />
+      {/* <VideoProgressbar currentPosition={props.currentPosition} /> */}
     </View>
   );
 };

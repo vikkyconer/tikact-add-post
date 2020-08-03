@@ -100,6 +100,8 @@ const CameraScreen = (props) => {
         captureAudio={true}
         type={cameraSide}
         flashMode={cameraFlash}
+        autoFocus={RNCamera.Constants.AutoFocus.on}
+        useNativeZoom={true}
         androidCameraPermissionOptions={{
           title: "Permission to use camera",
           message: "We need your permission to use your camera",
