@@ -12,6 +12,12 @@ const DiscardClipModal = (props) => {
 
     const lastClip = props.videoUris[props.videoUris.length - 1];
 
+    const processedVideo = await RNFS.exists(`${path}final.mp4`);
+
+    if (processedVideo) {
+      await RNFS.unlink(`${path}final.mp4`);
+    }
+
     await RNFS.unlink(lastClip.uri);
     console.log("lastClip.videoDuration: ", lastClip.videoDuration);
     const _recordedVideoDuration =
@@ -26,7 +32,9 @@ const DiscardClipModal = (props) => {
     console.log("discard _recordedVideoDuration: ", _recordedVideoDuration);
     props.setRecordedVideoDuration(_recordedVideoDuration);
     props.videoUris.pop();
-    props.processedVideos.pop();
+
+    const lastProcessedVideo = props.processedVideos.pop();
+    await RNFS.unlink(lastProcessedVideo);
     console.log("discard processedVideos: ", props.processedVideos);
     props.setProcessedVideos(props.processedVideos);
     props.setVideoUris(props.videoUris);

@@ -21,7 +21,7 @@ const RightContainer = (props) => {
           clearInterval(interval);
           resolve(props.processedVideos);
         }
-      }, 1000);
+      }, 100);
     });
   };
 

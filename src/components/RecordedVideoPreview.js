@@ -21,6 +21,7 @@ const RecordedVideoPreview = (props) => {
         filterEnable={true}
         filter={'CIFalseColor'}
         resizeMode={"cover"}
+        muted={false}
         style={{
           justifyContent: "center",
           alignItems: "center",

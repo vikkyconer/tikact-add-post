@@ -74,6 +74,7 @@ const VideoPreview = (props) => {
           volume={0}
           rate={currentSpeed}
           filter={"CIPhotoEffectInstant"}
+          muted={false}
           seek={videoStartTime}
           filterEnabled={true}
           onProgress={({ currentTime }) => {

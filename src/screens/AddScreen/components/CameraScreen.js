@@ -270,8 +270,10 @@ const CameraScreen = (props) => {
       )}*PTS" ${path}output_${index}.mp4`
     );
     const _videoUris = videoUris;
-    _videoUris[_videoUris.length - 1] = { ...lastVideo, processed: true };
+    const lastVideoIndex = _videoUris.indexOf(lastVideo);
+    _videoUris[lastVideoIndex] = { ...lastVideo, processed: true };
     setVideoUris(_videoUris);
+    console.log("_videoUris: ", _videoUris);
     setProcessedVideos([...processedVideos, `${path}output_${index}.mp4`]);
   };
 
