@@ -11,12 +11,23 @@ const RightContainer = (props) => {
   const window = Dimensions.get("window");
   const [showDiscardModal, setShowDiscardModal] = useState(false);
 
+  const getAllVideoProcessed = async () => {
+    return new Promise((resolve, reject) => {
+      var interval = setInterval(() => {
+        const allProcessed = props.videoUris.every(
+          (videoUri) => videoUri.processed
+        );
+        if (allProcessed) {
+          clearInterval(interval);
+          resolve(props.processedVideos);
+        }
+      }, 1000);
+    });
+  };
+
   const mergeVideos = async (path) => {
-    const _processedVideos = props.videoUris.every(
-      (videoUri) => videoUri.processed
-    )
-      ? props.processedVideos
-      : [];
+    const _processedVideos = await getAllVideoProcessed();
+    console.log("processedVideos: ", _processedVideos);
     const videos = _processedVideos.map((processedVideo) => {
       return `-i '${processedVideo}'`;
     });
@@ -115,6 +126,8 @@ const RightContainer = (props) => {
           setRecordedVideoDuration={props.setRecordedVideoDuration}
           recordedVideoDuration={props.recordedVideoDuration}
           setRemainingVideoDuration={props.setRemainingVideoDuration}
+          setProcessedVideos={props.setProcessedVideos}
+          processedVideos={props.processedVideos}
         />
       ) : null}
     </View>

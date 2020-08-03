@@ -44,6 +44,8 @@ const BottomContainer = (props) => {
           setRemainingVideoDuration={props.setRemainingVideoDuration}
           totalVideoDuration={props.totalVideoDuration}
           processedVideos={props.processedVideos}
+          setProcessedVideos={props.setProcessedVideos}
+          processedVideos={props.processedVideos}
         />
       </View>
       {!props.recording &&

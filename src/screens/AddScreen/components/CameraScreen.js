@@ -206,6 +206,8 @@ const CameraScreen = (props) => {
             setRecordedVideoDuration={setRecordedVideoDuration}
             recordedVideoDuration={recordedVideoDuration}
             processedVideos={processedVideos}
+            setProcessedVideos={setProcessedVideos}
+            processedVideos={processedVideos}
           />
         );
       case bottomContainers.FILTER:
@@ -367,6 +369,8 @@ const CameraScreen = (props) => {
             setRemainingVideoDuration={setRemainingVideoDuration}
             setRecordingVideoDuration={setRecordingVideoDuration}
             recordedVideoDuration={recordedVideoDuration}
+            processedVideos={processedVideos}
+            setProcessedVideos={setProcessedVideos}
             processedVideos={processedVideos}
           />
         </View>

@@ -26,6 +26,9 @@ const DiscardClipModal = (props) => {
     console.log("discard _recordedVideoDuration: ", _recordedVideoDuration);
     props.setRecordedVideoDuration(_recordedVideoDuration);
     props.videoUris.pop();
+    props.processedVideos.pop();
+    console.log("discard processedVideos: ", props.processedVideos);
+    props.setProcessedVideos(props.processedVideos);
     props.setVideoUris(props.videoUris);
 
     props.pausedTimes.pop();
