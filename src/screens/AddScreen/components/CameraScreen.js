@@ -254,7 +254,7 @@ const CameraScreen = (props) => {
     return path;
   };
 
-  const applyFilters = async (videoUris, lastVideo, index) => {
+  const applyFilters = async (videoUris, lastVideo) => {
     const videoUri = videoUris[0].uri;
     const path = getPath(videoUri);
     const exist = await RNFS.exists(path);
@@ -263,27 +263,36 @@ const CameraScreen = (props) => {
     const _exist = await RNFS.exists(path);
     console.log("now exist: ", _exist);
 
+    const _videoUris = videoUris;
+    const lastVideoIndex = _videoUris.indexOf(lastVideo);
+
+    setProcessedVideos([
+      ...processedVideos,
+      `${path}output_${lastVideoIndex}.mp4`,
+    ]);
+
     // apply filter
     await RNFFmpeg.execute(
       `-i '${lastVideo.uri}' -filter:v "setpts=${getVideoSpeed(
         lastVideo.currentSpeed
-      )}*PTS" ${path}output_${index}.mp4`
+      )}*PTS" ${path}output_${lastVideoIndex}.mp4`
     );
-    const _videoUris = videoUris;
-    const lastVideoIndex = _videoUris.indexOf(lastVideo);
+    
     _videoUris[lastVideoIndex] = { ...lastVideo, processed: true };
     setVideoUris(_videoUris);
     console.log("_videoUris: ", _videoUris);
-    setProcessedVideos([...processedVideos, `${path}output_${index}.mp4`]);
   };
 
   const endedRecording = () => {
+    console.log(
+      "endedRecording**************************************************"
+    );
     const now = new Date();
     setEndTime(now);
 
     const diffTime = Math.abs(now - startTime);
     const _recordedVideoDuration = recordedVideoDuration + diffTime / 1000;
-    console.log("ended");
+
     const lastVideo = {
       uri: lastVideoUri,
       currentSpeed,
@@ -300,7 +309,7 @@ const CameraScreen = (props) => {
     );
     const _remainingVideoDuration = totalVideoDuration - _recordedVideoDuration;
 
-    applyFilters(_videoUris, lastVideo, _videoUris.length - 1);
+    applyFilters(_videoUris, lastVideo);
 
     setRemainingVideoDuration(_remainingVideoDuration);
     setRecorded(true);

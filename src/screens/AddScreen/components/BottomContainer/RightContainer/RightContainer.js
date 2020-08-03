@@ -17,6 +17,7 @@ const RightContainer = (props) => {
         const allProcessed = props.videoUris.every(
           (videoUri) => videoUri.processed
         );
+
         if (allProcessed) {
           clearInterval(interval);
           resolve(props.processedVideos);
