@@ -5,7 +5,6 @@ import VideoPausedMark from "./VideoPausedMark";
 const VideoRecordProgress = (props) => {
   const renderPausedMarks = () => {
     return props.pausedTimes.map((pausedTime, index) => {
-      console.log("pausedTimes: ", pausedTime);
       return <VideoPausedMark key={index} position={pausedTime} />;
     });
   };

@@ -87,11 +87,14 @@ const RightContainer = (props) => {
     >
       {props.recording || props.recorded ? (
         <View style={{ flexDirection: "row" }}>
-          <Ionicons
-            name="backspace"
-            style={{ fontSize: 30, color: "white", paddingRight: 20 }}
-            onPress={() => setShowDiscardModal(true)}
-          />
+          {!props.recording ? (
+            <Ionicons
+              name="backspace"
+              style={{ fontSize: 30, color: "white", paddingRight: 20 }}
+              onPress={() => setShowDiscardModal(true)}
+            />
+          ) : null}
+
           <Ionicons
             name="checkmark-circle"
             style={{ fontSize: 30, color: "red" }}
@@ -129,6 +132,10 @@ const RightContainer = (props) => {
           setPausedTimes={props.setPausedTimes}
           pausedTimes={props.pausedTimes}
           progressBarPercent={props.progressBarPercent}
+          totalVideoDuration={props.totalVideoDuration}
+          setRecordedVideoDuration={props.setRecordedVideoDuration}
+          recordedVideoDuration={props.recordedVideoDuration}
+          setRemainingVideoDuration={props.setRemainingVideoDuration}
         />
       ) : null}
     </View>

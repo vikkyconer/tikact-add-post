@@ -39,6 +39,10 @@ const BottomContainer = (props) => {
           setPausedTimes={props.setPausedTimes}
           pausedTimes={props.pausedTimes}
           progressBarPercent={props.progressBarPercent}
+          setRecordedVideoDuration={props.setRecordedVideoDuration}
+          recordedVideoDuration={props.recordedVideoDuration}
+          setRemainingVideoDuration={props.setRemainingVideoDuration}
+          totalVideoDuration={props.totalVideoDuration}
         />
       </View>
       {!props.recording &&

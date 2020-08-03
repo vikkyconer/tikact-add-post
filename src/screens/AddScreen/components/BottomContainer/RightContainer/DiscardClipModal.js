@@ -4,32 +4,33 @@ var RNFS = require("react-native-fs");
 
 const DiscardClipModal = (props) => {
   const discardClip = async () => {
-    console.log("uris: ", props.videoUris);
     const splitPath = props.videoUris[0].uri.split("/");
     const fileName = splitPath[splitPath.length - 1];
     const fileNameWithoutExtension = fileName.split(".")[0];
-    console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
     const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
     const exist = await RNFS.exists(path);
-    // if(exist) {
-    //   await RNFS.unlink(path)
-    // }
-    // await Promise.all(props.videoUris.map(async(video) => {
-    //   await RNFS.unlink(video.uri)
-    // }))
-    // props.setVideoUris([]);
+
     const lastClip = props.videoUris[props.videoUris.length - 1];
 
     await RNFS.unlink(lastClip.uri);
+    console.log("lastClip.videoDuration: ", lastClip.videoDuration);
+    const _recordedVideoDuration =
+      props.recordedVideoDuration - lastClip.videoDuration;
+    props.setRemainingVideoDuration(
+      props.totalVideoDuration - _recordedVideoDuration
+    );
+    console.log(
+      "discard remaining Video duration: ",
+      props.totalVideoDuration - _recordedVideoDuration
+    );
+    console.log("discard _recordedVideoDuration: ", _recordedVideoDuration);
+    props.setRecordedVideoDuration(_recordedVideoDuration);
     props.videoUris.pop();
     props.setVideoUris(props.videoUris);
 
     props.pausedTimes.pop();
     props.setPausedTimes(props.pausedTimes);
 
-    // setProgressBarPercent(
-    //   Animated.Value(props.pausedTimes[props.pausedTimes.length - 1])
-    // );
     if (props.pausedTimes.length) {
       props.progressBarPercent.setValue(
         props.pausedTimes[props.pausedTimes.length - 1]
@@ -42,8 +43,6 @@ const DiscardClipModal = (props) => {
       props.setRecording(false);
       props.setRecorded(false);
     }
-    console.log("pausedTimesDiscard: ", props.pausedTimes);
-    console.log("videoUris: ", props.videoUris);
     props.setShowDiscardModal(false);
   };
   return (

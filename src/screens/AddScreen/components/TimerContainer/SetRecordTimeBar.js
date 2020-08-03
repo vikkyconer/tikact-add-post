@@ -1,19 +1,12 @@
-import React from "react";
-import { View, Text, Dimensions, Animated } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, Animated } from "react-native";
 import Slider from "react-native-slider";
 const checked = require("../../../../assets/icons/checked.png");
 
 const SetRecordTimeBar = (props) => {
-  const window = Dimensions.get("window");
-  const renderHorizontalBars = () => {
-    const n = parseInt(window.width * 0.21);
-
-    return [...Array(n)].map((e, i) => (
-      <Text key={i} style={{ color: "white", height: 10, fontSize: 20 }}>
-        |
-      </Text>
-    ));
-  };
+  useEffect(() => {
+    props.setPartVideoDuration(props.remainingVideoDuration);
+  }, []);
 
   return (
     <View

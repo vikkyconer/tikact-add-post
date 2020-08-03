@@ -17,7 +17,7 @@ const TimerContainer = (props) => {
         if (_currentTimer <= 0) {
           clearInterval(interval);
           props.setTimerValue(currentTimer);
-          props.setRecording(true);
+          // props.setRecording(true);
           props.recordVideo();
           props.setBottomContainer(bottomContainers.DEFAULT);
           props.setShowCameraTimer(false);

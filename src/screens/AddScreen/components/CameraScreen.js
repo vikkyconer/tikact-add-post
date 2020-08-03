@@ -48,6 +48,9 @@ const CameraScreen = (props) => {
   const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
 
+  // video params
+  const [lastVideoUri, setLastVideoUri] = useState(null);
+
   // video recording params
   const [recordedVideoDuration, setRecordedVideoDuration] = useState(0);
   const [startTime, setStartTime] = useState(null);
@@ -197,6 +200,8 @@ const CameraScreen = (props) => {
             progressBarPercent={progressBarPercent}
             remainingVideoDuration={remainingVideoDuration}
             setRemainingVideoDuration={setRemainingVideoDuration}
+            setRecordedVideoDuration={setRecordedVideoDuration}
+            recordedVideoDuration={recordedVideoDuration}
           />
         );
       case bottomContainers.FILTER:
@@ -239,13 +244,22 @@ const CameraScreen = (props) => {
     setEndTime(now);
 
     const diffTime = Math.abs(now - startTime);
-    const _recordedVideo = recordedVideoDuration + Math.ceil(diffTime / 1000);
-    setRecordedVideoDuration(_recordedVideo);
+    const _recordedVideoDuration = recordedVideoDuration + diffTime / 1000;
+    console.log("ended");
+    setVideoUris([
+      ...videoUris,
+      {
+        uri: lastVideoUri,
+        currentSpeed,
+        videoDuration: diffTime / 1000,
+      },
+    ]);
+    console.log("_recordedVideoDuration: ", _recordedVideoDuration);
+    setRecordedVideoDuration(_recordedVideoDuration);
 
     progressBarPercent.stopAnimation((value) =>
       setPausedTimes([...pausedTimes, parseInt(value)])
     );
-
     const _remainingVideoDuration = totalVideoDuration - partVideoDuration;
 
     setRemainingVideoDuration(_remainingVideoDuration);
@@ -255,8 +269,6 @@ const CameraScreen = (props) => {
 
   const recordVideo = async () => {
     try {
-      console.log("recordedVideoDuration : ", recordedVideoDuration);
-
       const _remainingVideoDuration =
         totalVideoDuration - recordedVideoDuration;
 
@@ -264,22 +276,21 @@ const CameraScreen = (props) => {
         _remainingVideoDuration !== partVideoDuration
           ? partVideoDuration
           : _remainingVideoDuration;
-      console.log("_videoDuration: ", _videoDuration);
 
+      console.log("totalVideoDuration : ", totalVideoDuration);
+      console.log("recordedVideoDuration : ", recordedVideoDuration);
       console.log("_remainingVideoDuration: ", _remainingVideoDuration);
+      console.log("partVideoDuration: ", partVideoDuration);
+      console.log("_videoDuration: ", _videoDuration);
 
       if (_remainingVideoDuration > 0) {
         setRemainingVideoDuration(_remainingVideoDuration);
         const { uri, codec = "mp4" } = await camera.recordAsync({
           maxDuration: _videoDuration,
         });
-        setVideoUris([...videoUris, { uri, currentSpeed }]);
+        console.log("uri");
+        setLastVideoUri(uri);
       }
-
-      // progressBarPercent.stopAnimation((value) =>
-      //   setPausedTimes([...pausedTimes, parseInt(value)])
-      // );
-      // console.log("uri: ", videoUris);
     } catch (error) {
       console.log("error: ", error);
     }
@@ -329,6 +340,8 @@ const CameraScreen = (props) => {
             progressBarPercent={progressBarPercent}
             remainingVideoDuration={remainingVideoDuration}
             setRemainingVideoDuration={setRemainingVideoDuration}
+            setRecordingVideoDuration={setRecordingVideoDuration}
+            recordedVideoDuration={recordedVideoDuration}
           />
         </View>
       </View>
