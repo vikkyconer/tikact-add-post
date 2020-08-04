@@ -18,6 +18,7 @@ const VideoPreview = (props) => {
   const [showSpeeds, setShowSpeeds] = useState(true);
   const [currentPosition, setCurrentPosition] = useState(0);
   const [videoStartTime, setVideoStartTime] = useState(0);
+  const [secondsSelected, setSecondsSelected] = useState(totalVideoDuration);
 
   const getMultipleOptions = (arr, unit, currentValue) => {
     return arr.map((data, key) => {
@@ -71,7 +72,7 @@ const VideoPreview = (props) => {
           ref={(ref) => setVideoPlayer(ref)}
           pictureInPicture={true}
           fullscreen={true}
-          volume={0}
+          volume={1}
           rate={currentSpeed}
           filter={"CIPhotoEffectInstant"}
           muted={false}
@@ -188,7 +189,7 @@ const VideoPreview = (props) => {
             marginTop: 70,
           }}
         >
-          <Text style={{ color: "white" }}>59.0s selected</Text>
+          <Text style={{ color: "white" }}>{secondsSelected}s selected</Text>
           <View style={{ flexDirection: "row" }}>
             <Ionicons
               name="speedometer-outline"
@@ -212,6 +213,7 @@ const VideoPreview = (props) => {
           currentPosition={currentPosition}
           length={totalVideoDuration}
           setVideoStartTime={setVideoStartTime}
+          setSecondsSelected={setSecondsSelected}
         />
       </View>
     </View>

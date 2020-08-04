@@ -4,9 +4,9 @@ import { View, Dimensions } from "react-native";
 
 const CustomSlider = (props) => {
   return (
-    <View style={{ position: "absolute", left: 20, top: 15 }}>
+    <View style={{ position: "absolute", left: 20, top: 25 }}>
       <MultiSlider
-        trackStyle={{ height: 70, opacity: 0 }}
+        trackStyle={{ height: 90, opacity: 0 }}
         selectedStyle={{
           borderColor: "blue",
           borderWidth: 5,
@@ -15,7 +15,7 @@ const CustomSlider = (props) => {
         }}
         markerContainerStyle={{
           backgroundColor: "blue",
-          height: 70,
+          height: 90,
           width: 20,
         }}
         markerStyle={{ backgroundColor: "red", height: 20, width: 5 }}
@@ -24,6 +24,8 @@ const CustomSlider = (props) => {
         sliderLength={Dimensions.get("window").width - 70}
         onValuesChange={(values) => {
           console.log("values: ", values);
+          const _seconds = values[1] - values[0];
+          props.setSecondsSelected(_seconds);
           props.setVideoStartTime(values[0]);
         }}
         min={0}

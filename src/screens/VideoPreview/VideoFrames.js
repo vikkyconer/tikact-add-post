@@ -41,7 +41,7 @@ const VideoFrames = (props) => {
       console.log("sourceFile: ", sourceFile);
       const fps = props.length / 10;
       const images = await RNFFmpeg.execute(
-        `-i '${sourceFile}' -vf fps=1/${fps} ${path}output%d.png`
+        `-i '${sourceFile}' -vf fps=1 ${path}output%d.png`
       );
     }
 
@@ -50,7 +50,7 @@ const VideoFrames = (props) => {
     const _frames = createdImages.map((images) => {
       return images.path;
     });
-    setPerFrameWidth(window.width / _frames.length);
+    setPerFrameWidth(window.width / 15);
     setFrames(_frames);
   };
 
@@ -66,18 +66,21 @@ const VideoFrames = (props) => {
         paddingLeft: 10,
       }}
     >
-      {frames.map((frame, index) => {
-        return (
-          <Image
-            key={index}
-            source={{ uri: `file://${frame}` }}
-            style={{ width: perFrameWidth - 2.5, height: 80 }}
-          />
-        );
-      })}
+      <ScrollView horizontal={true}>
+        {frames.map((frame, index) => {
+          return (
+            <Image
+              key={index}
+              source={{ uri: `file://${frame}` }}
+              style={{ width: perFrameWidth , height: 80 }}
+            />
+          );
+        })}
+      </ScrollView>
       <CustomSlider
         length={props.length}
         setVideoStartTime={props.setVideoStartTime}
+        setSecondsSelected={props.setSecondsSelected}
       />
       {/* <VideoProgressbar currentPosition={props.currentPosition} /> */}
     </View>
