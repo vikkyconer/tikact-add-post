@@ -19,6 +19,7 @@ import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
 import { getVideoSpeed } from "../utility";
+import { PinchGestureHandler } from "react-native-gesture-handler";
 var RNFS = require("react-native-fs");
 
 const CameraScreen = (props) => {
@@ -49,6 +50,7 @@ const CameraScreen = (props) => {
   const [showCameraTimer, setShowCameraTimer] = useState(false);
   const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
+  const [zoom, setZoom] = useState(0);
 
   // video params
   const [lastVideoUri, setLastVideoUri] = useState(null);
@@ -100,8 +102,30 @@ const CameraScreen = (props) => {
     }
   };
 
+  const onPinchGestureEvent = (nativeEvent) => {
+    console.log("onPinchGestureEvent: ");
+    if (nativeEvent.scale > 1) {
+      if (camera.state.zoom + camera.zoomRate > 1) {
+        camera.setState({ zoom: 1 });
+      } else {
+        camera.setState({
+          zoom: camera.state.zoom + camera.zoomRate,
+        });
+      }
+    } else if (nativeEvent.scale < 1) {
+      if (camera.state.zoom - camera.zoomRate < 0) {
+        camera.setState({ zoom: 0 });
+      } else {
+        camera.setState({
+          zoom: camera.state.zoom - camera.zoomRate,
+        });
+      }
+    }
+  };
+
   const getCamera = () => {
     return (
+      // <PinchGesture onPinchGestureEvent={onPinchGestureEvent}>
       <RNCamera
         ref={(ref) => {
           setCamera(ref);
@@ -111,8 +135,10 @@ const CameraScreen = (props) => {
         captureAudio={true}
         type={cameraSide}
         flashMode={cameraFlash}
+        zoom={zoom}
         autoFocus={RNCamera.Constants.AutoFocus.on}
-        useNativeZoom={true}
+        videoStabilizationMode="auto"
+        // useNativeZoom={true}
         onRecordingStart={startedRecording}
         onRecordingEnd={endedRecording}
         androidCameraPermissionOptions={{
@@ -122,6 +148,27 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
+        <PinchGestureHandler
+          onGestureEvent={({ nativeEvent }) => {
+            if (nativeEvent.scale > 1) {
+              if (zoom < 1) {
+                setZoom(zoom + 0.1);
+              } else {
+                setZoom(1);
+              }
+            } else if (nativeEvent.scale < 1) {
+              if (zoom > 0) {
+                setZoom(zoom - 0.1);
+              } else {
+                setZoom(0);
+              }
+            }
+          }}
+        >
+          <View
+            style={{ position: "absolute", width: "100%", height: "100%" }}
+          />
+        </PinchGestureHandler>
         {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
 
         {!recording && !videoProcessing ? (
@@ -171,6 +218,7 @@ const CameraScreen = (props) => {
 
         {!showCameraTimer ? getBottomContainer() : null}
       </RNCamera>
+      // </PinchGesture>
     );
   };
 
