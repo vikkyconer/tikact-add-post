@@ -29,6 +29,9 @@ const RightContainer = (props) => {
   const mergeVideos = async (path) => {
     const _processedVideos = await getAllVideoProcessed();
     console.log("processedVideos: ", _processedVideos);
+    if (_processedVideos.length === 1) {
+      return _processedVideos[0];
+    }
     const videos = _processedVideos.map((processedVideo) => {
       return `-i '${processedVideo}'`;
     });
@@ -86,11 +89,13 @@ const RightContainer = (props) => {
             />
           ) : null}
 
-          <Ionicons
-            name="checkmark-circle"
-            style={{ fontSize: 30, color: "red" }}
-            onPress={processVideo}
-          />
+          {!props.recording ? (
+            <Ionicons
+              name="checkmark-circle"
+              style={{ fontSize: 30, color: "red" }}
+              onPress={processVideo}
+            />
+          ) : null}
         </View>
       ) : (
         <TouchableOpacity
