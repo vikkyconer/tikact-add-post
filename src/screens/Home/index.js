@@ -1,17 +1,48 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, 
+    StyleSheet, 
+    Text, 
+    TouchableOpacity,
+     View, 
+     Alert,
+     BackHandler,
+     PermissionsAndroid,
+     Image,
+     Platform,
+     ActivityIndicator,
+     Picker,
+     SafeAreaView } from 'react-native';
 
-const Home = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text>{'Hello Home.....!'}</Text>
-    </View>
-  );
-};
+     import { connect } from 'react-redux';
+import { videoList} from '../../actions/homeVideoList'
 
-export default Home;
+
+class Home extends Component {
+
+    componentDidMount() {
+
+        this.props.videoList();
+    }
+
+    render() {
+        return (
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                <Text>{'Hello Home.....!'}</Text>
+            </View>
+        )
+    }
+}
+
+const mapStateToProps = store => {
+    return {
+      vList: store.videoList,
+  
+        
+    }
+  }
+  
+  export default connect(mapStateToProps, {videoList} )(Home);

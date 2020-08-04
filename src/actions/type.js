@@ -1,0 +1,1 @@
+export const HOME_LIST_OF_VIDEO = 'HOME_LIST_OF_VIDEO';
