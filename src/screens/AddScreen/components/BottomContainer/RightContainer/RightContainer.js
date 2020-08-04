@@ -44,7 +44,7 @@ const RightContainer = (props) => {
     console.log("query: ", query);
 
     const response = await RNFFmpeg.execute(
-      `${query} -map "[outv]" -map "[outa]" ${path}final.mp4`
+      `${query} -q 1 -map "[outv]" -map "[outa]" ${path}final.mp4`
     );
     console.log("response: ", response);
     return `${path}final.mp4`;

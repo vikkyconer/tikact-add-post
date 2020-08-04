@@ -275,9 +275,9 @@ const CameraScreen = (props) => {
     await RNFFmpeg.execute(
       `-i '${lastVideo.uri}' -filter:v "setpts=${getVideoSpeed(
         lastVideo.currentSpeed
-      )}*PTS" ${path}output_${lastVideoIndex}.mp4`
+      )}*PTS" -q 1 ${path}output_${lastVideoIndex}.mp4`
     );
-    
+
     _videoUris[lastVideoIndex] = { ...lastVideo, processed: true };
     setVideoUris(_videoUris);
     console.log("_videoUris: ", _videoUris);
