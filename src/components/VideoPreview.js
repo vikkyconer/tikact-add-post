@@ -7,7 +7,12 @@ import { style } from "../screens/AddScreen/styles";
 import Video from "react-native-video";
 import { speeds } from "../screens/AddScreen/constants";
 import VideoFrames from "../screens/VideoPreview/VideoFrames";
-import { getVideoSpeed, getPath } from "../screens/AddScreen/utility";
+import {
+  getVideoSpeed,
+  getPath,
+  getAudioSpeed,
+} from "../screens/AddScreen/utility";
+var RNFS = require("react-native-fs");
 
 const VideoPreview = (props) => {
   const { videoUri, totalVideoDuration } = props.route.params;
@@ -19,6 +24,7 @@ const VideoPreview = (props) => {
   const [showSpeeds, setShowSpeeds] = useState(true);
   const [currentPosition, setCurrentPosition] = useState(0);
   const [videoStartTime, setVideoStartTime] = useState(0);
+  const [videoEndTime, setVideoEndTime] = useState(totalVideoDuration);
   const [secondsSelected, setSecondsSelected] = useState(totalVideoDuration);
 
   const getMultipleOptions = (arr, unit, currentValue) => {
@@ -66,16 +72,39 @@ const VideoPreview = (props) => {
   };
 
   const modifyVideo = async () => {
+    let finalPath = "";
+    let trimmedVideoPath = "";
     const path = await getPath(videoUri);
 
-    const query = `-i '${videoUri}' -filter_complex "[0:v]setpts=${getVideoSpeed(
-      currentSpeed
-    )}*PTS[v];[0:a]atempo=2.0[a]" -q 1 -map "[v]" -map "[a]" ${path}final.mp4`;
+    if (videoStartTime !== 0 || videoEndTime !== totalVideoDuration) {
+      trimmedVideoPath = `${path}trimmedVideo.mp4`;
+      const exist = await RNFS.exists(`${trimmedVideoPath}`);
 
-    await RNFFmpeg.execute(query);
+      if (exist) {
+        await RNFS.unlink(path);
+      }
+
+      const trimmVideoQuery = `-i '${videoUri}' -ss 00:00:${videoStartTime} -to 00:00:${videoEndTime} -async 1 ${path}trimmedVideo.mp4`;
+
+      await RNFFmpeg.execute(trimmVideoQuery);
+    } else {
+      trimmedVideoPath = videoUri;
+    }
+
+    if (currentSpeed !== 1) {
+      const query = `-i '${trimmedVideoPath}' -filter_complex "[0:v]setpts=${getVideoSpeed(
+        currentSpeed
+      )}*PTS[v];[0:a]${getAudioSpeed(
+        currentSpeed
+      )}[a]" -q 1 -map "[v]" -map "[a]" ${path}final.mp4`;
+      finalPath = `${path}final.mp4`;
+      await RNFFmpeg.execute(query);
+    } else {
+      finalPath = trimmedVideoPath;
+    }
 
     props.navigation.navigate("RecordedVideoPreview", {
-      videoUri: `${path}final.mp4`,
+      videoUri: finalPath,
     });
   };
 
@@ -223,6 +252,7 @@ const VideoPreview = (props) => {
           currentPosition={currentPosition}
           length={totalVideoDuration}
           setVideoStartTime={setVideoStartTime}
+          setVideoEndTime={setVideoEndTime}
           setSecondsSelected={setSecondsSelected}
         />
       </View>

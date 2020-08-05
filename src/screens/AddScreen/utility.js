@@ -17,6 +17,23 @@ export const getVideoSpeed = (currentSpeed) => {
   }
 };
 
+export const getAudioSpeed = (currentSpeed) => {
+  switch (currentSpeed) {
+    case 0.3:
+      return "atempo=2.0,atempo=2.0";
+    case 0.5:
+      return "atempo=0.5";
+    case 1:
+      return "atempo=1.0";
+    case 2:
+      return "atempo=2.0";
+    case 3:
+      return "atempo=2.0";
+    default:
+      return "atempo=1.0";
+  }
+};
+
 export const getPath = async (videoPath) => {
   const splitPath = videoPath.split("/");
   const fileName = splitPath[splitPath.length - 1];

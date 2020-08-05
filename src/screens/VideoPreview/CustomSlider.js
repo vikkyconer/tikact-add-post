@@ -23,10 +23,10 @@ const CustomSlider = (props) => {
         values={[0, props.length]}
         sliderLength={Dimensions.get("window").width - 70}
         onValuesChange={(values) => {
-          console.log("values: ", values);
           const _seconds = values[1] - values[0];
           props.setSecondsSelected(_seconds);
           props.setVideoStartTime(values[0]);
+          props.setVideoEndTime(values[1]);
         }}
         min={0}
         max={props.length}

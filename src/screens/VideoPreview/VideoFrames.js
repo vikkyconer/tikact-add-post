@@ -80,6 +80,7 @@ const VideoFrames = (props) => {
       <CustomSlider
         length={props.length}
         setVideoStartTime={props.setVideoStartTime}
+        setVideoEndTime={props.setVideoEndTime}
         setSecondsSelected={props.setSecondsSelected}
       />
       {/* <VideoProgressbar currentPosition={props.currentPosition} /> */}
