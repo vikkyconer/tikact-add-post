@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import Video from "react-native-video";
 import BottomBar from "../screens/RecordedVideoPreview/BottomBar/BottomBar";
@@ -8,8 +8,9 @@ import Filters from "../screens/RecordedVideoPreview/FilterContainer/Filters";
 
 const RecordedVideoPreview = (props) => {
   const { videoUri } = props.route.params;
-
   const [videoPlayer, setVideoPlayer] = useState(null);
+  const [paused, setPaused] = useState(false);
+
   return (
     <View>
       <Video
@@ -18,6 +19,7 @@ const RecordedVideoPreview = (props) => {
         fullscreen={true}
         volume={1}
         repeat={true}
+        paused={paused}
         filterEnable={true}
         filter={"CIFalseColor"}
         resizeMode={"cover"}
@@ -32,7 +34,11 @@ const RecordedVideoPreview = (props) => {
       />
       <BackButton navigation={props.navigation} />
       <VideoEditOptions />
-      <BottomBar navigation={props.navigation} videoUri={videoUri} />
+      <BottomBar
+        navigation={props.navigation}
+        videoUri={videoUri}
+        setPaused={setPaused}
+      />
       {/* <Filters /> */}
     </View>
   );

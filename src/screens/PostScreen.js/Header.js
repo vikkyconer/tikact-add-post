@@ -10,7 +10,10 @@ const Header = (props) => {
           name="arrow-back-outline"
           color="black"
           size={25}
-          onPress={() => props.navigation.goBack()}
+          onPress={() => {
+            props.onGoBack()
+            props.navigation.goBack();
+          }}
         />
         <Text
           style={{

@@ -64,9 +64,13 @@ const BottomBar = (props) => {
           alignItems: "center",
           paddingVertical: 10,
         }}
-        onPress={() =>
-          props.navigation.navigate("PostScreen", { videoUri: props.videoUri })
-        }
+        onPress={() => {
+          props.setPaused(true);
+          props.navigation.navigate("PostScreen", {
+            videoUri: props.videoUri,
+            onGoBack: () => props.setPaused(false),
+          });
+        }}
       >
         <Text style={{ color: "white" }}>Next</Text>
       </TouchableOpacity>
