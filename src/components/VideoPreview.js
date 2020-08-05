@@ -26,6 +26,7 @@ const VideoPreview = (props) => {
   const [videoStartTime, setVideoStartTime] = useState(0);
   const [videoEndTime, setVideoEndTime] = useState(totalVideoDuration);
   const [secondsSelected, setSecondsSelected] = useState(totalVideoDuration);
+  const [processingVideo, setProcessingVideo] = useState(false);
 
   const getMultipleOptions = (arr, unit, currentValue) => {
     return arr.map((data, key) => {
@@ -72,6 +73,7 @@ const VideoPreview = (props) => {
   };
 
   const modifyVideo = async () => {
+    setProcessingVideo(true);
     let finalPath = "";
     let trimmedVideoPath = "";
     const path = await getPath(videoUri);
@@ -102,7 +104,7 @@ const VideoPreview = (props) => {
     } else {
       finalPath = trimmedVideoPath;
     }
-
+    setProcessingVideo(false);
     props.navigation.navigate("RecordedVideoPreview", {
       videoUri: finalPath,
     });
@@ -174,14 +176,23 @@ const VideoPreview = (props) => {
           },
         ]}
       >
-        <Ionicons
-          name="arrow-back-outline"
-          color="white"
-          size={20}
-          onPress={() => props.navigation.goBack(null)}
-        />
+        <View>
+          {!processingVideo ? (
+            <Ionicons
+              name="arrow-back-outline"
+              color="white"
+              size={20}
+              onPress={() => props.navigation.goBack(null)}
+            />
+          ) : null}
+        </View>
+
         <View style={{ width: 80, marginRight: 10, paddingRight: 10 }}>
-          <Button title="Next" onPress={modifyVideo} />
+          <Button
+            title="Next"
+            onPress={modifyVideo}
+            disabled={processingVideo}
+          />
         </View>
       </View>
 
