@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Button, Dimensions, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
-import { getIcon } from "../utility";
+import { RNFFmpeg } from "react-native-ffmpeg";
 import { style } from "../screens/AddScreen/styles";
 import Video from "react-native-video";
 import { speeds } from "../screens/AddScreen/constants";
 import VideoFrames from "../screens/VideoPreview/VideoFrames";
+import { getVideoSpeed, getPath } from "../screens/AddScreen/utility";
 
 const VideoPreview = (props) => {
   const { videoUri, totalVideoDuration } = props.route.params;
@@ -61,6 +62,20 @@ const VideoPreview = (props) => {
           )}
         </View>
       );
+    });
+  };
+
+  const modifyVideo = async () => {
+    const path = await getPath(videoUri);
+
+    const query = `-i '${videoUri}' -filter_complex "[0:v]setpts=${getVideoSpeed(
+      currentSpeed
+    )}*PTS[v];[0:a]atempo=2.0[a]" -q 1 -map "[v]" -map "[a]" ${path}final.mp4`;
+
+    await RNFFmpeg.execute(query);
+
+    props.navigation.navigate("RecordedVideoPreview", {
+      videoUri: `${path}final.mp4`,
     });
   };
 
@@ -137,12 +152,7 @@ const VideoPreview = (props) => {
           onPress={() => props.navigation.goBack(null)}
         />
         <View style={{ width: 80, marginRight: 10, paddingRight: 10 }}>
-          <Button
-            title="Next"
-            onPress={() =>
-              props.navigation.navigate("RecordedVideoPreview", { videoUri })
-            }
-          />
+          <Button title="Next" onPress={modifyVideo} />
         </View>
       </View>
 

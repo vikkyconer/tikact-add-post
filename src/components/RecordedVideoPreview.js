@@ -16,7 +16,7 @@ const RecordedVideoPreview = (props) => {
         ref={(ref) => setVideoPlayer(ref)}
         pictureInPicture={true}
         fullscreen={true}
-        volume={0}
+        volume={1}
         repeat={true}
         filterEnable={true}
         filter={"CIFalseColor"}

@@ -18,7 +18,7 @@ import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
-import { getVideoSpeed } from "../utility";
+import { getVideoSpeed, getPath } from "../utility";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 var RNFS = require("react-native-fs");
 
@@ -102,30 +102,8 @@ const CameraScreen = (props) => {
     }
   };
 
-  const onPinchGestureEvent = (nativeEvent) => {
-    console.log("onPinchGestureEvent: ");
-    if (nativeEvent.scale > 1) {
-      if (camera.state.zoom + camera.zoomRate > 1) {
-        camera.setState({ zoom: 1 });
-      } else {
-        camera.setState({
-          zoom: camera.state.zoom + camera.zoomRate,
-        });
-      }
-    } else if (nativeEvent.scale < 1) {
-      if (camera.state.zoom - camera.zoomRate < 0) {
-        camera.setState({ zoom: 0 });
-      } else {
-        camera.setState({
-          zoom: camera.state.zoom - camera.zoomRate,
-        });
-      }
-    }
-  };
-
   const getCamera = () => {
     return (
-      // <PinchGesture onPinchGestureEvent={onPinchGestureEvent}>
       <RNCamera
         ref={(ref) => {
           setCamera(ref);
@@ -218,7 +196,6 @@ const CameraScreen = (props) => {
 
         {!showCameraTimer ? getBottomContainer() : null}
       </RNCamera>
-      // </PinchGesture>
     );
   };
 
@@ -293,24 +270,9 @@ const CameraScreen = (props) => {
     setRecording(true);
   };
 
-  const getPath = (videoPath) => {
-    const splitPath = videoPath.split("/");
-    const fileName = splitPath[splitPath.length - 1];
-    const fileNameWithoutExtension = fileName.split(".")[0];
-    console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
-    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
-    return path;
-  };
-
   const applyFilters = async (videoUris, lastVideo) => {
     const videoUri = videoUris[0].uri;
-    const path = getPath(videoUri);
-    const exist = await RNFS.exists(path);
-    console.log("exist: ", exist);
-    const result = !exist ? await RNFS.mkdir(path) : null;
-    const _exist = await RNFS.exists(path);
-    console.log("now exist: ", _exist);
-
+    const path = await getPath(videoUri);
     const _videoUris = videoUris;
     const lastVideoIndex = _videoUris.indexOf(lastVideo);
 
