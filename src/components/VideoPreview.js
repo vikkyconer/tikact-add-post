@@ -140,7 +140,7 @@ const VideoPreview = (props) => {
           <Button
             title="Next"
             onPress={() =>
-              props.navigation.navigate("PostScreen", { videoUri })
+              props.navigation.navigate("RecordedVideoPreview", { videoUri })
             }
           />
         </View>

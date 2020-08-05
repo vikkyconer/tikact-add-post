@@ -7,7 +7,7 @@ import BackButton from "../screens/RecordedVideoPreview/BackButton";
 import Filters from "../screens/RecordedVideoPreview/FilterContainer/Filters";
 
 const RecordedVideoPreview = (props) => {
-  const { videoUri, totalVideoDuration } = props.route.params;
+  const { videoUri } = props.route.params;
 
   const [videoPlayer, setVideoPlayer] = useState(null);
   return (
@@ -19,7 +19,7 @@ const RecordedVideoPreview = (props) => {
         volume={0}
         repeat={true}
         filterEnable={true}
-        filter={'CIFalseColor'}
+        filter={"CIFalseColor"}
         resizeMode={"cover"}
         muted={false}
         style={{
