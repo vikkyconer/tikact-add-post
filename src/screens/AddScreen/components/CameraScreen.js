@@ -295,9 +295,13 @@ const CameraScreen = (props) => {
       `${path}output_${lastVideoIndex}.mp4`,
     ]);
 
+    await RNFFmpeg.execute(
+      `-i '${lastVideo.uri}' -i ${selectedSound} -c copy -map 0:v:0 -map 1:a:0 ${path}audio_video_${lastVideoIndex}.mp4`
+    );
+
     // apply filter
     await RNFFmpeg.execute(
-      `-i '${lastVideo.uri}' -filter:v "setpts=${getVideoSpeed(
+      `-i '${path}audio_video_${lastVideoIndex}.mp4' -filter:v "setpts=${getVideoSpeed(
         lastVideo.currentSpeed
       )}*PTS" -q 1 ${path}output_${lastVideoIndex}.mp4`
     );
@@ -362,57 +366,6 @@ const CameraScreen = (props) => {
     await camera.stopRecording();
   };
 
-  const getCameraOptions = () => {
-    return (
-      <View style={{ width: "100%", height: "100%" }}>
-        {/* <Image source={{ uri: videoUri }} style={{ flex: 1 }} /> */}
-        <View style={{ position: "absolute", width: "100%", height: "100%" }}>
-          <VideoOtherOptions
-            crossIcon={crossIcon}
-            flashCamera={flashCamera}
-            flashIcon={flashIcon}
-            setBottomContainer={setBottomContainer}
-            cameraSide={cameraSide}
-            setCameraSide={setCameraSide}
-            setShowSpeedOptions={setShowSpeedOptions}
-            showSpeedOptions={showSpeedOptions}
-          />
-          <BottomContainer
-            recordVideo={recordVideo}
-            stopRecording={stopRecording}
-            recording={recording}
-            navigation={props.navigation}
-            showSpeedOptions={showSpeedOptions}
-            setBottomContainer={setBottomContainer}
-            setRecording={setRecording}
-            setRecordingPaused={setRecordingPaused}
-            recordingPaused={recordingPaused}
-            recorded={recorded}
-            videoUris={videoUris}
-            setVideoProcessing={setVideoProcessing}
-            setRecorded={setRecorded}
-            setVideoUris={setVideoUris}
-            setCurrentSpeed={setCurrentSpeed}
-            currentSpeed={currentSpeed}
-            setTotalVideoDuration={setTotalVideoDuration}
-            setPartVideoDuration={setPartVideoDuration}
-            totalVideoDuration={totalVideoDuration}
-            setPausedTimes={setPausedTimes}
-            pausedTimes={pausedTimes}
-            progressBarPercent={progressBarPercent}
-            remainingVideoDuration={remainingVideoDuration}
-            setRemainingVideoDuration={setRemainingVideoDuration}
-            setRecordingVideoDuration={setRecordingVideoDuration}
-            recordedVideoDuration={recordedVideoDuration}
-            processedVideos={processedVideos}
-            setProcessedVideos={setProcessedVideos}
-            processedVideos={processedVideos}
-          />
-        </View>
-      </View>
-    );
-  };
-
   return (
     <View
       style={{
@@ -422,7 +375,6 @@ const CameraScreen = (props) => {
     >
       <StatusBar hidden={true} />
       {getCamera()}
-      {/* {!recorded ? getCamera() : getCameraOptions()} */}
     </View>
   );
 };

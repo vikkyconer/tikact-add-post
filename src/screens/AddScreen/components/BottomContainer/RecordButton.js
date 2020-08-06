@@ -1,6 +1,5 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
-import { bottomContainers } from "../../constants";
 import { promisify } from "../../utility";
 
 const RecordButton = (props) => {
