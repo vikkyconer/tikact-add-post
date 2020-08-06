@@ -51,7 +51,6 @@ const CameraScreen = (props) => {
   const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
   const [zoom, setZoom] = useState(0);
-  const [selectedSound, setSelectedSound] = useState(null);
 
   // video params
   const [lastVideoUri, setLastVideoUri] = useState(null);
@@ -119,8 +118,8 @@ const CameraScreen = (props) => {
     }
   };
 
-  const playSound = async () => {
-    const sound = await promisify(selectedSound);
+  const playSound = async (url) => {
+    const sound = await promisify(url);
     sound.play();
   };
 
@@ -132,7 +131,7 @@ const CameraScreen = (props) => {
         }}
         whiteBalance={whiteBalance}
         style={{ flex: 1 }}
-        captureAudio={selectedSound ? false : true}
+        captureAudio={true}
         type={cameraSide}
         flashMode={cameraFlash}
         zoom={zoom}
@@ -157,8 +156,6 @@ const CameraScreen = (props) => {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </PinchGestureHandler>
-
-        {selectedSound ? playSound() : null}
 
         {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
 
@@ -273,7 +270,7 @@ const CameraScreen = (props) => {
           />
         );
       case bottomContainers.SOUND:
-        return <SoundContainer setSelectedSound={setSelectedSound} />;
+        return <SoundContainer playSound={playSound} />;
     }
   };
 

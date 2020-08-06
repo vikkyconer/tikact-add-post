@@ -29,7 +29,7 @@ const SoundContainer = (props) => {
         // transform: [{ translateY: containerHeight }],
       }}
     >
-      <SoundGrid setSelectedSound={props.setSelectedSound} />
+      <SoundGrid playSound={props.playSound} />
     </Animated.View>
   );
 };
