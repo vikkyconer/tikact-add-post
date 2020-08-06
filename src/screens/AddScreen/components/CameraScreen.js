@@ -18,10 +18,9 @@ import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
-import { getVideoSpeed, getPath } from "../utility";
+import { getVideoSpeed, getPath, promisify } from "../utility";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import SoundContainer from "./SoundContainer";
-var RNFS = require("react-native-fs");
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -52,6 +51,7 @@ const CameraScreen = (props) => {
   const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
   const [zoom, setZoom] = useState(0);
+  const [selectedSound, setSelectedSound] = useState(null);
 
   // video params
   const [lastVideoUri, setLastVideoUri] = useState(null);
@@ -103,6 +103,27 @@ const CameraScreen = (props) => {
     }
   };
 
+  const setZoomLevel = (nativeEvent) => {
+    if (nativeEvent.scale > 1) {
+      if (zoom < 1) {
+        setZoom(zoom + 0.1);
+      } else {
+        setZoom(1);
+      }
+    } else if (nativeEvent.scale < 1) {
+      if (zoom > 0) {
+        setZoom(zoom - 0.1);
+      } else {
+        setZoom(0);
+      }
+    }
+  };
+
+  const playSound = async () => {
+    const sound = await promisify(selectedSound);
+    sound.play();
+  };
+
   const getCamera = () => {
     return (
       <RNCamera
@@ -111,7 +132,7 @@ const CameraScreen = (props) => {
         }}
         whiteBalance={whiteBalance}
         style={{ flex: 1 }}
-        captureAudio={true}
+        captureAudio={selectedSound ? false : true}
         type={cameraSide}
         flashMode={cameraFlash}
         zoom={zoom}
@@ -129,25 +150,15 @@ const CameraScreen = (props) => {
       >
         <PinchGestureHandler
           onGestureEvent={({ nativeEvent }) => {
-            if (nativeEvent.scale > 1) {
-              if (zoom < 1) {
-                setZoom(zoom + 0.1);
-              } else {
-                setZoom(1);
-              }
-            } else if (nativeEvent.scale < 1) {
-              if (zoom > 0) {
-                setZoom(zoom - 0.1);
-              } else {
-                setZoom(0);
-              }
-            }
+            setZoomLevel(nativeEvent);
           }}
         >
           <View
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </PinchGestureHandler>
+
+        {selectedSound ? playSound() : null}
 
         {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
 
@@ -262,7 +273,7 @@ const CameraScreen = (props) => {
           />
         );
       case bottomContainers.SOUND:
-        return <SoundContainer />;
+        return <SoundContainer setSelectedSound={setSelectedSound} />;
     }
   };
 

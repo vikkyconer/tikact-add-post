@@ -7,9 +7,10 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-var Sound = require("react-native-sound");
+import { promisify } from "../../utility";
+var RNFS = require("react-native-fs");
 
-const SoundGrid = () => {
+const SoundGrid = (props) => {
   const [sounds, setSounds] = useState([]);
   const [activeSound, setActiveSound] = useState(null);
 
@@ -17,22 +18,27 @@ const SoundGrid = () => {
     getSounds();
   }, []);
 
-  const promisify = (url) => {
-    return new Promise((resolve, reject) => {
-      const sound = new Sound(url, null, (error) => {
-        if (error) {
-          console.log("error: ", error);
-        }
-        resolve(sound);
-      });
+  const fetchSound = async (url, slug) => {
+    const soundsFolder = `${RNFS.DocumentDirectoryPath}/sound/`;
+    const exist = await RNFS.exists(soundsFolder);
+
+    if (exist) {
+      await RNFS.unlink(soundsFolder);
+    }
+    await RNFS.mkdir(soundsFolder);
+    await RNFS.downloadFile({
+      fromUrl: url,
+      toFile: `${soundsFolder}/${slug}.mp4`,
     });
+    props.setSelectedSound(`${soundsFolder}/${slug}.mp4`);
   };
 
   const playSound = async (_activeSound) => {
     console.log("playSound");
     const sound = await promisify(_activeSound.url);
-    console.log("sound fetched");
-    setActiveSound({ ..._activeSound, loader: false });
+    console.log("sound fetched: ", sound);
+    setActiveSound({ ..._activeSound, loader: false, sound });
+    sound.setNumberOfLoops(-1);
     sound.play();
   };
 
@@ -41,38 +47,47 @@ const SoundGrid = () => {
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
       {
         url: "https://tikact.s3.ap-south-1.amazonaws.com/tum+mile.mp4",
         name: "Tum Mile",
+        slug: "tum-mile",
       },
     ]);
   };
@@ -83,7 +98,7 @@ const SoundGrid = () => {
       data={sounds}
       renderItem={({ item, index }) => {
         return (
-          <View
+          <TouchableOpacity
             style={{
               flex: 1,
               flexDirection: "column",
@@ -92,6 +107,10 @@ const SoundGrid = () => {
               height: 150,
               borderRadius: 20,
               alignItems: "center",
+            }}
+            onPress={async () => {
+              await activeSound.sound.stop();
+              fetchSound(item.url, item.slug);
             }}
           >
             {activeSound && activeSound.index === index ? (
@@ -110,7 +129,8 @@ const SoundGrid = () => {
                     alignSelf: "center",
                     top: "40%",
                   }}
-                  onPress={() => {
+                  onPress={async () => {
+                    await activeSound.sound.stop();
                     setActiveSound(null);
                   }}
                 />
@@ -125,7 +145,11 @@ const SoundGrid = () => {
                   alignSelf: "center",
                   top: "40%",
                 }}
-                onPress={() => {
+                onPress={async () => {
+                  if (activeSound) {
+                    await activeSound.sound.stop();
+                  }
+
                   playSound({ index, url: item.url, loader: true });
                   setActiveSound({ index, url: item.url, loader: true });
                 }}
@@ -133,7 +157,7 @@ const SoundGrid = () => {
             )}
 
             <Text style={{ color: "white", fontSize: 20 }}>{item.name}</Text>
-          </View>
+          </TouchableOpacity>
         );
       }}
       numColumns={3}

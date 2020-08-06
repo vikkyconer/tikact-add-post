@@ -1,4 +1,5 @@
 var RNFS = require("react-native-fs");
+var Sound = require("react-native-sound");
 
 export const getVideoSpeed = (currentSpeed) => {
   switch (currentSpeed) {
@@ -47,4 +48,15 @@ export const getPath = async (videoPath) => {
   }
   const result = await RNFS.mkdir(path);
   return path;
+};
+
+export const promisify = (url) => {
+  return new Promise((resolve, reject) => {
+    const sound = new Sound(url, null, (error) => {
+      if (error) {
+        console.log("error: ", error);
+      }
+      resolve(sound);
+    });
+  });
 };
