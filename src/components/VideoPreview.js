@@ -105,6 +105,7 @@ const VideoPreview = (props) => {
       finalPath = trimmedVideoPath;
     }
     setProcessingVideo(false);
+    setPaused(true);
     props.navigation.navigate("RecordedVideoPreview", {
       videoUri: finalPath,
     });

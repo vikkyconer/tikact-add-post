@@ -49,4 +49,5 @@ export const bottomContainers = {
   DEFAULT: 0,
   FILTER: 1,
   TIMER: 2,
+  SOUND: 3
 };

@@ -20,6 +20,7 @@ import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
 import { getVideoSpeed, getPath } from "../utility";
 import { PinchGestureHandler } from "react-native-gesture-handler";
+import SoundContainer from "./SoundContainer";
 var RNFS = require("react-native-fs");
 
 const CameraScreen = (props) => {
@@ -147,6 +148,7 @@ const CameraScreen = (props) => {
             style={{ position: "absolute", width: "100%", height: "100%" }}
           />
         </PinchGestureHandler>
+
         {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
 
         {!recording && !videoProcessing ? (
@@ -259,6 +261,8 @@ const CameraScreen = (props) => {
             remainingVideoDuration={remainingVideoDuration}
           />
         );
+      case bottomContainers.SOUND:
+        return <SoundContainer />;
     }
   };
 

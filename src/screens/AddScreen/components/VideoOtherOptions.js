@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { soundIcon } from "../constants";
+import { View, Text, TouchableOpacity } from "react-native";
+import { soundIcon, bottomContainers } from "../constants";
 import VideoEditTools from "./VideoEditTools";
 
 const VideoOtherOptions = (props) => {
@@ -14,7 +14,8 @@ const VideoOtherOptions = (props) => {
         }}
       >
         {props.crossIcon}
-        <View
+        <TouchableOpacity
+          onPress={() => props.setBottomContainer(bottomContainers.SOUND)}
           style={{
             flexDirection: "row",
             position: "absolute",
@@ -24,7 +25,7 @@ const VideoOtherOptions = (props) => {
         >
           {soundIcon}
           <Text style={{ color: "white" }}>Sounds</Text>
-        </View>
+        </TouchableOpacity>
         <VideoEditTools
           flashCamera={props.flashCamera}
           flashIcon={props.flashIcon}
