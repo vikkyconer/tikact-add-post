@@ -35,19 +35,24 @@ export const getAudioSpeed = (currentSpeed) => {
   }
 };
 
-export const getPath = async (videoPath) => {
+export const getPath = async (videoPath, folder, deleteFolder) => {
   const splitPath = videoPath.split("/");
   const fileName = splitPath[splitPath.length - 1];
   const fileNameWithoutExtension = fileName.split(".")[0];
   console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
-  const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
+  const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/${folder}/`;
   const exist = await RNFS.exists(path);
   console.log("exist: ", exist);
-  if (exist) {
+  if (!exist) {
+    const result = await RNFS.mkdir(path);
+    return path;
+  } else if (exist && deleteFolder) {
     await RNFS.unlink(path);
+    const result = await RNFS.mkdir(path);
+    return path;
+  } else {
+    return path;
   }
-  const result = await RNFS.mkdir(path);
-  return path;
 };
 
 export const promisify = (url) => {

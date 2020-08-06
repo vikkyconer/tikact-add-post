@@ -3,7 +3,7 @@ import { View, Dimensions, TouchableOpacity, Image, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RNFFmpeg } from "react-native-ffmpeg";
 import DiscardClipModal from "./DiscardClipModal";
-import { getVideoSpeed } from "../../../utility";
+import { getVideoSpeed, getPath } from "../../../utility";
 var RNFS = require("react-native-fs");
 const uploadPic = require("../../../../../assets/images/upload.jpg");
 
@@ -52,15 +52,8 @@ const RightContainer = (props) => {
 
   const processVideo = async () => {
     props.setVideoProcessing(true);
-    console.log("uris: ", props.videoUris);
-    const splitPath = props.videoUris[0].uri.split("/");
-    const fileName = splitPath[splitPath.length - 1];
-    const fileNameWithoutExtension = fileName.split(".")[0];
-    console.log("fileNameWithoutExtension: ", fileNameWithoutExtension);
-    const path = `${RNFS.DocumentDirectoryPath}/${fileNameWithoutExtension}/processedVideo/`;
-    const exist = await RNFS.exists(path);
-    console.log("exist: ", exist);
-    const result = !exist ? await RNFS.mkdir(path) : null;
+    const path = await getPath(props.videoUris[0].uri, "processedVideo", false);
+
     const videoPath = await mergeVideos(path);
     const files = await RNFS.readDir(path);
     console.log("files: ", files);

@@ -76,7 +76,7 @@ const VideoPreview = (props) => {
     setProcessingVideo(true);
     let finalPath = "";
     let trimmedVideoPath = "";
-    const path = await getPath(videoUri);
+    const path = await getPath(videoUri, 'processed_video', true);
 
     if (videoStartTime !== 0 || videoEndTime !== totalVideoDuration) {
       trimmedVideoPath = `${path}trimmedVideo.mp4`;

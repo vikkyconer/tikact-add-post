@@ -32,6 +32,7 @@ const SoundContainer = (props) => {
       <SoundGrid
         setSelectedSound={props.setSelectedSound}
         setBottomContainer={props.setBottomContainer}
+        setSoundPlayer={props.setSoundPlayer}
       />
     </Animated.View>
   );

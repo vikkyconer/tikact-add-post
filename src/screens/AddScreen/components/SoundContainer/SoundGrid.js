@@ -31,6 +31,8 @@ const SoundGrid = (props) => {
         toFile: `${soundsFolder}${slug}.mp4`,
       }).promise;
     }
+    const _soundPlayer = await promisify(`${soundsFolder}${slug}.mp4`);
+    props.setSoundPlayer(_soundPlayer);
     props.setSelectedSound(`${soundsFolder}${slug}.mp4`);
     props.setBottomContainer(bottomContainers.DEFAULT);
   };

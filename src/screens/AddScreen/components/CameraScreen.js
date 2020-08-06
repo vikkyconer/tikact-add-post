@@ -18,9 +18,10 @@ import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
-import { getVideoSpeed, getPath, promisify } from "../utility";
+import { getVideoSpeed, getPath, promisify, getAudioSpeed } from "../utility";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import SoundContainer from "./SoundContainer";
+var RNFS = require("react-native-fs");
 
 const CameraScreen = (props) => {
   const [camera, setCamera] = useState(null);
@@ -61,6 +62,9 @@ const CameraScreen = (props) => {
   const [recordedVideoDuration, setRecordedVideoDuration] = useState(0);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
+  const [soundPlayer, setSoundPlayer] = useState(null);
+  const [startCounter, setStartCounter] = useState(0);
+  const [endCounter, setEndCounter] = useState(0);
 
   const crossIcon = (
     <Feather
@@ -271,61 +275,82 @@ const CameraScreen = (props) => {
           <SoundContainer
             setSelectedSound={setSelectedSound}
             setBottomContainer={setBottomContainer}
+            setSoundPlayer={setSoundPlayer}
           />
         );
     }
   };
 
-  const startedRecording = () => {
-    console.log("started:");
-    const now = new Date();
-    setStartTime(now);
-    changeProgressBarPercent();
-    setRecording(true);
-  };
-
   const applyFilters = async (videoUris, lastVideo) => {
     const videoUri = videoUris[0].uri;
-    const path = await getPath(videoUri);
+    const audioVideoPath = await getPath(videoUri, 'audioVideo', true);
+    const trimmedAudioPath = await getPath(videoUri, 'trimmedAudio', true);
+    const processedPath = await getPath(videoUri, 'processedVideo', false);
     const _videoUris = videoUris;
     const lastVideoIndex = _videoUris.indexOf(lastVideo);
+    let audioVideoFile = "";
 
     setProcessedVideos([
       ...processedVideos,
-      `${path}output_${lastVideoIndex}.mp4`,
+      `${processedPath}output_${lastVideoIndex}.mp4`,
     ]);
 
+    if (selectedSound !== "") {      
+      let trimmedAudioFIle = `${trimmedAudioPath}trimmed_audio_${lastVideoIndex}.mp4`;
+      audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
+
+      await RNFFmpeg.execute(
+        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio}  -i '${selectedSound}' ${trimmedAudioPath}trimmed_audio_${lastVideoIndex}.mp4`
+      );
+      await RNFFmpeg.execute(
+        `-i '${lastVideo.uri}' -i ${trimmedAudioFIle} -c copy -map 0:v:0 -map 1:a:0 ${audioVideoFile}`
+      );
+    } else {
+      audioVideoFile = `${lastVideo.uri}`;
+    }
+
+    console.log('started processedPath ********************')
     await RNFFmpeg.execute(
-      `-i '${lastVideo.uri}' -i ${selectedSound} -c copy -map 0:v:0 -map 1:a:0 ${path}audio_video_${lastVideoIndex}.mp4`
+      `-i '${audioVideoFile}' -filter_complex "[0:v]setpts=${getVideoSpeed(
+        lastVideo.currentSpeed
+      )}*PTS[v];[0:a]${getAudioSpeed(
+        lastVideo.currentSpeed
+      )}[a]" -q 1 -map "[v]" -map "[a]" ${processedPath}output_${lastVideoIndex}.mp4`
     );
 
-    // apply filter
-    await RNFFmpeg.execute(
-      `-i '${path}audio_video_${lastVideoIndex}.mp4' -filter:v "setpts=${getVideoSpeed(
-        lastVideo.currentSpeed
-      )}*PTS" -q 1 ${path}output_${lastVideoIndex}.mp4`
-    );
+    const existingFiles = await RNFS.readDir(processedPath);
+    console.log("cameraScreen existing Files: ", existingFiles);
+    console.log('ended processedPath ########################')
+    // await RNFFmpeg.execute(
+    //   `-i '${audioVideoFile}' -filter:v "setpts=${getVideoSpeed(
+    //     lastVideo.currentSpeed
+    //   )}*PTS" -q 1 ${path}output_${lastVideoIndex}.mp4`
+    // );
 
     _videoUris[lastVideoIndex] = { ...lastVideo, processed: true };
     setVideoUris(_videoUris);
     console.log("_videoUris: ", _videoUris);
   };
 
-  const endedRecording = () => {
-    console.log(
-      "endedRecording**************************************************"
-    );
+  const endedRecording = async () => {
     const now = new Date();
     setEndTime(now);
 
     const diffTime = Math.abs(now - startTime);
     const _recordedVideoDuration = recordedVideoDuration + diffTime / 1000;
+    setEndCounter(diffTime / 1000);
+
+    if (soundPlayer) {
+      await soundPlayer.stop();
+    }
 
     const lastVideo = {
       uri: lastVideoUri,
       currentSpeed,
       videoDuration: diffTime / 1000,
       processed: false,
+      startAudio: startCounter,
+      endAudio: diffTime / 1000
     };
     const _videoUris = [...videoUris, lastVideo];
     setVideoUris(_videoUris);
@@ -342,6 +367,21 @@ const CameraScreen = (props) => {
     setRemainingVideoDuration(_remainingVideoDuration);
     setRecorded(true);
     setRecording(false);
+  };
+
+  const startedRecording = async () => {
+    console.log("started:");
+    const now = new Date();
+    if (endCounter) {
+      setStartCounter(endCounter);
+    }
+    setStartTime(now);
+    if (soundPlayer) {
+      await soundPlayer.play();
+    }
+
+    changeProgressBarPercent();
+    setRecording(true);
   };
 
   const recordVideo = async () => {

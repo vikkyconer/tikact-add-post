@@ -3,10 +3,6 @@ import { View, TouchableOpacity } from "react-native";
 import { promisify } from "../../utility";
 
 const RecordButton = (props) => {
-  const playSound = async () => {
-    const sound = await promisify(props.selectedSound);
-    sound.play();
-  };
   return (
     <TouchableOpacity
       style={{
@@ -15,10 +11,7 @@ const RecordButton = (props) => {
         borderRadius: 70,
         alignItems: "center",
       }}
-      onPress={() => {
-        props.recordVideo();
-        playSound();
-      }}
+      onPress={props.recordVideo}
     >
       <View
         style={{
