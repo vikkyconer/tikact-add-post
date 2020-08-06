@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { promisify } from "../../utility";
+import { bottomContainers } from "../../constants";
 var RNFS = require("react-native-fs");
 
 const SoundGrid = (props) => {
@@ -30,7 +31,8 @@ const SoundGrid = (props) => {
         toFile: `${soundsFolder}${slug}.mp4`,
       }).promise;
     }
-    props.playSound(`${soundsFolder}${slug}.mp4`);
+    props.setSelectedSound(`${soundsFolder}${slug}.mp4`);
+    props.setBottomContainer(bottomContainers.DEFAULT);
   };
 
   const playSound = async (_activeSound) => {
@@ -167,7 +169,7 @@ const SoundGrid = (props) => {
               />
             )}
 
-            <Text style={{ color: "white", fontSize: 20 }}>{item.name}</Text>
+            <Text style={{ color: "black", fontSize: 20 }}>{item.name}</Text>
           </TouchableOpacity>
         );
       }}

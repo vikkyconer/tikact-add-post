@@ -51,6 +51,7 @@ const CameraScreen = (props) => {
   const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
   const [zoom, setZoom] = useState(0);
+  const [selectedSound, setSelectedSound] = useState("");
 
   // video params
   const [lastVideoUri, setLastVideoUri] = useState(null);
@@ -118,11 +119,6 @@ const CameraScreen = (props) => {
     }
   };
 
-  const playSound = async (url) => {
-    const sound = await promisify(url);
-    sound.play();
-  };
-
   const getCamera = () => {
     return (
       <RNCamera
@@ -131,7 +127,7 @@ const CameraScreen = (props) => {
         }}
         whiteBalance={whiteBalance}
         style={{ flex: 1 }}
-        captureAudio={true}
+        captureAudio={selectedSound ? false : true}
         type={cameraSide}
         flashMode={cameraFlash}
         zoom={zoom}
@@ -243,6 +239,7 @@ const CameraScreen = (props) => {
             processedVideos={processedVideos}
             setProcessedVideos={setProcessedVideos}
             processedVideos={processedVideos}
+            selectedSound={selectedSound}
           />
         );
       case bottomContainers.FILTER:
@@ -270,7 +267,12 @@ const CameraScreen = (props) => {
           />
         );
       case bottomContainers.SOUND:
-        return <SoundContainer playSound={playSound} />;
+        return (
+          <SoundContainer
+            setSelectedSound={setSelectedSound}
+            setBottomContainer={setBottomContainer}
+          />
+        );
     }
   };
 

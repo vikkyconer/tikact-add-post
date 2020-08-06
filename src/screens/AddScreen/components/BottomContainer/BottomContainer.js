@@ -25,6 +25,7 @@ const BottomContainer = (props) => {
           recording={props.recording}
           recordVideo={props.recordVideo}
           stopRecording={props.stopRecording}
+          selectedSound={props.selectedSound}
         />
         <RightContainer
           recording={props.recording}

@@ -16,7 +16,10 @@ const MiddleContainer = (props) => {
       {props.recording ? (
         <StopRecordButton stopRecording={props.stopRecording} />
       ) : (
-        <RecordButton recordVideo={props.recordVideo} />
+        <RecordButton
+          recordVideo={props.recordVideo}
+          selectedSound={props.selectedSound}
+        />
       )}
     </View>
   );
