@@ -18,6 +18,18 @@ const DiscardClipModal = (props) => {
       await RNFS.unlink(`${path}final.mp4`);
     }
 
+    if (props.selectedSound) {
+      if (props.videoUris.length === 1) {
+        props.setStartCounter(0);
+        props.setEndCounter(0);
+      } else {
+        props.setStartCounter(
+          props.videoUris[props.videoUris.length - 2].endAudio
+        );
+        props.setEndCounter(lastClip.startAudio);
+      }
+    }
+
     await RNFS.unlink(lastClip.uri);
     console.log("lastClip.videoDuration: ", lastClip.videoDuration);
     const _recordedVideoDuration =

@@ -244,6 +244,8 @@ const CameraScreen = (props) => {
             setProcessedVideos={setProcessedVideos}
             processedVideos={processedVideos}
             selectedSound={selectedSound}
+            setStartCounter={setStartCounter}
+            setEndCounter={setEndCounter}
           />
         );
       case bottomContainers.FILTER:
@@ -398,7 +400,7 @@ const CameraScreen = (props) => {
   const startedRecording = async () => {
     console.log("started:");
     const now = new Date();
-    if (endCounter) {
+    if (selectedSound && endCounter) {
       setStartCounter(endCounter);
     }
     setStartTime(now);

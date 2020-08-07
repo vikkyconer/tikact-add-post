@@ -127,6 +127,9 @@ const RightContainer = (props) => {
           setRemainingVideoDuration={props.setRemainingVideoDuration}
           setProcessedVideos={props.setProcessedVideos}
           processedVideos={props.processedVideos}
+          setStartCounter={props.setStartCounter}
+          setEndCounter={props.setEndCounter}
+          selectedSound={props.selectedSound}
         />
       ) : null}
     </View>

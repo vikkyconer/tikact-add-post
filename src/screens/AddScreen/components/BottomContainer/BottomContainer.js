@@ -47,6 +47,9 @@ const BottomContainer = (props) => {
           processedVideos={props.processedVideos}
           setProcessedVideos={props.setProcessedVideos}
           processedVideos={props.processedVideos}
+          setStartCounter={props.setStartCounter}
+          setEndCounter={props.setEndCounter}
+          selectedSound={props.selectedSound}
         />
       </View>
       {!props.recording &&
