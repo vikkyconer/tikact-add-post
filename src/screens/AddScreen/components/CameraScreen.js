@@ -289,25 +289,35 @@ const CameraScreen = (props) => {
     const lastVideoIndex = _videoUris.indexOf(lastVideo);
     let audioVideoFile = "";
 
-    // if no sound and no speed
-    // if sound and no speed
-    // if no sound and speed
-    // if sound and speed
+    // if no sound and no speed -- working
+    // if sound and no speed -- working
+    // if no sound and speed -- working
+    // if sound and speed -- working
 
     if (!selectedSound && lastVideo.currentSpeed === 1) {
-      setProcessedVideos([...processedVideos, lastVideo.uri]);
+      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
+      setProcessedVideos([...processedVideos, processedVideoFile]);
+      await RNFS.copyFile(lastVideo.uri, processedVideoFile);
     } else if (selectedSound && lastVideo.currentSpeed === 1) {
+      console.log(
+        `sound with no speed ${lastVideoIndex} ***********************************`
+      );
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
-      setProcessedVideos([...processedVideos, audioVideoFile]);
+      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
+      setProcessedVideos([...processedVideos, processedVideoFile]);
+      console.log("startAudio: ", lastVideo.startAudio);
+      console.log("endAudio: ", lastVideo.endAudio);
 
       await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -i '${selectedSound}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -c copy -map 0:v:0 -map 1:a:0 -q 1 ${audioVideoFile}`
+        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound}' ${audioVideoFile}`
+      );
+
+      await RNFFmpeg.execute(
+        `-i '${lastVideo.uri}' -i '${audioVideoFile}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${processedVideoFile}`
       );
     } else if (!selectedSound && lastVideo.currentSpeed !== 1) {
-      setProcessedVideos([
-        ...processedVideos,
-        `${processedPath}output_${lastVideoIndex}.mp4`,
-      ]);
+      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
+      setProcessedVideos([...processedVideos, processedVideoFile]);
 
       audioVideoFile = `${lastVideo.uri}`;
 
@@ -316,25 +326,27 @@ const CameraScreen = (props) => {
           lastVideo.currentSpeed
         )}*PTS[v];[0:a]${getAudioSpeed(
           lastVideo.currentSpeed
-        )}[a]" -q 1 -map "[v]" -map "[a]" ${processedPath}output_${lastVideoIndex}.mp4`
+        )}[a]" -q 1 -map "[v]" -map "[a]" ${processedVideoFile}`
       );
     } else if (selectedSound && lastVideo.currentSpeed !== 1) {
-      setProcessedVideos([
-        ...processedVideos,
-        `${processedPath}output_${lastVideoIndex}.mp4`,
-      ]);
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
+      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
+      setProcessedVideos([...processedVideos, processedVideoFile]);
 
       await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -i '${selectedSound}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -c copy -map 0:v:0 -map 1:a:0 -q 1 ${audioVideoFile}`
+        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound}' ${audioVideoFile}`
       );
 
       await RNFFmpeg.execute(
-        `-i '${audioVideoFile}' -filter_complex "[0:v]setpts=${getVideoSpeed(
+        `-i '${lastVideo.uri}' -i '${audioVideoFile}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${audioVideoPath}trimmed_${lastVideoIndex}.mp4`
+      );
+
+      await RNFFmpeg.execute(
+        `-i '${audioVideoPath}trimmed_${lastVideoIndex}.mp4' -filter_complex "[0:v]setpts=${getVideoSpeed(
           lastVideo.currentSpeed
         )}*PTS[v];[0:a]${getAudioSpeed(
           lastVideo.currentSpeed
-        )}[a]" -q 1 -map "[v]" -map "[a]" ${processedPath}output_${lastVideoIndex}.mp4`
+        )}[a]" -q 1 -map "[v]" -map "[a]" ${processedVideoFile}`
       );
     }
 
