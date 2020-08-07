@@ -112,6 +112,7 @@ build/
 .idea
 .gradle
 local.properties
+*.hprof
 *.iml
 
 # node.js
