@@ -19,7 +19,7 @@ const SoundGrid = (props) => {
     getSounds();
   }, []);
 
-  const fetchSound = async (url, slug) => {
+  const fetchSound = async (_sound) => {
     const soundsFolder = `${RNFS.DocumentDirectoryPath}/sound/`;
     const exist = await RNFS.exists(soundsFolder);
     console.log("exist : ", exist);
@@ -27,13 +27,16 @@ const SoundGrid = (props) => {
     if (!exist) {
       await RNFS.mkdir(soundsFolder);
       await RNFS.downloadFile({
-        fromUrl: url,
-        toFile: `${soundsFolder}${slug}.mp4`,
+        fromUrl: _sound.url,
+        toFile: `${soundsFolder}${_sound.slug}.mp4`,
       }).promise;
     }
-    const _soundPlayer = await promisify(`${soundsFolder}${slug}.mp4`);
+    const _soundPlayer = await promisify(`${soundsFolder}${_sound.slug}.mp4`);
     props.setSoundPlayer(_soundPlayer);
-    props.setSelectedSound(`${soundsFolder}${slug}.mp4`);
+    props.setSelectedSound({
+      ..._sound,
+      url: `${soundsFolder}${_sound.slug}.mp4`,
+    });
     props.setBottomContainer(bottomContainers.DEFAULT);
   };
 
@@ -125,7 +128,7 @@ const SoundGrid = (props) => {
               if (activeSound) {
                 await activeSound.sound.stop();
               }
-              fetchSound(item.url, item.slug);
+              fetchSound(item);
             }}
           >
             {activeSound && activeSound.index === index ? (

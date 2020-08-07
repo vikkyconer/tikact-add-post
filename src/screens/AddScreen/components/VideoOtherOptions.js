@@ -4,6 +4,12 @@ import { soundIcon, bottomContainers } from "../constants";
 import VideoEditTools from "./VideoEditTools";
 
 const VideoOtherOptions = (props) => {
+  const isVideoNotPlaying = () => {
+    return (
+      !props.recording &&
+      props.remainingVideoDuration === props.totalVideoDuration
+    );
+  };
   return (
     <View>
       <View
@@ -14,18 +20,27 @@ const VideoOtherOptions = (props) => {
         }}
       >
         {props.crossIcon}
+
         <TouchableOpacity
-          onPress={() => props.setBottomContainer(bottomContainers.SOUND)}
+          onPress={() => {
+            if (isVideoNotPlaying()) {
+              props.changeSoundsContainerY();
+              props.setBottomContainer(bottomContainers.SOUND);
+            }
+          }}
           style={{
             flexDirection: "row",
             position: "absolute",
-            left: "45%",
+            left: "40%",
             top: 10,
           }}
         >
           {soundIcon}
-          <Text style={{ color: "white" }}>Sounds</Text>
+          <Text style={{ color: "white" }}>
+            {props.selectedSound ? props.selectedSound.name : "Sounds"}
+          </Text>
         </TouchableOpacity>
+
         <VideoEditTools
           flashCamera={props.flashCamera}
           flashIcon={props.flashIcon}
