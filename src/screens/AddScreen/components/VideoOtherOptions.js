@@ -24,7 +24,6 @@ const VideoOtherOptions = (props) => {
         <TouchableOpacity
           onPress={() => {
             if (isVideoNotPlaying()) {
-              props.changeSoundsContainerY();
               props.setBottomContainer(bottomContainers.SOUND);
             }
           }}
