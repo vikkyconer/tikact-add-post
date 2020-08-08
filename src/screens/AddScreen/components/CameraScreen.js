@@ -49,7 +49,7 @@ const CameraScreen = (props) => {
   const [pausedTimes, setPausedTimes] = useState([]);
   const [timerValue, setTimerValue] = useState(3);
   const [showCameraTimer, setShowCameraTimer] = useState(false);
-  const timerContainerY = useRef(new Animated.Value(220)).current;  
+  const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
   const [zoom, setZoom] = useState(0);
   const [selectedSound, setSelectedSound] = useState("");
@@ -294,6 +294,7 @@ const CameraScreen = (props) => {
     const _videoUris = videoUris;
     const lastVideoIndex = _videoUris.indexOf(lastVideo);
     let audioVideoFile = "";
+    const processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
 
     // if no sound and no speed -- working
     // if sound and no speed -- working
@@ -301,15 +302,10 @@ const CameraScreen = (props) => {
     // if sound and speed -- working
 
     if (!selectedSound && lastVideo.currentSpeed === 1) {
-      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
       await RNFS.copyFile(lastVideo.uri, processedVideoFile);
     } else if (selectedSound && lastVideo.currentSpeed === 1) {
-      console.log(
-        `sound with no speed ${lastVideoIndex} ***********************************`
-      );
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
-      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
       console.log("startAudio: ", lastVideo.startAudio);
       console.log("endAudio: ", lastVideo.endAudio);
@@ -322,7 +318,6 @@ const CameraScreen = (props) => {
         `-i '${lastVideo.uri}' -i '${audioVideoFile}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${processedVideoFile}`
       );
     } else if (!selectedSound && lastVideo.currentSpeed !== 1) {
-      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
       audioVideoFile = `${lastVideo.uri}`;
@@ -336,23 +331,10 @@ const CameraScreen = (props) => {
       );
     } else if (selectedSound && lastVideo.currentSpeed !== 1) {
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
-      processedVideoFile = `${processedPath}output_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
       await RNFFmpeg.execute(
-        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' ${audioVideoFile}`
-      );
-
-      await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -i '${audioVideoFile}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${audioVideoPath}trimmed_${lastVideoIndex}.mp4`
-      );
-
-      await RNFFmpeg.execute(
-        `-i '${audioVideoPath}trimmed_${lastVideoIndex}.mp4' -filter_complex "[0:v]setpts=${getVideoSpeed(
-          lastVideo.currentSpeed
-        )}*PTS[v];[0:a]${getAudioSpeed(
-          lastVideo.currentSpeed
-        )}[a]" -q 1 -map "[v]" -map "[a]" ${processedVideoFile}`
+        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${_endCounter} -i '${selectedSound.url}' -filter_complex "[0:v]setpts=0.5*PTS[v];[1:a]atempo=1[a]" -map "[v]" -map "[a]" -shortest ${processedVideoFile}`
       );
     }
 
@@ -370,7 +352,8 @@ const CameraScreen = (props) => {
 
     const diffTime = Math.abs(now - startTime);
     const _recordedVideoDuration = recordedVideoDuration + diffTime / 1000;
-    setEndCounter(diffTime / 1000);
+    const _endCounter = diffTime / 1000 / currentSpeed;
+    setEndCounter(_endCounter);
 
     if (soundPlayer) {
       await soundPlayer.stop();
@@ -409,7 +392,7 @@ const CameraScreen = (props) => {
     }
     setStartTime(now);
     if (soundPlayer) {
-      await soundPlayer.play();
+      await soundPlayer.setCurrentTime(startCounter).play();
     }
 
     changeProgressBarPercent();
