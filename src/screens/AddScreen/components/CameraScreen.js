@@ -334,7 +334,7 @@ const CameraScreen = (props) => {
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
       await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${_endCounter} -i '${selectedSound.url}' -filter_complex "[0:v]setpts=0.5*PTS[v];[1:a]atempo=1[a]" -map "[v]" -map "[a]" -shortest ${processedVideoFile}`
+        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -filter_complex "[0:v]setpts=0.5*PTS[v];[1:a]atempo=1[a]" -map "[v]" -map "[a]" -shortest ${processedVideoFile}`
       );
     }
 
@@ -365,7 +365,7 @@ const CameraScreen = (props) => {
       videoDuration: diffTime / 1000,
       processed: false,
       startAudio: startCounter,
-      endAudio: diffTime / 1000,
+      endAudio: _endCounter,
     };
     const _videoUris = [...videoUris, lastVideo];
     setVideoUris(_videoUris);
@@ -391,8 +391,12 @@ const CameraScreen = (props) => {
       setStartCounter(endCounter);
     }
     setStartTime(now);
+    console.log("startCounter: ", startCounter);
     if (soundPlayer) {
-      await soundPlayer.setCurrentTime(startCounter).play();
+      await soundPlayer
+        .setSpeed(1 / currentSpeed)
+        .setCurrentTime(startCounter)
+        .play();
     }
 
     changeProgressBarPercent();
