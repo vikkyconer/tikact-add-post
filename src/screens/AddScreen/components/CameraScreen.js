@@ -311,11 +311,7 @@ const CameraScreen = (props) => {
       console.log("endAudio: ", lastVideo.endAudio);
 
       await RNFFmpeg.execute(
-        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' ${audioVideoFile}`
-      );
-
-      await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -i '${audioVideoFile}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${processedVideoFile}`
+        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${processedVideoFile}`
       );
     } else if (!selectedSound && lastVideo.currentSpeed !== 1) {
       setProcessedVideos([...processedVideos, processedVideoFile]);
@@ -391,11 +387,11 @@ const CameraScreen = (props) => {
       setStartCounter(endCounter);
     }
     setStartTime(now);
-    console.log("startCounter: ", startCounter);
+    console.log("startCounter: ", endCounter);
     if (soundPlayer) {
       await soundPlayer
         .setSpeed(1 / currentSpeed)
-        .setCurrentTime(startCounter)
+        .setCurrentTime(endCounter)
         .play();
     }
 
