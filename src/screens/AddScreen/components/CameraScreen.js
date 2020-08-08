@@ -330,7 +330,13 @@ const CameraScreen = (props) => {
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
       await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -filter_complex "[0:v]setpts=0.5*PTS[v];[1:a]atempo=1[a]" -map "[v]" -map "[a]" -shortest ${processedVideoFile}`
+        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${
+          lastVideo.endAudio
+        } -i '${
+          selectedSound.url
+        }' -filter_complex "[0:v]setpts=${getVideoSpeed(
+          lastVideo.currentSpeed
+        )}*PTS[v];[1:a]atempo=1[a]" -map "[v]" -map "[a]" -q 1 -shortest ${processedVideoFile}`
       );
     }
 
