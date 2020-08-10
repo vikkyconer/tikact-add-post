@@ -355,10 +355,10 @@ const CameraScreen = (props) => {
     const diffTime = Math.abs(now - startTime);
     const _recordedVideoDuration = recordedVideoDuration + diffTime / 1000;
     const _endCounter = diffTime / 1000 / currentSpeed;
-    setEndCounter(_endCounter);
+    setEndCounter(_recordedVideoDuration);
 
     if (soundPlayer) {
-      await soundPlayer.stop();
+      await soundPlayer.pause();
     }
 
     const lastVideo = {
@@ -390,15 +390,13 @@ const CameraScreen = (props) => {
     console.log("started:");
     const now = new Date();
     if (selectedSound && endCounter) {
+      console.log("endCounter");
       setStartCounter(endCounter);
     }
     setStartTime(now);
-    console.log("startCounter: ", endCounter);
-    if (soundPlayer) {
-      await soundPlayer
-        .setSpeed(1 / currentSpeed)
-        .setCurrentTime(endCounter)
-        .play();
+    console.log("startAudioCounter endCounter: ", endCounter);
+    if (soundPlayer && endCounter === 0) {
+      await soundPlayer.setSpeed(1 / currentSpeed).play();
     }
 
     changeProgressBarPercent();
