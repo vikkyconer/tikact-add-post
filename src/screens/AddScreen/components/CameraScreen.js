@@ -358,7 +358,11 @@ const CameraScreen = (props) => {
     setEndCounter(_recordedVideoDuration);
 
     if (soundPlayer) {
-      await soundPlayer.pause();
+      if (_recordedVideoDuration >= totalVideoDuration) {
+        await soundPlayer.stop();
+      } else {
+        await soundPlayer.pause();
+      }
     }
 
     const lastVideo = {
@@ -395,7 +399,7 @@ const CameraScreen = (props) => {
     }
     setStartTime(now);
     console.log("startAudioCounter endCounter: ", endCounter);
-    if (soundPlayer && endCounter === 0) {
+    if (soundPlayer) {
       await soundPlayer.setSpeed(1 / currentSpeed).play();
     }
 
