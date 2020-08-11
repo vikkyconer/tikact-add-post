@@ -110,7 +110,7 @@ const SoundGrid = (props) => {
 
   return (
     <FlatList
-      style={{ padding: 10 }}
+      style={{ padding: 10, paddingTop: 40 }}
       data={sounds}
       renderItem={({ item, index }) => {
         return (

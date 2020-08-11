@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { Animated } from "react-native";
+import { Animated, TouchableOpacity } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import SoundGrid from "./SoundGrid";
+import { bottomContainers } from "../../constants";
 
 const SoundContainer = (props) => {
   const soundsContainerY = useRef(new Animated.Value(500)).current;
-  
+
   useEffect(() => {
     Animated.spring(soundsContainerY, {
       toValue: 0,
@@ -34,6 +36,19 @@ const SoundContainer = (props) => {
         setBottomContainer={props.setBottomContainer}
         setSoundPlayer={props.setSoundPlayer}
       />
+
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 5,
+          top: 5,
+          width: 25,
+          height: 25,
+        }}
+        onPress={() => props.setBottomContainer(bottomContainers.DEFAULT)}
+      >
+        <Ionicons name="close-outline" color="black" size={25} />
+      </TouchableOpacity>
     </Animated.View>
   );
 };
