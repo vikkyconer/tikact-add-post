@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ProfilePic from "./ProfilePic";
 import { RNCamera } from "react-native-camera";
 import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { bottomContainers } from "../../constants";
-const { View, TouchableOpacity } = require("react-native");
+const { View, TouchableOpacity, Animated } = require("react-native");
 
 const Filters = (props) => {
   const [filters, setFilters] = useState([]);
   const [filterBrightness, setFilterBrightness] = useState(1);
+  const yScale = useRef(new Animated.Value(220)).current;
+
+  useEffect(() => {
+    Animated.spring(yScale, {
+      toValue: 0,
+      velocity: 20,
+      tension: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   useEffect(() => {
     DeviceBrightness.setBrightnessLevel(filterBrightness);
@@ -46,13 +57,14 @@ const Filters = (props) => {
   };
 
   return (
-    <View
+    <Animated.View
       style={{
         position: "absolute",
         bottom: 0,
         left: 0,
         right: 0,
         height: 220,
+        transform: [{ translateY: yScale }],
       }}
     >
       <View
@@ -102,7 +114,7 @@ const Filters = (props) => {
       >
         {renderFilters()}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
