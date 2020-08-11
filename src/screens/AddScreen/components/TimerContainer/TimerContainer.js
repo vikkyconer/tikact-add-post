@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, Animated } from "react-native";
+import { View, Text, Animated, TouchableOpacity } from "react-native";
 import Timers from "./Timers";
 import SetRecordTimeBar from "./SetRecordTimeBar";
 import StartShootingBtn from "./StartShootingBtn";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { bottomContainers } from "../../constants";
 
 const TimerContainer = (props) => {
@@ -34,7 +35,7 @@ const TimerContainer = (props) => {
         bottom: 0,
         left: 0,
         right: 0,
-        height: 220,
+        height: 280,
         transform: [{ translateY: props.timerContainerY }],
       }}
     >
@@ -49,12 +50,25 @@ const TimerContainer = (props) => {
           borderTopRightRadius: 10,
         }}
       />
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 5,
+          top: 5,
+          width: 25,
+          height: 25,
+        }}
+        onPress={() => props.setBottomContainer(bottomContainers.DEFAULT)}
+      >
+        <Ionicons name="close-outline" color="white" size={25} />
+      </TouchableOpacity>
+
       <View
         style={{
           width: "100%",
           height: 10,
           paddingHorizontal: 20,
-          paddingVertical: 15,
+          paddingVertical: 45,
         }}
       >
         <View

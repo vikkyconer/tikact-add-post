@@ -107,22 +107,6 @@ const CameraScreen = (props) => {
     }
   };
 
-  const setZoomLevel = (nativeEvent) => {
-    if (nativeEvent.scale > 1) {
-      if (zoom < 1) {
-        setZoom(zoom + 0.1);
-      } else {
-        setZoom(1);
-      }
-    } else if (nativeEvent.scale < 1) {
-      if (zoom > 0) {
-        setZoom(zoom - 0.1);
-      } else {
-        setZoom(0);
-      }
-    }
-  };
-
   const getCamera = () => {
     return (
       <RNCamera
@@ -134,10 +118,9 @@ const CameraScreen = (props) => {
         captureAudio={selectedSound ? false : true}
         type={cameraSide}
         flashMode={cameraFlash}
-        zoom={zoom}
         autoFocus={RNCamera.Constants.AutoFocus.on}
         videoStabilizationMode="auto"
-        // useNativeZoom={true}
+        useNativeZoom={true}
         onRecordingStart={startedRecording}
         onRecordingEnd={endedRecording}
         androidCameraPermissionOptions={{
@@ -147,15 +130,6 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-        <PinchGestureHandler
-          onGestureEvent={({ nativeEvent }) => {
-            setZoomLevel(nativeEvent);
-          }}
-        >
-          <View
-            style={{ position: "absolute", width: "100%", height: "100%" }}
-          />
-        </PinchGestureHandler>
 
         {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
 
@@ -164,7 +138,6 @@ const CameraScreen = (props) => {
             style={{
               position: "absolute",
               width: "100%",
-              height: "100%",
             }}
             onPress={() => setBottomContainer(bottomContainers.DEFAULT)}
           />
