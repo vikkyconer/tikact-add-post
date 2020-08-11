@@ -112,6 +112,7 @@ const CameraScreen = (props) => {
         useNativeZoom={true}
         onRecordingStart={startedRecording}
         onRecordingEnd={endedRecording}
+        onTap={(event) => setBottomContainer(bottomContainers.DEFAULT)}
         androidCameraPermissionOptions={{
           title: "Permission to use camera",
           message: "We need your permission to use your camera",
