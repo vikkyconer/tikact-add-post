@@ -41,8 +41,6 @@ const VideoOtherOptions = (props) => {
         </TouchableOpacity>
 
         <VideoEditTools
-          flashCamera={props.flashCamera}
-          flashIcon={props.flashIcon}
           setBottomContainer={props.setBottomContainer}
           cameraSide={props.cameraSide}
           setCameraSide={props.setCameraSide}

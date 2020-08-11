@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Animated,
-  Text,
+  Platform,
 } from "react-native";
 import { RNCamera } from "react-native-camera";
 import VideoOtherOptions from "./VideoOtherOptions";
@@ -18,8 +18,7 @@ import Filters from "./FilterContainer/Filters";
 import TimerContainer from "./TimerContainer/TimerContainer";
 import VideoRecordProgress from "./VideoRecordProgress/VideoRecordProgress";
 import TimerDisplay from "./TimerContainer/TimerDisplay";
-import { getVideoSpeed, getPath, promisify, getAudioSpeed } from "../utility";
-import { PinchGestureHandler } from "react-native-gesture-handler";
+import { getVideoSpeed, getPath, getAudioSpeed } from "../utility";
 import SoundContainer from "./SoundContainer";
 var RNFS = require("react-native-fs");
 
@@ -28,7 +27,6 @@ const CameraScreen = (props) => {
   const [cameraSide, setCameraSide] = useState("front");
   const [cameraFlash, setCameraFlash] = useState("off");
   const [recording, setRecording] = useState(false);
-  const [flashIcon, setFlashIcon] = useState("flash-off-outline");
   const [whiteBalance, setWhiteBalance] = useState(
     RNCamera.Constants.WhiteBalance.auto
   );
@@ -85,17 +83,6 @@ const CameraScreen = (props) => {
     }).start();
   };
 
-  const flashCamera = () => {
-    console.log("flash Camera");
-    if (cameraFlash === "off") {
-      setCameraFlash("torch");
-      setFlashIcon("flash-outline");
-    } else {
-      setCameraFlash("off");
-      setFlashIcon("flash-off-outline");
-    }
-  };
-
   const getCamera = () => {
     return (
       <RNCamera
@@ -113,6 +100,9 @@ const CameraScreen = (props) => {
         onRecordingStart={startedRecording}
         onRecordingEnd={endedRecording}
         onTap={(event) => setBottomContainer(bottomContainers.DEFAULT)}
+        onCameraReady={() => {
+          console.log("camera ready");
+        }}
         androidCameraPermissionOptions={{
           title: "Permission to use camera",
           message: "We need your permission to use your camera",
@@ -154,8 +144,6 @@ const CameraScreen = (props) => {
           recording === false ? (
             <VideoOtherOptions
               crossIcon={crossIcon}
-              flashCamera={flashCamera}
-              flashIcon={flashIcon}
               cameraSide={cameraSide}
               setCameraSide={setCameraSide}
               setShowSpeedOptions={setShowSpeedOptions}
@@ -270,8 +258,11 @@ const CameraScreen = (props) => {
       console.log("startAudio: ", lastVideo.startAudio);
       console.log("endAudio: ", lastVideo.endAudio);
 
+      const _startVideoTime =
+        Platform.Version < 27 ? lastVideo.startAudio + 2 : lastVideo.startAudio;
+
       await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -q 1 ${processedVideoFile}`
+        `-ss ${_startVideoTime} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
       );
     } else if (!selectedSound && lastVideo.currentSpeed !== 1) {
       setProcessedVideos([...processedVideos, processedVideoFile]);
@@ -289,10 +280,13 @@ const CameraScreen = (props) => {
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
+      const _startVideoTime =
+        Platform.Version < 27 ? lastVideo.startAudio + 2 : lastVideo.startAudio;
+
       await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${
-          lastVideo.endAudio
-        } -i '${
+        `-ss ${_startVideoTime} -t ${lastVideo.endAudio} -i '${
+          lastVideo.uri
+        }' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${
           selectedSound.url
         }' -filter_complex "[0:v]setpts=${getVideoSpeed(
           lastVideo.currentSpeed
