@@ -3,7 +3,9 @@ import ProfilePic from "./ProfilePic";
 import { RNCamera } from "react-native-camera";
 import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
-const { View } = require("react-native");
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { bottomContainers } from "../../constants";
+const { View, TouchableOpacity } = require("react-native");
 
 const Filters = (props) => {
   const [filters, setFilters] = useState([]);
@@ -50,7 +52,7 @@ const Filters = (props) => {
         bottom: 0,
         left: 0,
         right: 0,
-        height: 200,
+        height: 220,
       }}
     >
       <View
@@ -65,6 +67,18 @@ const Filters = (props) => {
           borderTopRightRadius: 10,
         }}
       />
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 5,
+          top: 55,
+          width: 25,
+          height: 25,
+        }}
+        onPress={() => props.setBottomContainer(bottomContainers.DEFAULT)}
+      >
+        <Ionicons name="close-outline" color="white" size={25} />
+      </TouchableOpacity>
 
       <View>
         <Slider
