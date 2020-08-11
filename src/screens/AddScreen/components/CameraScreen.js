@@ -49,7 +49,6 @@ const CameraScreen = (props) => {
   const [pausedTimes, setPausedTimes] = useState([]);
   const [timerValue, setTimerValue] = useState(3);
   const [showCameraTimer, setShowCameraTimer] = useState(false);
-  const timerContainerY = useRef(new Animated.Value(220)).current;
   const [remainingVideoDuration, setRemainingVideoDuration] = useState(15);
   const [zoom, setZoom] = useState(0);
   const [selectedSound, setSelectedSound] = useState("");
@@ -83,16 +82,6 @@ const CameraScreen = (props) => {
       toValue: window.width * 0.9,
       duration: remainingVideoDuration * 1000,
       useNativeDriver: false,
-    }).start();
-  };
-
-  const changeTimerContainerY = () => {
-    Animated.spring(timerContainerY, {
-      toValue: 0,
-      velocity: 20,
-      tension: 1,
-      friction: 5,
-      useNativeDriver: true,
     }).start();
   };
 
@@ -130,7 +119,6 @@ const CameraScreen = (props) => {
           buttonNegative: "Cancel",
         }}
       >
-
         {showCameraTimer ? <TimerDisplay timer={timerValue} /> : null}
 
         {!recording && !videoProcessing ? (
@@ -172,7 +160,6 @@ const CameraScreen = (props) => {
               setShowSpeedOptions={setShowSpeedOptions}
               showSpeedOptions={showSpeedOptions}
               setBottomContainer={setBottomContainer}
-              changeTimerContainerY={changeTimerContainerY}
               selectedSound={selectedSound}
               recording={recording}
               remainingVideoDuration={remainingVideoDuration}
@@ -243,7 +230,6 @@ const CameraScreen = (props) => {
             totalVideoDuration={totalVideoDuration}
             setBottomContainer={setBottomContainer}
             recordVideo={recordVideo}
-            timerContainerY={timerContainerY}
             progressBarPercent={progressBarPercent}
             setPartVideoDuration={setPartVideoDuration}
             remainingVideoDuration={remainingVideoDuration}

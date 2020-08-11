@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, Animated, TouchableOpacity } from "react-native";
 import Timers from "./Timers";
 import SetRecordTimeBar from "./SetRecordTimeBar";
@@ -7,7 +7,18 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { bottomContainers } from "../../constants";
 
 const TimerContainer = (props) => {
+  const timerContainerY = useRef(new Animated.Value(220)).current;
   const [currentTimer, setCurrentTimer] = useState(3);
+
+  useEffect(() => {
+    Animated.spring(timerContainerY, {
+      toValue: 0,
+      velocity: 20,
+      tension: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const runCounter = async () => {
     return new Promise((resolve, reject) => {
@@ -36,7 +47,7 @@ const TimerContainer = (props) => {
         left: 0,
         right: 0,
         height: 280,
-        transform: [{ translateY: props.timerContainerY }],
+        transform: [{ translateY: timerContainerY }],
       }}
     >
       <View

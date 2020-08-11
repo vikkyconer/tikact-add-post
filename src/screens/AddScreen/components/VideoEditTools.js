@@ -42,10 +42,7 @@ const VideoEditTools = (props) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center" }}
-        onPress={() => {
-          props.setBottomContainer(bottomContainers.TIMER);
-          props.changeTimerContainerY();
-        }}
+        onPress={() => props.setBottomContainer(bottomContainers.TIMER)}
       >
         {getIcon("stopwatch-outline")}
         <Text style={{ color: "white" }}>Timer</Text>
