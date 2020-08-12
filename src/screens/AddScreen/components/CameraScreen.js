@@ -258,7 +258,7 @@ const CameraScreen = (props) => {
       console.log("startAudio: ", lastVideo.startAudio);
       console.log("endAudio: ", lastVideo.endAudio);
 
-      const audioDelay = Platform.Version < 27 ? 2 : 0;
+      const audioDelay = Platform.Version < 27 ? 3 : 0;
 
       await RNFFmpeg.execute(
         `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -itsoffset ${audioDelay} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
@@ -279,7 +279,7 @@ const CameraScreen = (props) => {
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
-      const audioDelay = Platform.Version < 27 ? 2 : 0;
+      const audioDelay = Platform.Version < 27 ? 3 : 0;
 
       await RNFFmpeg.execute(
         `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${
