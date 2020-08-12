@@ -258,11 +258,10 @@ const CameraScreen = (props) => {
       console.log("startAudio: ", lastVideo.startAudio);
       console.log("endAudio: ", lastVideo.endAudio);
 
-      const _startVideoTime =
-        Platform.Version < 27 ? lastVideo.startAudio + 2 : lastVideo.startAudio;
+      const audioDelay = Platform.Version < 27 ? 2 : 0;
 
       await RNFFmpeg.execute(
-        `-ss ${_startVideoTime} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -itsoffset ${audioDelay} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
       );
     } else if (!selectedSound && lastVideo.currentSpeed !== 1) {
       setProcessedVideos([...processedVideos, processedVideoFile]);
@@ -280,13 +279,12 @@ const CameraScreen = (props) => {
       audioVideoFile = `${audioVideoPath}audio_video_${lastVideoIndex}.mp4`;
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
-      const _startVideoTime =
-        Platform.Version < 27 ? lastVideo.startAudio + 2 : lastVideo.startAudio;
+      const audioDelay = Platform.Version < 27 ? 2 : 0;
 
       await RNFFmpeg.execute(
-        `-ss ${_startVideoTime} -t ${lastVideo.endAudio} -i '${
-          lastVideo.uri
-        }' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${
+        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${
+          lastVideo.endAudio
+        } -itsoffset ${audioDelay} -i '${
           selectedSound.url
         }' -filter_complex "[0:v]setpts=${getVideoSpeed(
           lastVideo.currentSpeed
