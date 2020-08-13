@@ -8,6 +8,11 @@ import PostScreen from "../components/PostScreen";
 import AudioScreen from "../components/AudioScreen";
 import RecordAudio from "../components/RecordAudio";
 import RecordedVideoPreview from "../components/RecordedVideoPreview";
+import SoundsDetail from "../components/Sounds";
+import HashtagsDetails from "../components/Hashtags";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
+import getFontSize from "../utils.js";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +81,57 @@ export default function MainScreen() {
           headerTransparent: true,
           headerShown: false,
         }}
+      />
+        <Stack.Screen
+        name="SoundsDetail"
+        component={SoundsDetail}
+        options={({ navigation }) => ({
+          title: "Sound track",
+          headerTitleStyle: {
+            fontSize: getFontSize(22),
+            color: "#313131",
+            fontFamily: "Roboto-Medium",
+            alignSelf: "center",
+            marginRight: 40,
+          },
+          headerLeft: () => (
+            <FontAwesome5
+              onPress={() => navigation.pop()}
+              name="chevron-left"
+              size={getFontSize(26)}
+              style={{
+                paddingHorizontal: 20,
+                color: "#616161",
+              }}
+            />
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="HashtagDetail"
+        component={HashtagsDetails}
+        options={({ navigation }) => ({
+          title: "#hashtags",
+          headerTitleStyle: {
+            fontSize: getFontSize(22),
+            color: "#313131",
+            fontFamily: "Roboto-Medium",
+            alignSelf: "center",
+            marginRight: 40,
+          },
+          headerLeft: () => (
+            <FontAwesome5
+              onPress={() => navigation.pop()}
+              name="chevron-left"
+              size={getFontSize(26)}
+              style={{
+                paddingHorizontal: 20,
+                color: "#616161",
+              }}
+            />
+          ),
+        })}
       />
     </Stack.Navigator>
   );
