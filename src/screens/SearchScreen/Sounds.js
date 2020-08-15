@@ -14,6 +14,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import getFontSize from '../../utils';
 import { fetchSounds } from '../../services/apiHandler';
+import { normalize } from '../../styles/normalize';
 
 const windowWidth = Dimensions.get('window').width;
 // const height = windowHeight / 2 - 120;
@@ -50,23 +51,24 @@ const Sounds = ({ navigation }) => {
   const renderPhoto = ({ item }) => (
     <TouchableOpacity
       onPress={() => navigation.navigate('SoundsDetail', { soundId: item.id })}
-      style={{ flexDirection: 'row', paddingLeft: 40 }}
+      style={{ flexDirection: 'row', paddingLeft: normalize(20) }}
     >
-      <View style={{ marginEnd: 15 }}>
+      <View style={{ marginEnd: normalize(10) }}>
         <Image
           key={item.id}
           source={{ uri: item.name }}
-          style={{ width: 72, height: 72 }}
+          style={{ width: normalize(70), height: normalize(70) }}
           defaultSource={require('../../assets/defaultImage.png')}
         />
         <FontAwesome5
           name="play"
-          size={27}
+          size={normalize(23)}
           style={{
             color: '#FFFFFF',
             position: 'absolute',
-            left: 25,
-            top: 23,
+            left: normalize(25),
+            top: normalize(25),
+            opacity:0.9
           }}
         />
       </View>
@@ -76,7 +78,7 @@ const Sounds = ({ navigation }) => {
             fontSize: getFontSize(18),
             color: '#313131',
             fontFamily: 'Roboto-Regular',
-            marginBottom: 10,
+            marginBottom: normalize(10),
           }}
         >
           {item.name}

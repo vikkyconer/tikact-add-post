@@ -12,13 +12,14 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import getFontSize from '../../utils';
 import { fetchUsers } from '../../services/apiHandler';
+import { normalize } from '../../styles/normalize';
 
 const FollowButton = ({ isFollowing = false }) => (
   <TouchableOpacity
-    onPress={() => {}}
+    onPress={() => { }}
     style={{
-      width: 90,
-      height: 28,
+      width: normalize(90),
+      height: normalize(28),
       backgroundColor: isFollowing ? 'white' : '#5395EA',
       borderRadius: 5,
       alignItems: 'center',
@@ -29,19 +30,19 @@ const FollowButton = ({ isFollowing = false }) => (
       <FontAwesome
         name="paper-plane-o"
         size={getFontSize(20)}
+        style={{ transform: [{ rotate: "20deg" }] }}
         color="#5395EA"
-        // style={{ ...iconStyle, marginTop: 3 }}
       />
     ) : (
-      <Text
-        style={{
-          color: 'white',
-          fontSize: getFontSize(16),
-        }}
-      >
-        Follow
-      </Text>
-    )}
+        <Text
+          style={{
+            color: 'white',
+            fontSize: getFontSize(14),
+          }}
+        >
+          Follow
+        </Text>
+      )}
   </TouchableOpacity>
 );
 
@@ -59,7 +60,7 @@ const User = ({ item }) => (
       style={{ width: getFontSize(66), height: getFontSize(66), borderRadius: getFontSize(66) / 2 }}
       defaultSource={require('../../assets/defaultImage.png')}
     />
-    <View style={{ flexBasis: 100, marginHorizontal: getFontSize(18), flexGrow: 1 }}>
+    <View style={{ flexBasis: 100, marginHorizontal: getFontSize(15), flexGrow: 1 }}>
       <Text
         style={{ fontFamily: 'Roboto-Regular', fontSize: getFontSize(18), color: '#313131' }}
       >
@@ -86,7 +87,7 @@ const User = ({ item }) => (
       </Text>
     </View>
 
-    <FollowButton isFollowing={item.isFollowing} />
+    <FollowButton isFollowing={false} />
   </View>
 );
 
@@ -113,11 +114,11 @@ const Users = () => {
   }
   return (
     <FlatList
-    // bounces={false}
-    // pagingEnabled={true}
-    // showsHorizontalScrollIndicator={false}
-    // showsVerticalScrollIndicator={false}
-    // legacyImplementation={false}
+      // bounces={false}
+      // pagingEnabled={true}
+      // showsHorizontalScrollIndicator={false}
+      // showsVerticalScrollIndicator={false}
+      // legacyImplementation={false}
       data={users}
       ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
       ListHeaderComponent={() => <View style={{ height: 20 }} />}

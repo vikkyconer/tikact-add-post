@@ -9,6 +9,7 @@ import Comment from './components/Comment';
 import Follower from './components/Follower';
 import Like from './components/Like';
 import Mention from './components/Mention';
+import { normalize } from '../../styles/normalize';
 
 const allNotifications = [
   {
@@ -90,13 +91,13 @@ const AllNotifications = () => (
       <View style={{ marginBottom: 10 }} />
     )}
     renderItem={(item) => renderPhoto(item)}
-    ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+    ItemSeparatorComponent={() => <View style={{ height: normalize(15) }} />}
     renderSectionHeader={({ section: { title } }) => (
       <Text
         style={{
-          marginLeft: 15,
-          marginTop: 10,
-          color: '#B2B2B2',
+          marginLeft: normalize(15),
+          marginTop: normalize(10),
+          color: '#b2b2b2',
           fontFamily: 'Roboto-Medium',
         }}
       >

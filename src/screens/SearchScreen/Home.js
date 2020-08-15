@@ -8,6 +8,7 @@ import TrendingVideoList from './components/TrendingVideoList';
 import TopActorList from './components/TopActorList';
 import TrendingHashTagComponent from './components/TrendingHashtagComponent';
 import TopTracks from './components/TopTracks';
+import { normalize } from '../../styles/normalize'
 
 import getFontSize from '../../utils';
 import {
@@ -25,12 +26,12 @@ const textStyle = {
 };
 const iconStyle = {
   color: textColor,
-  marginRight: 10,
+  marginRight: normalize(10),
 };
-const iconFontSize = 20;
+const iconFontSize = normalize(20);
 const headerStyle = {
-  marginBottom: 10,
-  paddingLeft: 11,
+  marginBottom: normalize(10),
+  paddingLeft: normalize(11),
   flexDirection: 'row',
 };
 const containerStyle = {
@@ -174,7 +175,7 @@ const TopVideosContainer = () => {
       <View
         style={{
           ...headerStyle,
-          marginTop: 15,
+          marginTop: normalize(15),
         }}
       >
         <FontAwesome5 name="video" size={iconFontSize} style={iconStyle} />

@@ -1,18 +1,19 @@
 import React from "react";
 import { Text, View, Image, StyleSheet } from "react-native";
 import getFontSize from "../../../utils";
+import { normalize } from "../../../styles/normalize";
 
 const Like = ({ item }) => {
   const likes = item.likes;
   const nameArray = likes.map((obj) => obj.name);
   const name = nameArray.join(", ");
   const firstTwo = likes.slice(0, 2);
-  const imageSize = firstTwo.length === 2 ? 39 : 51;
+  const imageSize = firstTwo.length === 2 ? normalize(39) : normalize(51);
   return (
     <View
       style={{
         flexDirection: "row",
-        paddingHorizontal: 15,
+        paddingHorizontal: normalize(15),
         alignItems: "center",
       }}
     >
@@ -20,21 +21,21 @@ const Like = ({ item }) => {
         const imageStyle =
           index === 1
             ? {
-                marginTop: 22,
-                marginLeft: -29,
-                borderWidth: 2,
-                borderColor: "white",
-                width: imageSize + 2,
-                height: imageSize + 2,
-                borderRadius: (imageSize + 2) / 2,
-              }
+              marginTop: normalize(22),
+              marginLeft: normalize(-29),
+              borderWidth: 2,
+              borderColor: "white",
+              width: imageSize + 2,
+              height: imageSize + 2,
+              borderRadius: (imageSize + 2) / 2,
+            }
             : {
-                width: imageSize,
-                height: imageSize,
-                borderRadius: imageSize / 2,
-                // borderWidth: StyleSheet.hairlineWidth,
-                // borderColor: "#B6B7B8",
-              };
+              width: imageSize,
+              height: imageSize,
+              borderRadius: imageSize / 2,
+              // borderWidth: StyleSheet.hairlineWidth,
+              // borderColor: "#B6B7B8",
+            };
         return (
           <Image
             key={obj.id}
@@ -49,7 +50,7 @@ const Like = ({ item }) => {
           flexDirection: "row",
           flexBasis: 180,
           flexGrow: 1,
-          marginHorizontal: 15,
+          marginHorizontal: normalize(10),
           flexWrap: "wrap",
         }}
       >
@@ -57,7 +58,7 @@ const Like = ({ item }) => {
           style={{
             fontSize: getFontSize(16),
             color: "#313131",
-            marginRight: 5,
+            marginRight: normalize(5),
             fontFamily: "Roboto-Medium",
           }}
         >
@@ -65,18 +66,17 @@ const Like = ({ item }) => {
           <Text
             style={{
               fontSize: getFontSize(16),
-              color: "#B7B8B9",
+              color: "#99999C",
               fontFamily: "Roboto-Regular",
-              marginRight: 5,
+              marginRight: normalize(5),
             }}
           >
             liked your video.
           </Text>
           <Text
             style={{
-              fontSize: getFontSize(16),
-              color: "#99999C",
-              marginRight: 0,
+              fontSize: getFontSize(15),
+              color: "#B7B8B9",
               fontFamily: "Roboto-Regular",
             }}
           >
@@ -87,7 +87,7 @@ const Like = ({ item }) => {
       <Image
         key={item.id + 1}
         source={{ uri: item.likedPhoto }}
-        style={{ width: 52, height: 52 }}
+        style={{ width: normalize(45), height: normalize(45) }}
         defaultSource={require("../../../assets/defaultImage.png")}
       />
     </View>
