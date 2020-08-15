@@ -62,6 +62,8 @@ const CameraScreen = (props) => {
   const [soundPlayer, setSoundPlayer] = useState(null);
   const [startCounter, setStartCounter] = useState(0);
   const [endCounter, setEndCounter] = useState(0);
+  const [initiatedCameraTime, setInitatedCameraTime] = useState(null);
+  const [audioDelay, setAudioDelay] = useState(0);
 
   const crossIcon = (
     <Feather
@@ -258,11 +260,25 @@ const CameraScreen = (props) => {
       console.log("startAudio: ", lastVideo.startAudio);
       console.log("endAudio: ", lastVideo.endAudio);
 
-      const audioDelay = Platform.Version < 27 ? 3 : 0;
+      // const audioDelay = Platform.Version < 27 ? 3 : 0;
+      if(Platform.Version < 27) {
+        await RNFFmpeg.execute(
+          `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+        );
+      } else {
+        await RNFFmpeg.execute(
+          `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+        );
+      }
+      // if (audioDelay > 0) {
+      //   // await RNFFmpeg.execute(
+      //   //   `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' ${audioVideoFile}`
+      //   // );
 
-      await RNFFmpeg.execute(
-        `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -itsoffset ${audioDelay} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
-      );
+        
+      // } else {
+        
+      // }
     } else if (!selectedSound && lastVideo.currentSpeed !== 1) {
       setProcessedVideos([...processedVideos, processedVideoFile]);
 
@@ -345,6 +361,12 @@ const CameraScreen = (props) => {
   const startedRecording = async () => {
     console.log("started:");
     const now = new Date();
+    if (initiatedCameraTime) {
+      const diffTime = Math.abs(now - initiatedCameraTime);
+      const secondsDiff = diffTime / 1000;
+      setAudioDelay(secondsDiff);
+      console.log("secondsDiff: ", secondsDiff);
+    }
     if (selectedSound && endCounter) {
       console.log("endCounter");
       setStartCounter(endCounter);
@@ -367,6 +389,8 @@ const CameraScreen = (props) => {
           : remainingVideoDuration;
 
       if (remainingVideoDuration > 0) {
+        const now = new Date();
+        await setInitatedCameraTime(now);
         const { uri, codec = "mp4" } = await camera.recordAsync({
           maxDuration: _videoDuration,
         });
