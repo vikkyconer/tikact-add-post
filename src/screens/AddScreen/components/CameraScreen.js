@@ -261,15 +261,18 @@ const CameraScreen = (props) => {
       console.log("endAudio: ", lastVideo.endAudio);
 
       // const audioDelay = Platform.Version < 27 ? 3 : 0;
-      if(Platform.Version < 27) {
-        await RNFFmpeg.execute(
-          `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
-        );
-      } else {
-        await RNFFmpeg.execute(
-          `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
-        );
-      }
+      await RNFFmpeg.execute(
+        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+      );
+      // if(Platform.Version < 27) {
+      //   await RNFFmpeg.execute(
+      //     `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+      //   );
+      // } else {
+      //   await RNFFmpeg.execute(
+      //     `-i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+      //   );
+      // }
       // if (audioDelay > 0) {
       //   // await RNFFmpeg.execute(
       //   //   `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${selectedSound.url}' ${audioVideoFile}`
