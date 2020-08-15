@@ -16,15 +16,16 @@ import {
 } from "react-native";
 
 import getFontSize from "../../../utils";
+import { normalize } from "../../../styles/normalize";
 
 const FollowButton = ({ isFollowing = false }) => (
   <TouchableOpacity
-    onPress={() => {}}
+    onPress={() => { }}
     style={{
-      width: 90,
-      height: 28,
+      width: normalize(85),
+      height: normalize(28),
       backgroundColor: isFollowing ? "white" : "#5395EA",
-      borderRadius: 5,
+      borderRadius: normalize(5),
       alignItems: "center",
       justifyContent: "center",
       borderWidth: isFollowing ? StyleSheet.hairlineWidth : 0,
@@ -33,7 +34,7 @@ const FollowButton = ({ isFollowing = false }) => (
     <Text
       style={{
         color: isFollowing ? "black" : "white",
-        fontSize: getFontSize(16),
+        fontSize: getFontSize(15),
       }}
     >
       {isFollowing ? "Following" : "Follow"}
@@ -41,18 +42,18 @@ const FollowButton = ({ isFollowing = false }) => (
   </TouchableOpacity>
 );
 
-const Follower = ({item}) => (
+const Follower = ({ item }) => (
   <View
     style={{
       flexDirection: "row",
-      paddingHorizontal: 15,
+      paddingHorizontal: normalize(15),
       alignItems: "center",
     }}
   >
     <Image
       key={item.id}
       source={{ uri: item.url }}
-      style={{ width: 50, height: 50, borderRadius: 25 }}
+      style={{ width: normalize(50), height: normalize(50), borderRadius: normalize(50 / 2) }}
       defaultSource={require("../../../assets/defaultImage.png")}
     />
     <View
@@ -60,7 +61,7 @@ const Follower = ({item}) => (
         flexDirection: "row",
         flexBasis: 150,
         flexGrow: 1,
-        marginHorizontal: 15,
+        marginHorizontal: normalize(10),
         flexWrap: "wrap",
       }}
     >
@@ -68,31 +69,29 @@ const Follower = ({item}) => (
         style={{
           fontSize: getFontSize(16),
           color: "#313131",
-          marginRight: 5,
+          marginRight: normalize(5),
           fontFamily: "Roboto-Medium",
         }}
       >
         {item.name}
+        <Text
+          style={{
+            fontSize: getFontSize(16),
+            color: "#99999C",
+            fontFamily: "Roboto-Regular",
+            marginRight: normalize(3),
+          }}
+        >{' '}started following you.{' '}
+        </Text>
+        <Text
+          style={{
+            fontSize: getFontSize(16),
+            color: "#B7B8B9",
+            fontFamily: "Roboto-Regular",
+          }}
+        >
+          47m
       </Text>
-
-      <Text
-        style={{
-          fontSize: getFontSize(16),
-          color: "#B7B8B9",
-          fontFamily: "Roboto-Regular",
-          marginRight: 3,
-        }}
-      >
-        started following you.
-      </Text>
-      <Text
-        style={{
-          fontSize: getFontSize(16),
-          color: "#99999C",
-          fontFamily: "Roboto-Regular",
-        }}
-      >
-        47m
       </Text>
     </View>
     <FollowButton isFollowing={item.isFollowing} />

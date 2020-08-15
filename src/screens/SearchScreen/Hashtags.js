@@ -10,13 +10,14 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import getFontSize from '../../utils';
 import { fetchHashTags } from '../../services/apiHandler';
+import { normalize } from '../../styles/normalize';
 
 const PlayImage = () => (
   <Image
     style={{
-      width: 20,
-      height: 20,
-      marginRight: 5,
+      width: normalize(20),
+      height: normalize(20),
+      marginRight: normalize(5),
     }}
     source={{
       uri:
@@ -135,7 +136,8 @@ const Hashtag = ({ navigation }) => {
         <Text
           style={{
             fontSize: getFontSize(25),
-            marginRight: 15,
+            marginRight: normalize(15),
+            fontWeight: 'bold'
           }}
         >
           #
@@ -145,7 +147,8 @@ const Hashtag = ({ navigation }) => {
             style={{
               fontSize: getFontSize(18),
               color: '#313131',
-              fontFamily: 'Roboto-Regular',
+              fontFamily: 'Roboto-Medium',
+              marginTop: normalize(3)
             }}
           >
             {item.hashtag}
@@ -155,7 +158,7 @@ const Hashtag = ({ navigation }) => {
               fontSize: getFontSize(14),
               color: '#B7B8B9',
               fontFamily: 'Roboto-Regular',
-              lineHeight: 25,
+              lineHeight: normalize(20),
             }}
           >
             {item.postsCount || 12}
@@ -166,8 +169,7 @@ const Hashtag = ({ navigation }) => {
       <View
         style={{
           flexDirection: 'row',
-          alignItems: 'center',
-          // alignSelf: "center",
+          alignItems: 'center'
         }}
       >
         <PlayImage />

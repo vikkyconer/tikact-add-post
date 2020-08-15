@@ -10,6 +10,7 @@ import Likes from './Likes';
 import Followers from './Followers';
 import Mentions from './Mentions';
 import getFontSize from '../../utils';
+import { normalize } from '../../styles/normalize';
 
 const activeTintColor = '#313131';
 const windowWidth = Dimensions.get('window').width;
@@ -20,22 +21,22 @@ const Header = () => (
     style={{
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingVertical: 10,
-      paddingHorizontal: 20,
+      paddingVertical: normalize(10),
+      paddingHorizontal: normalize(20),
       alignItems: 'center',
     }}
   >
-    <FontAwesome5 name="chevron-left" size={23} />
+    <FontAwesome5 name="chevron-left" size={normalize(20)} />
     <Text
       style={{
-        fontSize: getFontSize(24),
+        fontSize: getFontSize(20),
         fontFamily: 'Roboto-Medium',
         color: '#313131',
       }}
     >
       Activities
     </Text>
-    <FontAwesome5 name="paper-plane" size={25} style={{ color: '#616161' }} />
+    <FontAwesome5 name="paper-plane" size={normalize(20)} style={{ color: '#616161', transform: [{ rotate: "20deg" }] }} />
   </View>
 );
 
@@ -46,16 +47,17 @@ const TabNavigator = () => (
       backgroundColor: 'white',
     }}
     tabBarOptions={{
+      scrollEnabled: true,
       labelStyle: {
         fontSize: getFontSize(16),
-        width: windowWidth / 5,
+        width: normalize(90),
         textTransform: 'capitalize',
-        fontFamily: 'Roboto-Regular',
+        fontFamily: 'Roboto-Regular'
       },
-      indicatorStyle: { backgroundColor: 'black', height: 0.75 },
+      indicatorStyle: { backgroundColor: 'black', height: normalize(1.5) },
       tabStyle: {
-        // paddingVertical: 0,
-        marginBottom: -7,
+        width: normalize(95),
+        marginBottom: normalize(-5)
       },
       activeTintColor,
     }}
@@ -65,6 +67,7 @@ const TabNavigator = () => (
     <Tab.Screen name="Comments" component={Comments} />
     <Tab.Screen name="Mentions" component={Mentions} />
     <Tab.Screen name="Followers" component={Followers} />
+    <Tab.Screen name="Gift & Letters" component={Followers} />
   </Tab.Navigator>
 );
 const NotificationScreen = () => (

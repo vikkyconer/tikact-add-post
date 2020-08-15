@@ -14,6 +14,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import getFontSize from '../../utils';
 
 import { fetchVideos } from '../../services/apiHandler';
+import { normalize } from '../../styles/normalize';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -35,9 +36,10 @@ const renderPhoto = ({ item }) => (
     <View
       style={{
         position: 'absolute',
-        top: 10,
-        right: 15,
+        top: normalize(15),
+        right: normalize(15),
         flexDirection: 'row',
+        opacity: 0.9
       }}
     >
       <FontAwesome5
@@ -45,7 +47,7 @@ const renderPhoto = ({ item }) => (
         size={12}
         style={{
           color: '#FFFFFF',
-          marginRight: 5,
+          marginRight: normalize(5),
         }}
       />
       <Text
@@ -75,10 +77,10 @@ const renderPhoto = ({ item }) => (
             uri: 'https://homepages.cae.wisc.edu/~ece533/images/monarch.png',
           }}
           style={{
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            marginHorizontal: 10,
+            width: normalize(30),
+            height: normalize(30),
+            borderRadius: normalize(15),
+            marginHorizontal: normalize(10),
           }}
         />
         <Text
@@ -148,8 +150,8 @@ const Videos = () => {
       ListFooterComponent={() => (isLoading ? (
         <ActivityIndicator style={{ marginVertical: 15 }} size="large" color="grey" />
       ) : (
-        <View style={{ height: 2 }} />
-      ))}
+          <View style={{ height: 2 }} />
+        ))}
       renderItem={(item) => renderPhoto(item)}
       keyExtractor={(photo, index) => String(index)}
       style={{ width: windowWidth }}

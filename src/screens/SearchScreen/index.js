@@ -11,6 +11,7 @@ import Sounds from './Sounds';
 import Users from './Users';
 import Videos from './Videos';
 import getFontSize from '../../utils';
+import { normalize } from '../../styles/normalize';
 
 const windowWidth = Dimensions.get('window').width;
 const Tab = createMaterialTopTabNavigator();
@@ -26,9 +27,8 @@ const TabMenu = ({ setShowSearch }) => (
       labelStyle: {
         fontSize: getFontSize(16),
         width: windowWidth / 5,
-        // width:100,
         textTransform: 'capitalize',
-        fontFamily: 'Roboto-Regular',
+        fontFamily: 'Roboto-Medium',
       },
       indicatorStyle: { backgroundColor: 'black', height: 0.75 },
       tabStyle: {
@@ -55,9 +55,9 @@ const TabMenu = ({ setShowSearch }) => (
           <Image
             source={require('../../assets/icons/tabmenu.png')}
             style={{
-              width: 25,
-              height: 25,
-              marginTop: Platform.OS === 'android' ? 18 : 10,
+              width: normalize(25),
+              height: normalize(25),
+              marginTop: Platform.OS === 'android' ? normalize(18) : normalize(10),
               tintColor: activeTintColor,
             }}
           />
@@ -77,43 +77,27 @@ const SearchBar = () => {
   return (
     <View
       style={{
-        paddingVertical: 10,
-        paddingHorizontal: 33,
+        marginTop: normalize(10),
+        marginLeft: normalize(30),
+        marginRight: normalize(30),
+        height: normalize(42),
+        flexDirection: 'row',
+        backgroundColor: '#F1F1F1',
+        alignItems:'center',
+        borderRadius:normalize(5)
       }}
     >
+      <FontAwesome5
+        name="search"
+        size={normalize(15)}
+        style={{ color: '#b7b8b9',marginLeft:normalize(10),marginRight:normalize(5) }}
+      />
       <TextInput
-        // placeholder="Search"
+        placeholder="Search"
         clearButtonMode="while-editing"
-        style={{
-          height: 45,
-          backgroundColor: '#F1F1F1',
-          padding: 10,
-          borderRadius: 2,
-        }}
         value={value}
         onChangeText={(text) => setValue(text)}
       />
-
-      {!value && (
-        <View style={{ flexDirection: 'row' }}>
-          <FontAwesome5
-            name="search"
-            size={18}
-            style={{ marginTop: -32, marginHorizontal: 12, color: '#616161' }}
-          />
-          <Text
-            style={{
-              marginTop: -34,
-              color: '#616161',
-              fontSize: getFontSize(19),
-              fontWeight: '300',
-              fontFamily: 'Roboto-Regular',
-            }}
-          >
-            Search
-          </Text>
-        </View>
-      )}
     </View>
   );
 };
