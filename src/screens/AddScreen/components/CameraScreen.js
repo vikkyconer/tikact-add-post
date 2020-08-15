@@ -63,7 +63,7 @@ const CameraScreen = (props) => {
   const [startCounter, setStartCounter] = useState(0);
   const [endCounter, setEndCounter] = useState(0);
   const [initiatedCameraTime, setInitatedCameraTime] = useState(null);
-  const [audioDelay, setAudioDelay] = useState(0);
+  const audioDelay = useRef(0);
 
   const crossIcon = (
     <Feather
@@ -261,8 +261,9 @@ const CameraScreen = (props) => {
       console.log("endAudio: ", lastVideo.endAudio);
 
       // const audioDelay = Platform.Version < 27 ? 3 : 0;
+      console.log("itsoffset: ", audioDelay.current);
       await RNFFmpeg.execute(
-        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -itsoffset ${audioDelay} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
+        `-ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -i '${lastVideo.uri}' -ss ${lastVideo.startAudio} -t ${lastVideo.endAudio} -itsoffset ${audioDelay.current} -i '${selectedSound.url}' -c copy -map 0:v:0 -map 1:a:0 -shortest -q 1 ${processedVideoFile}`
       );
       // if(Platform.Version < 27) {
       //   await RNFFmpeg.execute(
@@ -366,7 +367,7 @@ const CameraScreen = (props) => {
     if (initiatedCameraTime) {
       const diffTime = Math.abs(now - initiatedCameraTime);
       const secondsDiff = diffTime / 1000;
-      setAudioDelay(secondsDiff);
+      audioDelay.current = secondsDiff;
       console.log("secondsDiff: ", secondsDiff);
     }
     if (selectedSound && endCounter) {
