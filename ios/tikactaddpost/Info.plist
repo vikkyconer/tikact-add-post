@@ -37,8 +37,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>needs camera to capture video</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>need microphone to record audio</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>need access to photo library to upload media</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -69,16 +75,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>needs camera to capture video</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>need microphone to record audio</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>need access to photo library to upload media</string>
 </dict>
 </plist>
