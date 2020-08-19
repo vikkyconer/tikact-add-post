@@ -18,7 +18,7 @@ target 'tikActAddPost' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
-  pod 'OGReactNativeWaveform', :path => '../node_modules/react-native-audiowaveform'
+  # pod 'OGReactNativeWaveform', :path => '../node_modules/react-native-audiowaveform'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
