@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* tikActAddPostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tikActAddPostTests.m */; };
 		0430BEBA3615C86213933E2D /* libPods-tikActAddPost-tikActAddPostTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D422F852E47340C9F5F673 /* libPods-tikActAddPost-tikActAddPostTests.a */; };
+		131ECC8424ED377F007C2594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 131ECC8324ED377E007C2594 /* GoogleService-Info.plist */; };
+		131ECC8524ED377F007C2594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 131ECC8324ED377E007C2594 /* GoogleService-Info.plist */; };
+		131ECC8624ED377F007C2594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 131ECC8324ED377E007C2594 /* GoogleService-Info.plist */; };
+		131ECC8724ED377F007C2594 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 131ECC8324ED377E007C2594 /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -58,6 +62,7 @@
 		0E0D6660A8B54629AB60CF4F /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = ../src/assets/fonts/FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
 		127FD5001AC327D3F069485C /* Pods-tikActAddPost-tikActAddPostTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tikActAddPost-tikActAddPostTests.release.xcconfig"; path = "Target Support Files/Pods-tikActAddPost-tikActAddPostTests/Pods-tikActAddPost-tikActAddPostTests.release.xcconfig"; sourceTree = "<group>"; };
 		131ECC7524ED2261007C2594 /* RNDeviceBrightness.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceBrightness.xcodeproj; path = "../node_modules/react-native-device-brightness/RNDeviceBrightness.xcodeproj"; sourceTree = "<group>"; };
+		131ECC8324ED377E007C2594 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* tikActAddPost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tikActAddPost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = tikActAddPost/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = tikActAddPost/AppDelegate.m; sourceTree = "<group>"; };
@@ -168,6 +173,7 @@
 		13B07FAE1A68108700A75B9A /* tikActAddPost */ = {
 			isa = PBXGroup;
 			children = (
+				131ECC8324ED377E007C2594 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -434,6 +440,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				131ECC8524ED377F007C2594 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +450,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				131ECC8424ED377F007C2594 /* GoogleService-Info.plist in Resources */,
 				657E410F43C94BAB9F02606F /* Roboto-Medium.ttf in Resources */,
 				689429C4FDE14344A8B5D021 /* Roboto-Regular.ttf in Resources */,
 			);
@@ -453,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
+				131ECC8624ED377F007C2594 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				131ECC8724ED377F007C2594 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

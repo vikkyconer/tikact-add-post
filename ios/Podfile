@@ -22,6 +22,8 @@ target 'tikActAddPost' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'Firebase/Analytics'
+
   target 'tikActAddPostTests' do
     inherit! :complete
     # Pods for testing
