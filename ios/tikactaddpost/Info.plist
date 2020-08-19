@@ -77,6 +77,8 @@
 	<key>NSCameraUsageDescription</key>
 	<string>needs camera to capture video</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>need microphone to capture audio</string>
+	<string>need microphone to record audio</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>need access to photo library to upload media</string>
 </dict>
 </plist>
