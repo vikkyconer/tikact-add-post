@@ -23,6 +23,8 @@ target 'tikActAddPost' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'Firebase/Analytics'
+  
+  pod 'GoogleSignIn', '~> 5.0.2'
 
   target 'tikActAddPostTests' do
     inherit! :complete
