@@ -63,7 +63,7 @@
 		127FD5001AC327D3F069485C /* Pods-tikActAddPost-tikActAddPostTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tikActAddPost-tikActAddPostTests.release.xcconfig"; path = "Target Support Files/Pods-tikActAddPost-tikActAddPostTests/Pods-tikActAddPost-tikActAddPostTests.release.xcconfig"; sourceTree = "<group>"; };
 		131ECC7524ED2261007C2594 /* RNDeviceBrightness.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceBrightness.xcodeproj; path = "../node_modules/react-native-device-brightness/RNDeviceBrightness.xcodeproj"; sourceTree = "<group>"; };
 		131ECC8324ED377E007C2594 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* tikActAddPost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tikActAddPost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* tikAct.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tikAct.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = tikActAddPost/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = tikActAddPost/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = tikActAddPost/Images.xcassets; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* tikActAddPost.app */,
+				13B07F961A680F5B00A75B9A /* tikAct.app */,
 				00E356EE1AD99517003FC87E /* tikActAddPostTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* tikActAddPost-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* tikActAddPost-tvOSTests.xctest */,
@@ -330,7 +330,7 @@
 			);
 			name = tikActAddPost;
 			productName = tikActAddPost;
-			productReference = 13B07F961A680F5B00A75B9A /* tikActAddPost.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* tikAct.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* tikActAddPost-tvOS */ = {
@@ -856,8 +856,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tikAct.app;
-				PRODUCT_NAME = tikActAddPost;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tikact.app;
+				PRODUCT_NAME = tikAct;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -879,8 +879,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tikAct.app;
-				PRODUCT_NAME = tikActAddPost;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tikact.app;
+				PRODUCT_NAME = tikAct;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

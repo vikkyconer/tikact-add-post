@@ -1,4 +1,4 @@
-package com.tikactaddpost;
+package com.tikact.app;
 
 import android.app.Application;
 import android.content.Context;

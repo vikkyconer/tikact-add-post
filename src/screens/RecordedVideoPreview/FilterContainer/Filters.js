@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProfilePic from "./ProfilePic";
 import { RNCamera } from "react-native-camera";
-import DeviceBrightness from "react-native-device-brightness";
+// import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
 const { View } = require("react-native");
 
@@ -10,7 +10,7 @@ const Filters = (props) => {
   const [filterBrightness, setFilterBrightness] = useState(1);
 
   useEffect(() => {
-    DeviceBrightness.setBrightnessLevel(filterBrightness);
+    // DeviceBrightness.setBrightnessLevel(filterBrightness);
     const normal = RNCamera.Constants.WhiteBalance.auto;
     const f1 = RNCamera.Constants.WhiteBalance.sunny;
     const f2 = RNCamera.Constants.WhiteBalance.cloudy;

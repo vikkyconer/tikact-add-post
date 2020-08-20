@@ -1,4 +1,4 @@
-package com.tikactaddpost;
+package com.tikact.app;
 
 import com.facebook.react.ReactActivity;
 

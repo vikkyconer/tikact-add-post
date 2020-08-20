@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProfilePic from "./ProfilePic";
 import { RNCamera } from "react-native-camera";
-import DeviceBrightness from "react-native-device-brightness";
+// import DeviceBrightness from "react-native-device-brightness";
 import Slider from "@react-native-community/slider";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { bottomContainers } from "../../constants";
@@ -23,7 +23,7 @@ const Filters = (props) => {
   }, []);
 
   useEffect(() => {
-    DeviceBrightness.setBrightnessLevel(filterBrightness);
+    // DeviceBrightness.setBrightnessLevel(filterBrightness);
     const normal = RNCamera.Constants.WhiteBalance.auto;
     const f1 = RNCamera.Constants.WhiteBalance.sunny;
     const f2 = RNCamera.Constants.WhiteBalance.cloudy;
