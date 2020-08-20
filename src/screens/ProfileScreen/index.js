@@ -1,17 +1,29 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { View,SafeAreaView } from 'react-native';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
-const ProfileScreen = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text>{'Hello ProfileScreen.....!'}</Text>
-    </View>
-  );
+export default class Login extends Component {
+  render() {
+    return (
+      <SafeAreaView style={{justifyContent:"center",alignItems:"center",flex:1}}>
+        <LoginButton
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                console.log("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                console.log("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    console.log(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => console.log("logout.")}/>
+      </SafeAreaView>
+    );
+  }
 };
-
-export default ProfileScreen;

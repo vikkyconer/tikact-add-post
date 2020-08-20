@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">tikActAddPost</string>
+    <string name="facebook_app_id">622439581998488</string>
+<string name="fb_login_protocol_scheme">fb622439581998488</string>
+
 </resources>
