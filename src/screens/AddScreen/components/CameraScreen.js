@@ -97,7 +97,7 @@ const CameraScreen = (props) => {
         type={cameraSide}
         flashMode={cameraFlash}
         autoFocus={RNCamera.Constants.AutoFocus.on}
-        videoStabilizationMode="auto"
+        // videoStabilizationMode="auto"
         useNativeZoom={true}
         onRecordingStart={startedRecording}
         onRecordingEnd={endedRecording}
